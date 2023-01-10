@@ -61,7 +61,7 @@ class AuthController extends Controller
         }
         // Còn không sẽ trả về back và hiển thị lỗi email
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'user_login' => 'The provided credentials do not match our records.',
         ]);
     }
 

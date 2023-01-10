@@ -29,31 +29,11 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $bookRooms = Bookrooms::select('id')->pluck('id')->toArray();
-        $activitys = Acitivitys::select('id')->pluck('id')->toArray();
-        $activity = Bookrooms::whereRaw("id NOT IN (SELECT id FROM fu_activity)")->get();
-//        if (count($activity) > 0 ) {
-//            Acitivitys::create([
-//                'day' => $activity->day,
-//                'room_id' => $activity->room_id,
-//                'leader_login' => $activity->leader_login,
-//                'start_at' => $activity->start_at,
-//                'end_at' => $activity->end_at,
-//                'groupid' => $activity->groupid,
-//                'room_name' => $activity->room_name,
-//                'term_id' => $activity->term_id,
-//                'course_id' => $activity->course_id,
-//                'psubject_id' => $activity->psubect_id,
-//                'session_type0' => $activity->session_type,
-//                'psyllabus_id' => $activity->psyllabus_id,
-//                'area_id' => $activity->area_id
-//            ]);
-//        }
-//        dd($activity);
-        $bookRoom = Bookrooms::select('id')
-        ->whereNotIn('id', $activitys)
-            ->get();
-
+        $activity = new Acitivitys();
+//        $activity = Bookrooms::whereRaw("id NOT IN (SELECT id FROM fu_activity)")->get();
+//        $bookRoom = Acitivitys::select('id')
+//        ->whereNotIn('id', $activitys)
+//            ->get();
         $rooms = Room::orderBy('id', 'asc')->get();
         $slots = Slot::all();
         $subjects = Subjects::all();
@@ -165,7 +145,7 @@ class RoomController extends Controller
                             'psyllabus_id' => 1,
                             'area_id' => $area_id,
                             'session_check' => 0,
-                            'is_active' => 0,
+                            'is_active' => 1,
                             'room_name' => $request->room_name,
                             'description' => $request->description,
                             'start_at' => $start_time,
@@ -174,10 +154,10 @@ class RoomController extends Controller
                         ];
                     }
                 }
-                $id = Bookrooms::create($create)->id;
-                $bookRoom = Bookrooms::find($id);
-                $psubject_id = Bookrooms::find($id)->psubject_id;
-                $group_id = Bookrooms::find($id)->groupid;
+                $id = Acitivitys::create($create)->id;
+                $bookRoom = Acitivitys::find($id);
+                $psubject_id = Acitivitys::find($id)->psubject_id;
+                $group_id = Acitivitys::find($id)->groupid;
                 $area_name = $bookRoom->areas ? $bookRoom->areas->area_name : "";
 
                 if ($psubject_id != null && $group_id != null) {
@@ -207,7 +187,7 @@ class RoomController extends Controller
                     'psyllabus_id' => 1,
                     'area_id' => $area_id,
                     'session_check' => 0,
-                    'is_active' => 0,
+                    'is_active' => 1,
                     'room_name' => $request->room_name,
                     'description' => $request->description,
                     'start_at' => $start_time,
@@ -215,10 +195,10 @@ class RoomController extends Controller
                     'des_cancel_room' => ""
                 ];
 
-                $id = Bookrooms::create($create)->id;
-                $bookRoom = Bookrooms::find($id);
-                $psubject_id = Bookrooms::find($id)->psubject_id;
-                $group_id = Bookrooms::find($id)->groupid;
+                $id = Acitivitys::create($create)->id;
+                $bookRoom = Acitivitys::find($id);
+                $psubject_id = Acitivitys::find($id)->psubject_id;
+                $group_id = Acitivitys::find($id)->groupid;
                 $area_name = $bookRoom->areas ? $bookRoom->areas->area_name : "";
 
                 if ($psubject_id != null && $group_id != null) {
@@ -246,8 +226,10 @@ class RoomController extends Controller
      */
     public function activeRooms(Request $request)
     {
-        $activity = Bookrooms::find($request->id);
-        return view('admin.rooms.detail', compact('activity'));
+        $activity = Acitivitys::find($request->id);
+        $user = auth()->user();
+
+        return view('admin.rooms.detail', compact('activity', 'user'));
     }
 
     /**
@@ -256,22 +238,23 @@ class RoomController extends Controller
      */
     public function updateRooms(Request $request)
     {
-        $activity = Bookrooms::find($request->id);
+        $activity = Acitivitys::find($request->id);
         $id = $request->id;
         $user = User::where('user_login', $activity->leader_login)->first();
         $email = $user->user_email;
         $room_name = $activity->room_name;
-        $area_name = $activity->areas ? $activity->areas->area_nane : "";
+        $date = $activity->day;
+        $area_name = $activity->areas ? $activity->areas->area_name : "";
         $group_name = $activity->group_name;
         $psubject_name = $activity->psubject_name;
         $description = $activity->description;
         $start_at = $activity->start_at;
         $end_at = $activity->end_at;
 
-        if ($activity->is_active == 0) {
-            $activity->is_active = 1;
+        if ($activity->is_active == 1) {
+            $activity->is_active = 0;
             $activity->save();
-            Service::getSendMail()->confirmSendMail($start_at, $end_at, $room_name, $area_name,
+            Service::getSendMail()->confirmSendMail($start_at, $end_at, $date, $room_name, $area_name,
                 $group_name, $psubject_name, $description, $id, $email);
             return redirect()->route('rooms.index')->with('msg-update', 'You have successfully approved the booking');
         } else {
@@ -295,7 +278,7 @@ class RoomController extends Controller
      */
     public function storeCancel(Request $request)
     {
-        $activity = Bookrooms::find($request->id);
+        $activity = Acitivitys::find($request->id);
         $user = User::where('user_login', $activity->leader_login)->first();
         $email = $user->user_email;
         $activity->des_cancel_room = $request->des_cancel_room;

@@ -162,42 +162,44 @@ License: You must have a valid license purchased only from themeforest(the above
                             <h3>Sign In</h3>
                         </div>
                         <!--begin::Form-->
-                        <form  enctype="multipart/form-data"
+                        <form enctype="multipart/form-data"
                               class="kt-form" action="" name="campusform" novalidate="novalidate" id="kt_login_form">
-                            {{--                            <div class="form-group">--}}
-                            {{--                                <input class="form-control" type="text" placeholder="Username or email" name="user_email">--}}
-                            {{--                            </div>--}}
-                            {{--                            @error('user_email')--}}
-                            {{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
-                            {{--                            @enderror--}}
-                            {{--                            <div class="form-group">--}}
-                            {{--                                <input class="form-control" type="password" placeholder="Password" name="password">--}}
-                            {{--                            </div>--}}
-                            {{--                            @error('password')--}}
-                            {{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
-                            {{--                            @enderror--}}
-                            {{--                            <div class="row kt-login__extra" style="margin-top: 10px">--}}
-                            {{--                                <div class="col">--}}
-                            {{--                                    <label class="kt-checkbox">--}}
-                            {{--                                        <input type="checkbox" name="remember_token"> Remember me--}}
-                            {{--                                        <span></span>--}}
-                            {{--                                    </label>--}}
-                            {{--                                </div>--}}
-                            {{--                                <div class="col kt-align-right">--}}
-                            {{--                                    <a href="javascript:;" id="kt_login_forgot" class="kt-link kt-login__link">Forget Password ?</a>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Username or email"
+                                       name="user_email">
+                            </div>
+                            @error('user_email')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <div class="form-group">
+                                <input class="form-control" type="password" placeholder="Password" name="password">
+                            </div>
+                            @error('password')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <div class="row kt-login__extra" style="margin-top: 10px">
+                                <div class="col">
+                                    <label class="kt-checkbox">
+                                        <input type="checkbox" name="remember_token"> Remember me
+                                        <span></span>
+                                    </label>
+                                </div>
+                                <div class="col kt-align-right">
+                                    <a href="javascript:;" id="kt_login_forgot" class="kt-link kt-login__link">Forget
+                                        Password ?</a>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="exampleSelect1">Choose Campus</label>
-                                <select class="form-control" id="campus_id" name="campus_id" >
+                                <select class="form-control" id="campus_id" name="campus_id">
                                     <option value="">Choose Campus</option>
-
-                                    @if(!empty($campus)) {
-                                    @for($i = 0; $i < count($campus); $i++)
-                                        <option {{ $campusCode == $campus[$i]->campus_code ? 'selected' : ""}}
-                                                value="{{ $campus[$i]->campus_code}}">{{ $campus[$i]->campus_name }}</option>
-                                    @endfor
-                                   @endif
+                                    @if(!empty($campus))
+                                        {
+                                        @for($i = 0; $i < count($campus); $i++)
+                                            <option {{ $campusCode == $campus[$i]->campus_code ? 'selected' : ""}}
+                                                    value="{{ $campus[$i]->campus_code}}">{{ $campus[$i]->campus_name }}</option>
+                                        @endfor
+                                    @endif
                                 </select>
                             </div>
                             <div class="pt-1 mb-4">

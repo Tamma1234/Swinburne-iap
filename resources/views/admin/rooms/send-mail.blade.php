@@ -56,7 +56,7 @@
                         </table>
                     </div>
                     <br>
-                        <p class="m_-8525905254478487520confirm-block" style="text-align:center">
+                        <p class="m_-8525905254478487520confirm-block" style="margin-left: 35%">
                             <a href="{{ route('rooms.active', ['id' => $id]) }}"
                                style="background: red;padding:10px;text-decoration:none;color:white" target="_blank">Detail</a>
                         </p>

@@ -65,19 +65,21 @@
                         </tr>
                         </tbody>
                     </table>
-                    @if($activity->is_active !=  1)
-                        <td class="text-nowrap">
-                            <a href="{{ route('rooms.update', ['id' => $activity->id]) }}"
-                               class="btn btn-info">Submit
-                            </a>
-                            <a href="{{ route('rooms.cancel', ['id' => $activity->id]) }}"
-                               class="btn btn-danger">Cancel
-                            </a>
-                        </td>
+                    @if($user->user_level == 1)
+                        @if($activity->is_active ==  1)
+                            <td class="text-nowrap">
+                                <a href="{{ route('rooms.update', ['id' => $activity->id]) }}"
+                                   class="btn btn-info">Submit
+                                </a>
+                                <a href="{{ route('rooms.cancel', ['id' => $activity->id]) }}"
+                                   class="btn btn-danger">Cancel
+                                </a>
+                            </td>
                         @else
-                        <td class="text-nowrap">
-                            <input type="text" class="btn btn-info" value="Approved" disabled>
-                        </td>
+                            <td class="text-nowrap">
+                                <input type="text" class="btn btn-info" value="Approved" disabled>
+                            </td>
+                        @endif
                     @endif
                 </div>
             </div>

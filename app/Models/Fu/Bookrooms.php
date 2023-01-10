@@ -9,7 +9,7 @@ class Bookrooms extends Model
 {
     use HasFactory;
 
-    protected $table = "fu_book_rooms";
+    protected $table = "fu_book_room";
 
     protected $fillable = [
         'day',

@@ -53,7 +53,7 @@
                         </table>
                     </div>
                     <br>
-                        <p class="m_-8525905254478487520confirm-block" style="text-align:center">
+                        <p class="m_-8525905254478487520confirm-block" style="margin-left: 30%">
                             <a href="{{ route('rooms.index') }}"
                                style="background: red;padding:10px;text-decoration:none;color:white" target="_blank">View</a>
                         </p>

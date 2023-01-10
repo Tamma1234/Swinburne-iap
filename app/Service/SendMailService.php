@@ -22,17 +22,18 @@ class SendMailService
             'date' => $date,
         ], function ($mail) use ($room_name) {
             $mail->from('thientamjvb@gmail.com');
-            $mail->to('tamnt117@fpt.edu.vn');
+            $mail->to('thientam160796@gmail.com');
             $mail->subject('Đặt phòng học cho sinh viên');
         });
     }
 
-    public function confirmSendMail($start_at, $end_at, $room_name, $area_name,
+    public function confirmSendMail($start_at, $end_at, $date, $room_name, $area_name,
                                     $group_name, $psubject_name, $description, $id, $email) {
         Mail::send('admin.rooms.confirm-mail', [
             'id' => $id,
             'start_time' => $start_at,
             'end_time' => $end_at,
+            'date' => $date,
             'room_name' => $room_name,
             'area_name' => $area_name,
             'group_name' => $group_name,

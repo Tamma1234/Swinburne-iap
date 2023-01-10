@@ -11,7 +11,7 @@
                     Table Room Options
                 </h3>
             </div>
-            <div class="col-md-6 col-4 align-self-center" style="margin-left: 100px">
+            <div class="col-md-4 col-4 align-self-center" style="margin-left: 100px">
                 <div class="input-group date">
                     <input type="text" class="form-control" readonly value="{{ $today }}" id="kt_datepicker_2">
                     <div class="input-group-append">
@@ -19,6 +19,13 @@
 							<i class="la la-calendar-check-o"></i>
 						</span>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-4 align-self-center" style="margin-left: 100px">
+                <div class="input-group date">
+                    <span style="width: 100px;"><span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Approved</span></span>
+                    <span style="width: 100px;"><span class="kt-badge  kt-badge--brand kt-badge--inline kt-badge--pill">Pending</span></span>
+                    <span style="width: 100px;"><span class="kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill">Not approved</span></span>
                 </div>
             </div>
         </div>
@@ -37,9 +44,10 @@
                         <tbody>
                         @foreach($rooms as $room)
                             <?php
-                            $activityToday = $bookRooms->where('room_id', $room->id)
+                            $activityToday = $activity->where('room_id', $room->id)
                                 ->where('day', $format)
                                 ->get();
+//                            dd($activityToday);
                             ?>
                             <tr>
                                 <td>{{ $room->room_name }}</td>
@@ -192,7 +200,7 @@
                                                                           id="exampleFormControlTextarea1"
                                                                           rows="2">{{ $item->description }}</textarea>
                                                             </div>
-                                                            @if( $item->des_cancel_room != "")
+                                                            @if( $item->is_active == 2)
                                                                 <div class="form-group">
                                                                     <label class="col-form-label"
                                                                            for="exampleFormControlTextarea1">Frame
