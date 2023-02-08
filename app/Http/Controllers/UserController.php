@@ -7,6 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Models\Bill;
 use App\Models\Dra\Curriculum;
+use App\Models\Fu\UserLevel;
 use App\Models\Office;
 use App\Models\Roles;
 use App\Models\User;
@@ -84,9 +85,10 @@ class UserController extends Controller
     public function edit(Request $request)
     {
         $user = User::find($request->id);
+        $userLevel = UserLevel::all();
         $roles = Roles::all();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'userLevel'));
     }
 
     /**

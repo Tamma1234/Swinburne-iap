@@ -11,6 +11,16 @@ class Room extends Model
 
     protected $table = 'fu_room';
 
+    protected $fillable = [
+        'area_id',
+        'room_name',
+        'room_type',
+        'description',
+        'capacity',
+        'valid_from',
+        'is_deleted'
+    ];
+
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');

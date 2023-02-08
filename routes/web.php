@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'room'], function () {
         Route::get('index', 'RoomController@index')->name('rooms.index');
+        Route::get('list-room', 'RoomController@listRooms')->name('list.rooms');
+        Route::get('create-room', 'RoomController@createRooms')->name('create.rooms');
+        Route::post('store', 'RoomController@store')->name('room.store');
+        Route::get('delete-room/{id}', 'RoomController@deleteRoom')->name('delete.room');
         Route::get('search', 'RoomController@searchDate')->name('rooms.search');
         Route::post('add-room/{id?}', 'RoomController@addRooms')->name('rooms.add');
         Route::get('active-room/{id}', 'RoomController@activeRooms')->name('rooms.active');

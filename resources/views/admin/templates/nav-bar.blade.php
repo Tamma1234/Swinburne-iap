@@ -197,8 +197,11 @@
                                         <li class="kt-menu__item " aria-haspopup="true"><a
                                                 href="{{ route('rooms.index') }}" class="kt-menu__link "><i
                                                     class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                    class="kt-menu__link-text">Book Rooms</span></a></li>
+                                        <li class="kt-menu__item " aria-haspopup="true"><a
+                                                href="{{ route('list.rooms') }}" class="kt-menu__link "><i
+                                                    class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                     class="kt-menu__link-text">List Rooms</span></a></li>
-
                                     </ul>
                                 </div>
                             </li>

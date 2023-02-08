@@ -1,8 +1,5 @@
 @extends('admin.layouts.main')
 @section('title', 'Create')
-
-
-
 @section('content')
     @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Users', 'value' => "List User", 'value2' => ""])
 

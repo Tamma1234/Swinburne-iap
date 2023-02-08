@@ -25,14 +25,16 @@
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>User Login:</label>
-                                    <input type="text" disabled name="user_login" class="form-control" id="exampleInputEmail1"
+                                    <input type="text" disabled name="user_login" class="form-control"
+                                           id="exampleInputEmail1"
                                            placeholder="Enter User login" value="{{$user->user_login}}">
                                 </div>
                                 <div class="col-lg-6">
                                     <label>User Surname:</label>
 
-                                    <input type="text" disabled name="user_surname" class="form-control" id="exampleInputEmail1"
-                                           placeholder="Enter User surname" value="{{$user->user_surname}}" >
+                                    <input type="text" disabled name="user_surname" class="form-control"
+                                           id="exampleInputEmail1"
+                                           placeholder="Enter User surname" value="{{$user->user_surname}}">
                                 </div>
                                 @error('user_surname')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -61,18 +63,31 @@
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>User Email:</label>
-                                    <input type="text" disabled name="user_email" class="form-control" id="exampleInputEmail1"
+                                    <input type="text" disabled name="user_email" class="form-control"
+                                           id="exampleInputEmail1"
                                            placeholder="Enter User Email" value="{{$user->user_email}}">
                                 </div>
                                 <div class="col-lg-6">
                                     <label>User Password:</label>
-                                    <input type="password" disabled name="user_pass" class="form-control" id="exampleInputEmail1"
-                                           placeholder="Enter User Password" >
+                                    <input type="password" disabled name="user_pass" class="form-control"
+                                           id="exampleInputEmail1"
+                                           placeholder="Enter User Password">
                                 </div>
                             </div>
                             @error('user_pass')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>Cấp độ người dùng:</label>
+                                    <select class="custom-select">
+                                        <option>Chọn cấp độ</option>
+                                        @foreach($userLevel as $level)
+                                        <option {{ $user->user_level == $level->id ? "selected" : "" }} value="{{ $level->id }}">{{ $level->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="card-border-primary mb-3 col-md-12">

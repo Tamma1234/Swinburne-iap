@@ -8,6 +8,7 @@ use App\Models\Fu\Bookrooms;
 use App\Models\Fu\Campus;
 use App\Models\Fu\Groups;
 use App\Models\Fu\Room;
+use App\Models\Fu\RoomType;
 use App\Models\Fu\Slot;
 use App\Models\Fu\Subjects;
 use App\Models\Product;
@@ -71,6 +72,49 @@ class RoomController extends Controller
 //        }
 //        return view('admin.rooms.list', compact('rooms', 'slots', 'activitys',
 //            'format', 'today', 'subjects', 'groups'));
+    }
+
+    /**
+     * @return void
+     */
+    public function listRooms () {
+        $rooms = Room::all();
+        $room_type = RoomType::all();
+        return view('admin.rooms.get-room', compact('rooms', 'room_type'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function createRooms() {
+        $room_type = RoomType::all();
+        $areas = Areas::all();
+        return view('admin.rooms.create', compact('room_type', 'areas'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function store(Request $request) {
+        $room = new Room();
+        $room->create([
+            "area_id" => $request->area_id,
+            "room_name" => $request->room_name,
+            "room_type" => $request->room_type,
+            "capacity" => $request->capacity,
+            "valid_from" => $request->valid_from,
+            "is_deleted" => 0
+        ]);
+
+        return redirect()->route('list.rooms')->with('msg-update', 'Create success room');
+    }
+
+    public function deleteRoom(Request $request) {
+        $id = $request->id;
+        $room = Room::find($id);
+        $room->delete();
+
+        return redirect()->route('list.rooms')->with('msg-delete', 'Delete success room');
     }
 
     /**
