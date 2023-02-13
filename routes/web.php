@@ -56,6 +56,21 @@ Route::middleware('auth')->group(function () {
         Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
         Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
+    //Course
+    Route::group(['prefix' => 'course'], function () {
+        Route::get('index', 'CourseController@index')->name('course.index');
+        Route::post('list-course', 'CourseController@listCourse')->name('list.course');
+        Route::get('create-course', 'CourseController@createRooms')->name('course.create');
+        Route::post('store', 'CourseController@store')->name('course.store');
+        Route::get('search', 'CourseController@doSearch')->name('course.search');
+//        Route::get('delete-room/{id}', 'RoomController@deleteRoom')->name('delete.room');
+//        Route::get('search', 'RoomController@searchDate')->name('rooms.search');
+//        Route::post('add-room/{id?}', 'RoomController@addRooms')->name('rooms.add');
+//        Route::get('active-room/{id}', 'RoomController@activeRooms')->name('rooms.active');
+//        Route::get('update-room/{id}', 'RoomController@updateRooms')->name('rooms.update');
+//        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
+//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
     // Route Roles
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/', 'RoleController@index')->name('roles.index');
