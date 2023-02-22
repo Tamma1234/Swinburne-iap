@@ -34,6 +34,7 @@
 <link href="{{asset('assets/admin/plugins/general/plugins/line-awesome/css/line-awesome.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/admin/plugins/general/plugins/flaticon/flaticon.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/admin/plugins/general/plugins/flaticon2/flaticon.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/admin/css/group-tabs.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/admin/plugins/general/@fortawesome/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css" />
 
 <style>

@@ -63,13 +63,31 @@ Route::middleware('auth')->group(function () {
         Route::get('create-course', 'CourseController@createRooms')->name('course.create');
         Route::post('store', 'CourseController@store')->name('course.store');
         Route::get('search', 'CourseController@doSearch')->name('course.search');
-//        Route::get('delete-room/{id}', 'RoomController@deleteRoom')->name('delete.room');
+        Route::get('edit/{id}', 'CourseController@edit')->name('course.edit');
+        Route::get('list-group/{id}', 'CourseController@listGroup')->name('course.group');
 //        Route::get('search', 'RoomController@searchDate')->name('rooms.search');
-//        Route::post('add-room/{id?}', 'RoomController@addRooms')->name('rooms.add');
 //        Route::get('active-room/{id}', 'RoomController@activeRooms')->name('rooms.active');
 //        Route::get('update-room/{id}', 'RoomController@updateRooms')->name('rooms.update');
 //        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
+
+    Route::group(['prefix' => 'term'], function () {
+        Route::get('index', 'TermController@index')->name('term.index');
+        Route::post('list-course', 'CourseController@listCourse')->name('list.course');
+        Route::get('create-term', 'TermController@createTerm')->name('term.create');
+        Route::get('edit-term/{id}', 'TermController@edit')->name('term.edit');
+        Route::post('update-term/{id}', 'TermController@update')->name('term.update');
+        Route::post('store', 'TermController@store')->name('term.store');
+//        // Cancel Roles
+        Route::get('delete/{id}', 'TermController@delete')->name('term.delete');
+//        // List Roles delete
+        Route::get('term-trashout', 'TermController@termTrashOut')->name('term.trash');
+//        // Delete Roles completely
+        Route::get('delete-completely/{id}', 'TermController@deleteCompletely')->name('term.delete.completely');
+        // Restore Term Delete
+        Route::get('restore/{id}', 'TermController@restore')->name('term.restore');
+
     });
     // Route Roles
     Route::group(['prefix' => 'roles'], function () {

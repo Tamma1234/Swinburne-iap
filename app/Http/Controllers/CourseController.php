@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Fu\Course;
 use App\Models\Fu\Department;
+use App\Models\Fu\GroupMember;
+use App\Models\Fu\Groups;
 use App\Models\Fu\Subjects;
 use App\Models\Fu\Terms;
 use App\Models\T7\GradeSyllabus;
@@ -79,5 +81,24 @@ class CourseController extends Controller
             }
             return $output;
         }
+    }
+
+    public function edit(Request $request) {
+        $course = Course::find($request->id);
+        $terms = Terms::all();
+        $syllabus = GradeSyllabus::all();
+        $subjects = Subjects::all();
+        $subject_id = $course->subject_id;
+        $groups = Groups::where('psubject_id', $subject_id)
+            ->where('pterm_id', $course->term_id)
+            ->get();
+        return view('admin.course.edit', compact('terms', 'course', 'subjects', 'syllabus', 'groups'));
+    }
+
+    public function listGroup(Request $request) {
+        $id = $request->id;
+        $groupMember = GroupMember::where('groupid', $id)->get();
+
+        return  view('admin.course.list-group', compact('groupMember'));
     }
 }

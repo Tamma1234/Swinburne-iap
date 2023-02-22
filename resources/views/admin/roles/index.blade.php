@@ -34,10 +34,10 @@
                                 <td>{{$role->id}}</td>
                                 <td>{{$role->role_name}}</td>
                                 <td class="text-nowrap">
-                                    <a href="{{route('roles.edit', ['id' => $role->id])}}" data-toggle="tooltip"
+                                    <a href="{{route('roles.edit', ['id' => $role->id])}}" data-toggle="kt-tooltip" title="Edit"
                                        data-original-title="Edit"><i class="flaticon-edit"></i>
                                     </a>
-                                    <a href="{{route('roles.remove', ['id' => $role->id])}}" data-toggle="tooltip"
+                                    <a href="{{route('roles.remove', ['id' => $role->id])}}" data-toggle="kt-tooltip" title="Delete"
                                        data-original-title="Close"> <i class="flaticon-delete"></i> </a>
                                 </td>
                             </tr>

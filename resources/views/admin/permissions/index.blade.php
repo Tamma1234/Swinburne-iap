@@ -34,10 +34,10 @@
                                 <td>{{$permission->id}}</td>
                                 <td>{{$permission->permission_name}}</td>
                                 <td class="text-nowrap">
-                                    <a href="{{route('permissions.edit', ['id' => $permission->id])}}" data-toggle="tooltip"
+                                    <a href="{{route('permissions.edit', ['id' => $permission->id])}}" data-toggle="kt-tooltip" title="Edit"
                                        data-original-title="Edit"><i class="flaticon-edit"></i>
                                     </a>
-                                    <a href="{{route('permissions.remove', ['id' => $permission->id])}}" data-toggle="tooltip"
+                                    <a href="{{route('permissions.remove', ['id' => $permission->id])}}" data-toggle="kt-tooltip" title="Delete"
                                        data-original-title="Close"> <i class="flaticon-delete"></i> </a>
                                 </td>
                             </tr>

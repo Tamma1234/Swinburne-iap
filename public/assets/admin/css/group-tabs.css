@@ -1,0 +1,15 @@
+.nav-item-group {
+    margin-right: 0.3rem;
+}
+
+
+
+.nav-item-group .nav-link-group active {
+
+}
+
+.nav-link-group.btn-brand:not(:disabled):not(.disabled):active,.nav-link-group.btn-brand:not(:disabled):not(.disabled).active, .show > .nav-link-group.btn-brand.dropdown-toggle {
+    background-color: #545252;
+    border-color: #545252;
+    color: white;
+}

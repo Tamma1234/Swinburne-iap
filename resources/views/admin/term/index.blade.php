@@ -1,66 +1,22 @@
 @extends('admin.layouts.main')
-@section('title', 'Create')
+@section('title', 'Index')
 @section('content')
-    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Users', 'value' => "List User", 'value2' => ""])
+    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Term', 'value' => "List Term", 'value2' => ""])
 
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label col-md-2">
+                <div class="kt-portlet__head-label col-md-8">
 										<span class="kt-portlet__head-icon">
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                     <h3 class="kt-portlet__head-title">
-                        Basic
+                        List Term
                     </h3>
                 </div>
-                <div class="col-sm-12 col-md-10">
-                    <form method="post">
-                        @csrf
-                        <div class="form-row">
-                            <div class="form-group col-md-2">
-                                <label for="inputState"></label>
-                                <select class="form-control" id="user_level" name="user_level">
-                                    <option selected value="">Chooose</option>
-                                    <option value="1">Cán bộ cấp cao</option>
-                                    <option value="2">Giảng viên</option>
-                                    <option value="3">Sinh viên</option>
-                                    <option value="4">Cán bộ đào tạo</option>
-                                    <option value="11">Giảng viên thể chất</option>
-                                    <option value="13">Cán bộ - Nhân viên</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="inputState"></label>
-                                <select id="study_status" class="form-control" name="study_status">
-                                    <option selected value="">Choose</option>
-                                    <option value="1">INTAKE</option>
-                                    <option value="3">DEFER</option>
-                                    <option value="4">DO</option>
-                                    <option value="5">CHANGE CAMPUS</option>
-                                    <option value="7">PENDING</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="inputState"></label>
-                                <select id="curriculum" class="form-control" name="curriculum_id">
-                                    <option selected value="">Choose...</option>
-                                    @foreach($curriculums as $curriculum)
-                                        <option value="{{ $curriculum->id }}">{{ $curriculum->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputState"></label>
-                                <div class="search">
-                                    <input type="text" id="user_givenname" class="form-control" placeholder="Name"
-                                           name="user_givenname">
-                                    <button type="button" class="btn btn-primary" ><i
-                                            class="flaticon-search" id="btn-form-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col-md-2 col-2 align-self-center">
+                    <a href="{{ route('term.create') }}" class="btn pull-right hidden-sm-down btn-success"><i
+                            class="mdi mdi-plus-circle"></i> Create</a>
                 </div>
             </div>
             <div class="kt-portlet__body" id="form-table-search">
@@ -68,27 +24,39 @@
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
                     <thead>
                     <tr>
-                        <th>USER LOGIN</th>
-                        <th>USER SURNAME</th>
-                        <th>USER MIDDLENAME</th>
-                        <th>USER GIVENAME</th>
-                        <th>USER EMAIL</th>
+                        <th>#</th>
+                        <th>Term Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Fee Term</th>
+                        <th>GC Term</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    @foreach($users as $user)
+                    <tbody id="tbody">
+                    @foreach($terms as $item)
                         <tr>
-                            <td>{{$user->user_login}}</td>
-                            <td>{{$user->user_surname}}</td>
-                            <td>{{$user->user_middlename}}</td>
-                            <td>{{$user->user_givenname}}</td>
-                            <td>{{$user->user_email}}</td>
+                            <td>{{$item->id}}</td>
+                            <td>{{$item->term_name}}</td>
+                            <td>{{$item->startday}}</td>
+                            <td>{{ $item->endday }}</td>
+                            <td> @if ($item->phat_sinh_phi_ky ==  1)
+                                    Đã phát sinh
+                                @else
+                                    Phát sinh
+                                @endif
+                            </td>
+                            <td> @if ($item->phat_sinh_phi_gc ==  1)
+                                    Đã phát sinh
+                                @else
+                                    Phát sinh
+                                @endif
+                            </td>
                             <td class="text-nowrap">
-                                <a href="{{route('users.edit', ['id' => $user->id])}}" data-toggle="kt-tooltip" title="Edit"
+                                <a href="{{ route('term.edit', ['id' => $item->id]) }}" data-toggle="kt-tooltip" title="Edit"
                                    data-original-title="Edit"><i class="flaticon-edit"></i>
                                 </a>
-                                <a href="{{route('users.remove', ['id' => $user->id])}}" data-toggle="kt-tooltip" title="Delete"
+                                <a href="{{ route('term.delete', ['id' => $item->id]) }}" data-toggle="kt-tooltip" title="Delete"
                                    data-original-title="Close"> <i class="flaticon-delete"></i> </a>
                             </td>
                         </tr>
@@ -102,6 +70,21 @@
 @endsection
 
 @section('script')
+    <script>
+        function doSearch() {
+            var term_id = $('#term_id').val();
+            var department_id = $('#department_id').val();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{ route('course.search') }}",
+                method: 'GET',
+                data: {term_id: term_id, department_id: department_id, _token: _token},
+                success: function (data) {
+
+                }
+            });
+        }
+    </script>
     <script>
         $(document).ready(function () {
             var table = $('#example').DataTable({pageLength: 10});
@@ -137,7 +120,7 @@
                 }).done(function (response) {
                     $('#form-table-search').empty();
                     $('#form-table-search').html(response);
-                    })
+                })
             });
         });
 

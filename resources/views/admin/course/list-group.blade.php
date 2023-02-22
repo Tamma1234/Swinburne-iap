@@ -6,7 +6,7 @@
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label col-md-2">
+                <div class="kt-portlet__head-label">
 										<span class="kt-portlet__head-icon">
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
@@ -14,69 +14,74 @@
                         List Course
                     </h3>
                 </div>
-                <div class="col-sm-8 col-md-8">
-                    <form method="post">
-                        <input type="hidden" name="_token" value="nMeViEnqyBfzuEGxFbMoLj4lKUUcUJrDN4dAkGRl">
-                        <div class="form-row" style="margin-top: 22px; justify-content: center">
-                            <div class="form-group row col-md-6">
-                                <label class="col-3 col-form-label" for="inputState">Semester</label>
-                                <select class="form-control col-6" onchange="doSearch();" id="term_id">
-                                    <option value="">Chooose</option>
-                                    @foreach($terms as $item)
-                                        <option value="{{ $item->id }}">{{ $item->term_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group row col-md-6">
-                                <label class="col-4 col-form-label" for="inputState">Department</label>
-                                <select id="department_id"  class="form-control col-6" >
-                                    <option value="">Choose</option>
-                                    @foreach($department as $item)
-                                    <option value="{{ $item->id }}">{{ $item->department_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-2 col-2 align-self-center">
-                    <a href="{{ route('course.create') }}" class="btn pull-right hidden-sm-down btn-success"><i
-                            class="mdi mdi-plus-circle"></i> Create</a>
-                </div>
             </div>
+            <form class="kt-form kt-form--label-right">
+                <div class="kt-portlet__body">
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-1 col-form-label">Học kỳ</label>
+                        <div class="col-6">
+                            <select class="custom-select form-control">
+                                @foreach($groupMember as $item)
+                                <option value="{{ $item->pterm_id }}">{{ $item->pterm_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-search-input" class="col-1 col-form-label">Bộ môn</label>
+                        <div class="col-6">
+                            <select class="custom-select form-control">
+                                <option selected="">Select</option>
+                                <option value="1">One</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-email-input" class="col-1 col-form-label">Khóa học</label>
+                        <div class="col-6">
+                            <select class="custom-select form-control">
+                                <option selected="">Select</option>
+                                <option value="1">One</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-url-input" class="col-1 col-form-label">Tên lớp</label>
+                        <div class="col-6">
+                            <input class="form-control" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="kt-portlet__body" id="form-table-search">
                 <!--begin: Datatable -->
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Course Name</th>
-                        <th>Subject Name</th>
-                        <th>Subject Code</th>
-                        <th>Curriculum Name</th>
-                        <th>Group</th>
-                        <th>Actions</th>
+                        <th>Tên Đăng Nhập</th>
+                        <th>Mã Sinh Viên</th>
+                        <th>Mã Sinh Viên AU</th>
+                        <th>Họ Và Tên</th>
+                        <th>Ngày Vào Lớp</th>
+                        <th>Trạng Thái</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
-                    @foreach($course as $item)
+                    <?php $i = 1 ?>
+                    @foreach($groupMember as $item)
                             <?php
-                            $subject_name = $item->subject->subject_name;
-                            $term_name = $item->term->term_name;
-                            $corse_name = $subject_name . ' ' . $term_name;
+                            $user_login = $item->member_login;
+                            $user = \App\Models\User::where('user_login', $user_login)->first();
                             ?>
                         <tr>
-                            <td>{{$item->id}}</td>
-                            <td>{{$corse_name}}</td>
-                            <td>{{$subject_name}}</td>
-                            <td>{{ $item->psubject_code }}</td>
-                            <td>{{ $item->syllabus_name }}</td>
-                            <td>{{ $item->num_of_group }}</td>
-                            <td class="text-nowrap">
-                                <a href="{{ route('course.edit', ['id' => $item->id]) }}"
-                                   data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i class="flaticon-edit"></i>
-                                </a>
-                            </td>
+                            <td>{{$i++}}</td>
+                            <td>{{$item->member_login}}</td>
+                            <td>{{ $user->user_code }}</td>
+                            <td>{{ $user->user_code_au }}</td>
+                            <td>{{ $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname }}</td>
+                            <td>{{ $item->date }}</td>
+                            <td></td>
                         </tr>
                     @endforeach
                     </tbody>
