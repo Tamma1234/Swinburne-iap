@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fu\Acitivitys;
 use App\Models\Fu\Course;
 use App\Models\Fu\Department;
 use App\Models\Fu\GroupMember;
 use App\Models\Fu\Groups;
+use App\Models\Fu\Slot;
 use App\Models\Fu\Subjects;
 use App\Models\Fu\Terms;
+use App\Models\T7\CourseResult;
 use App\Models\T7\GradeSyllabus;
 use Illuminate\Http\Request;
 
@@ -98,7 +101,14 @@ class CourseController extends Controller
     public function listGroup(Request $request) {
         $id = $request->id;
         $groupMember = GroupMember::where('groupid', $id)->get();
+        $group = Groups::find($id);
+        $subject = Subjects::find($group->psubject_id);
+        $department = Department::find($subject->department_id);
+        $activityGroup = Acitivitys::where('groupid', $id)->get();
+        $slots = Slot::all();
+        $courseResult = CourseResult::where('groupid', $id)->get();
 
-        return  view('admin.course.list-group', compact('groupMember'));
+        return  view('admin.course.list-group', compact('groupMember', 'group',
+            'department', 'activityGroup', 'slots', 'courseResult'));
     }
 }

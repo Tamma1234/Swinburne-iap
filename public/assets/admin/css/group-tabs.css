@@ -3,13 +3,8 @@
 }
 
 
-
-.nav-item-group .nav-link-group active {
-
-}
-
-.nav-link-group.btn-brand:not(:disabled):not(.disabled):active,.nav-link-group.btn-brand:not(:disabled):not(.disabled).active, .show > .nav-link-group.btn-brand.dropdown-toggle {
-    background-color: #545252;
-    border-color: #545252;
+.nav-link-group.btn-dark:not(:disabled):not(.disabled):active,.nav-link-group.btn-dark:not(:disabled):not(.disabled).active, .show > .nav-link-group.btn-dark.dropdown-toggle {
+    background-color: #2a4eff;
+    border-color: #2a4eff;
     color: white;
 }

@@ -1,24 +1,19 @@
 <?php
 
-namespace App\Models\Fu;
+namespace App\Models\T7;
 
-use App\Models\T7\GradeSyllabus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Groups extends Model
+class CourseResult extends Model
 {
     use HasFactory;
 
-    protected $table = "fu_group";
+    protected $table = "t7_course_result";
 
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');
         parent::__construct($attributes);
-    }
-
-    public function syllabus() {
-        return $this->hasOne(GradeSyllabus::class, 'id', 'syllabus_id');
     }
 }
