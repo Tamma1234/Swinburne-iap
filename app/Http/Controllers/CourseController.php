@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fu\Acitivitys;
+use App\Models\Fu\Attendance;
 use App\Models\Fu\Course;
 use App\Models\Fu\Department;
 use App\Models\Fu\GroupMember;
@@ -86,7 +87,8 @@ class CourseController extends Controller
         }
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $course = Course::find($request->id);
         $terms = Terms::all();
         $syllabus = GradeSyllabus::all();
@@ -95,10 +97,12 @@ class CourseController extends Controller
         $groups = Groups::where('psubject_id', $subject_id)
             ->where('pterm_id', $course->term_id)
             ->get();
+
         return view('admin.course.edit', compact('terms', 'course', 'subjects', 'syllabus', 'groups'));
     }
 
-    public function listGroup(Request $request) {
+    public function listGroup(Request $request)
+    {
         $id = $request->id;
         $groupMember = GroupMember::where('groupid', $id)->get();
         $group = Groups::find($id);
@@ -107,8 +111,12 @@ class CourseController extends Controller
         $activityGroup = Acitivitys::where('groupid', $id)->get();
         $slots = Slot::all();
         $courseResult = CourseResult::where('groupid', $id)->get();
-
-        return  view('admin.course.list-group', compact('groupMember', 'group',
-            'department', 'activityGroup', 'slots', 'courseResult'));
+        $attendances = Attendance::where('groupid', $id)->get();
+        $groupAnother = Groups::where('psubject_id', $group->psubject_id)
+            ->where('pterm_id', $group->pterm_id)
+            ->where('id', '!=', $id)
+            ->get();
+        return view('admin.course.list-group', compact('groupMember', 'group',
+            'department', 'activityGroup', 'slots', 'courseResult', 'attendances', 'id', 'groupAnother'));
     }
 }

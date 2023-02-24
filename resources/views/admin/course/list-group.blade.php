@@ -62,7 +62,7 @@
                                 </li>
                                 <li class="nav-item-group">
                                     <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab"
-                                       href="#kt_widget5_tab2_content" role="tab" >
+                                       href="#kt_widget5_tab2_content" role="tab">
                                         KẾ HOẠCH
                                     </a>
                                 </li>
@@ -74,31 +74,31 @@
                                 </li>
                                 <li class="nav-item-group">
                                     <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab"
-                                       href="#kt_widget5_tab3_content" role="tab">
+                                       href="#kt_widget5_tab4_content" role="tab">
                                         ĐIỂM DANH
                                     </a>
                                 </li>
                                 <li class="nav-item-group">
                                     <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab"
-                                       href="#kt_widget5_tab3_content" role="tab">
+                                       href="#kt_widget5_tab5_content" role="tab">
                                         LỚP KHÁC
                                     </a>
                                 </li>
                                 <li class="nav-item-group">
                                     <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab"
-                                       href="#kt_widget5_tab3_content" role="tab">
+                                       href="#kt_widget5_tab6_content" role="tab">
                                         LỊCH SỬ
                                     </a>
                                 </li>
                                 <li class="nav-item-group">
                                     <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab"
-                                       href="#kt_widget5_tab3_content" role="tab">
+                                       href="#kt_widget5_tab7_content" role="tab">
                                         DANH SÁCH BV
                                     </a>
                                 </li>
                                 <li class="nav-item-group">
                                     <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab"
-                                       href="#kt_widget5_tab3_content" role="tab">
+                                       href="#kt_widget5_tab8_content" role="tab">
                                         PLAN NEW
                                     </a>
                                 </li>
@@ -128,15 +128,22 @@
                                             <?php
                                             $user_login = $item->member_login;
                                             $user = \App\Models\User::where('user_login', $user_login)->first();
+                                            $totalGroup = \App\Models\Fu\GroupMember::where('groupid', $id)->where('member_login', $item->member_login)->get();
                                             ?>
                                         <tr>
                                             <td>{{$i++}}</td>
-                                            <td>{{$item->member_login}}</td>
+                                            <td class="text-primary">{{$item->member_login}}</td>
                                             <td>{{ $user->user_code }}</td>
                                             <td>{{ $user->user_code_au }}</td>
                                             <td>{{ $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname }}</td>
                                             <td>{{ $item->date }}</td>
-                                            <td></td>
+                                            <td>
+                                                @if(count($totalGroup) == 1)
+                                                    <span class="text-success">Intake</span>
+                                                @else
+                                                    <span class="text-danger">Fall</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -211,13 +218,18 @@
                                             @foreach($activityGroup as $item)
 
                                                 <tr class="{{ $item->done == 1 ? "table-primary" : "" }}">
-                                                    <th scope="row" class="{{ $item->done == 1 ? "text-success" : "" }}">{{ $i++ }} - {{$item->done == 1 ? "Đã học" : "Chưa học" }}</th>
-                                                    <td><input type="text" {{ $item->done == 1 ? "disabled" : "" }} value="{{ $item->day }}"><span>{{ date('l', strtotime($date)) }}</span></td>
+                                                    <th scope="row"
+                                                        class="{{ $item->done == 1 ? "text-success" : "" }}">{{ $i++ }}
+                                                        - {{$item->done == 1 ? "Đã học" : "Chưa học" }}</th>
+                                                    <td><input type="text"
+                                                               {{ $item->done == 1 ? "disabled" : "" }} value="{{ $item->day }}"><span>{{ date('l', strtotime($date)) }}</span>
+                                                    </td>
                                                     <td>
                                                         <select class="custom-select choose" id="subject"
                                                                 name="subject_id" {{ $item->done == 1 ? "disabled" : "" }}>
                                                             @foreach($slots as $slot)
-                                                                <option value="{{ $item->id }}">{{ $slot->id .' - '. $slot->slot_start}} </option>
+                                                                <option
+                                                                    value="{{ $item->id }}">{{ $slot->id .' - '. $slot->slot_start}} </option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -230,39 +242,137 @@
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
                             </div>
-                            <div class="tab-pane " id="kt_widget5_tab3_content">
+                            <div class="tab-pane" id="kt_widget5_tab3_content">
                                 <!--begin: Datatable -->
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Mã</th>
-                                        <th>Họ và Tên</th>
-                                        <th>Tổng</th>
-                                        <th>Trạng Thái</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($courseResult as $item)
-                                        <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
-                                        $full_name = $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname;
-                                            ?>
-                                    <tr>
-                                        <th scope="row">{{ $item->student_login }}</th>
-                                        <td>{{ $full_name }}</td>
-                                        <td>{{ $item->grade }}</td>
-                                        <td>{{ $item->is_finish == 0 ? "Not Passed" : "Passed"}}</td>
-                                    </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                <div class="col-md-8">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="table-active" style="color: #fff">
+                                        <tr>
+                                            <th>Mã</th>
+                                            <th>Họ và Tên</th>
+                                            <th>Tổng</th>
+                                            <th>Trạng Thái</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($courseResult as $item)
+                                                <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
+                                                $full_name = $user->user_surname . ' ' . $user->user_middlename . ' ' . $user->user_givenname;
+                                                ?>
+                                            <tr>
+                                                <td class="text-primary">{{ $item->student_login }}</td>
+                                                <td class="text-primary">{{ $full_name }}</td>
+                                                <td>{{ $item->grade }}</td>
+                                                <td> @if($item->is_finish == 0)
+                                                        <span class="text-danger">Not Passed</span>
+                                                    @else
+                                                        <span class="text-success">Passed</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-dark">
+                                    <span class="text-dark font-weight-bold">Trung Bình (Tổng {{ count($courseResult) }} Sinh Viên)</span>
+                                </div>
                                 <!--end: Datatable -->
+                            </div>
+                            <div class="tab-pane" id="kt_widget5_tab4_content">
+                                <div class="kt-section" style="overflow: auto">
+                                    <div class="kt-section__content">
+                                        <table class="table table-bordered sortable">
+                                            <thead class="table-active" style="color: white">
+                                            <tr>
+                                                <th rowspan="3" style="padding-bottom: 55px">STT</th>
+                                                <th rowspan="3" style="padding-bottom: 55px">Tên Đăng Nhập</th>
+                                                <th rowspan="3" style="padding-bottom: 55px">Mã</th>
+                                                <th rowspan="3" style="padding-bottom: 55px">Tổng Vắng</th>
+                                                <th rowspan="3" style="padding-bottom: 55px">% Vắng</th>
+                                                <th colspan="{{ count($activityGroup) + 1 }}" class="text-center">Tình
+                                                    Hình Đi Học
+                                                    <br/>
+                                                </th>
+                                                <th rowspan="3">Vắng (%) tới hiện nay</th>
+                                            </tr>
+                                            <?php $i = 1; ?>
+                                            <tr>
+                                                @foreach($activityGroup as $item)
+                                                        <?php $date = date('d/m', strtotime($item->day));
+                                                        ?>
+                                                    <th class="unsortable">{{ $date }}</th>
+                                                @endforeach
+                                                <th rowspan="2">Tổng</th>
+                                            </tr>
+                                            <tr>
+                                                @foreach($activityGroup as $item)
+                                                    <th class="unsortable">{{ $i++ }}</th>
+                                                @endforeach
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $i = 1 ?>
+                                            @foreach($courseResult as $item)
+                                                    <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
+                                                    $attendances = \App\Models\Fu\Attendance::where('user_login', $item->student_login)
+                                                        ->where('groupid', $id)
+                                                        ->where('val', 0)
+                                                        ->get();
+                                                    $totalAttendance = count($attendances);
+                                                    ?>
+                                                <tr>
+                                                    <td>{{ $i++ }}</td>
+                                                    <td>{{ $item->student_login }}</td>
+                                                    <td>{{ $user->user_code }}</td>
+                                                    <td class="text-center">{{ $totalAttendance }}</td>
+                                                    <td class="text-danger text-center">{{ $item->phan_tram_nghi }}%</td>
+                                                    @foreach($activityGroup as $activity)
+                                                            <?php $attendance = \App\Models\Fu\Attendance::where('activity_id', $activity->id)
+                                                            ->where('user_login', $item->student_login)
+                                                            ->first();
+                                                            ?>
+                                                        @if($activity->done == 1)
+                                                            <td class="text-center">
+                                                                @if($attendance->val == 1)
+                                                                    <span class="text-success">P</span>
+                                                                @else
+                                                                    <span class="text-danger">A</span>
+                                                                @endif
+                                                            </td>
+                                                        @else
+                                                            <td class="text-center font-weight-bold">-</td>
+                                                        @endif
+                                                    @endforeach
+                                                    <td class="text-center" style="padding-bottom: 55px">{{ $totalAttendance }}</td>
+                                                    <td class="text-danger" style="padding-bottom: 55px">{{ $item->phan_tram_nghi }}%</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="kt_widget5_tab5_content" aria-expanded="true">
+                                <div class="kt-widget kt-widget--project-1">
+                                    <div class="kt-widget__footer">
+                                        <div class="kt-widget__wrapper">
+                                            <div class="kt-widget__section">
+                                                @foreach($groupAnother as $item)
+                                                    <div class="kt-widget__blog" style="margin-right: 10px; border: 1px solid #a4a4a4; padding: 5px; border-radius: 13px">
+                                                        <i class="flaticon2-list-1"></i>
+                                                        <a href="{{ route('course.group', ['id' => $item->id]) }}" class="kt-widget__value kt-font-brand">{{ $item->group_name }}</a><span class="kt-widget__value">({{ $item->number_student }})</span>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!--end:: Widgets/Best Sellers-->
             </div>

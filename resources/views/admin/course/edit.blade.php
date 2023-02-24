@@ -104,22 +104,22 @@
                         <div class="kt-portlet__head-toolbar">
                             <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
                                 <li class="nav-item-group">
-                                    <button type="button" class="nav-link-group active btn btn-brand btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab1_content" role="tab">
+                                    <button type="button" class="nav-link-group active btn btn-dark btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab1_content" role="tab">
                                         DS Lớp
                                     </button>
                                 </li>
                                 <li class="nav-item-group">
-                                    <a class="nav-link-group btn btn-brand btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab2_content" role="tab">
+                                    <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab2_content" role="tab">
                                         Điểm
                                     </a>
                                 </li>
                                 <li class="nav-item-group">
-                                    <a class="nav-link-group btn btn-brand btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab3_content" role="tab">
+                                    <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab3_content" role="tab">
                                         Kế Hoạch
                                     </a>
                                 </li>
                                 <li class="nav-item-group">
-                                    <a class="nav-link-group btn btn-brand btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab3_content" role="tab">
+                                    <a class="nav-link-group btn btn-dark btn-hover-danger" data-toggle="tab" href="#kt_widget5_tab3_content" role="tab">
                                         Tổng Quan
                                     </a>
                                 </li>
@@ -145,197 +145,30 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="kt_widget5_tab2_content">
-                                <div class="kt-widget5">
-                                    <div class="kt-widget5__item">
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__pic">
-                                                <img class="kt-widget7__img" src="assets/media/products/product10.jpg" alt="">
-                                            </div>
-                                            <div class="kt-widget5__section">
-                                                <a href="#" class="kt-widget5__title">
-                                                    Branding Mockup
-                                                </a>
-                                                <p class="kt-widget5__desc">
-                                                    Metronic bootstrap themes.
-                                                </p>
-                                                <div class="kt-widget5__info">
-                                                    <span>Author:</span>
-                                                    <span class="kt-font-info">Fly themes</span>
-                                                    <span>Released:</span>
-                                                    <span class="kt-font-info">23.08.17</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">24,583</span>
-                                                <span class="kt-widget5__sales">sales</span>
-                                            </div>
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">3809</span>
-                                                <span class="kt-widget5__votes">votes</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-widget5__item">
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__pic">
-                                                <img class="kt-widget7__img" src="assets/media/products/product11.jpg" alt="">
-                                            </div>
-                                            <div class="kt-widget5__section">
-                                                <a href="#" class="kt-widget5__title">
-                                                    Awesome Mobile App
-                                                </a>
-                                                <p class="kt-widget5__desc">
-                                                    Metronic admin themes.Lorem Ipsum Amet
-                                                </p>
-                                                <div class="kt-widget5__info">
-                                                    <span>Author:</span>
-                                                    <span class="kt-font-info">Fly themes</span>
-                                                    <span>Released:</span>
-                                                    <span class="kt-font-info">23.08.17</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">210,054</span>
-                                                <span class="kt-widget5__sales">sales</span>
-                                            </div>
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">1103</span>
-                                                <span class="kt-widget5__votes">votes</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-widget5__item">
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__pic">
-                                                <img class="kt-widget7__img" src="assets/media/products/product6.jpg" alt="">
-                                            </div>
-                                            <div class="kt-widget5__section">
-                                                <a href="#" class="kt-widget5__title">
-                                                    Great Logo Designn
-                                                </a>
-                                                <p class="kt-widget5__desc">
-                                                    Metronic admin themes.
-                                                </p>
-                                                <div class="kt-widget5__info">
-                                                    <span>Author:</span>
-                                                    <span class="kt-font-info">Keenthemes</span>
-                                                    <span>Released:</span>
-                                                    <span class="kt-font-info">23.08.17</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">19,200</span>
-                                                <span class="kt-widget5__sales">sales</span>
-                                            </div>
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">1046</span>
-                                                <span class="kt-widget5__votes">votes</span>
-                                            </div>
-                                        </div>
+                                <div class="d-flex align-items-center justify-content-center" style="height: 300px">
+                                    <div class="text-center">
+                                        <h1 class="display-1 fw-bold">404</h1>
+                                        <p class="fs-3"> <span class="text-danger">Opps!</span> Page not found.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="kt_widget5_tab3_content">
-                                <div class="kt-widget5">
-                                    <div class="kt-widget5__item">
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__pic">
-                                                <img class="kt-widget7__img" src="assets/media/products/product11.jpg" alt="">
-                                            </div>
-                                            <div class="kt-widget5__section">
-                                                <a href="#" class="kt-widget5__title">
-                                                    Awesome Mobile App
-                                                </a>
-                                                <p class="kt-widget5__desc">
-                                                    Metronic admin themes.Lorem Ipsum Amet
-                                                </p>
-                                                <div class="kt-widget5__info">
-                                                    <span>Author:</span>
-                                                    <span class="kt-font-info">Fly themes</span>
-                                                    <span>Released:</span>
-                                                    <span class="kt-font-info">23.08.17</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">210,054</span>
-                                                <span class="kt-widget5__sales">sales</span>
-                                            </div>
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">1103</span>
-                                                <span class="kt-widget5__votes">votes</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-widget5__item">
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__pic">
-                                                <img class="kt-widget7__img" src="assets/media/products/product6.jpg" alt="">
-                                            </div>
-                                            <div class="kt-widget5__section">
-                                                <a href="#" class="kt-widget5__title">
-                                                    Great Logo Designn
-                                                </a>
-                                                <p class="kt-widget5__desc">
-                                                    Metronic admin themes.
-                                                </p>
-                                                <div class="kt-widget5__info">
-                                                    <span>Author:</span>
-                                                    <span class="kt-font-info">Keenthemes</span>
-                                                    <span>Released:</span>
-                                                    <span class="kt-font-info">23.08.17</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">19,200</span>
-                                                <span class="kt-widget5__sales">sales</span>
-                                            </div>
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">1046</span>
-                                                <span class="kt-widget5__votes">votes</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kt-widget5__item">
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__pic">
-                                                <img class="kt-widget7__img" src="assets/media/products/product10.jpg" alt="">
-                                            </div>
-                                            <div class="kt-widget5__section">
-                                                <a href="#" class="kt-widget5__title">
-                                                    Branding Mockup
-                                                </a>
-                                                <p class="kt-widget5__desc">
-                                                    Metronic bootstrap themes.
-                                                </p>
-                                                <div class="kt-widget5__info">
-                                                    <span>Author:</span>
-                                                    <span class="kt-font-info">Fly themes</span>
-                                                    <span>Released:</span>
-                                                    <span class="kt-font-info">23.08.17</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kt-widget5__content">
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">24,583</span>
-                                                <span class="kt-widget5__sales">sales</span>
-                                            </div>
-                                            <div class="kt-widget5__stats">
-                                                <span class="kt-widget5__number">3809</span>
-                                                <span class="kt-widget5__votes">votes</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="kt-section__content">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Buổi</th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mô tả</th>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
