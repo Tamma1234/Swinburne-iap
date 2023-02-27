@@ -98,7 +98,9 @@ class CourseController extends Controller
             ->where('pterm_id', $course->term_id)
             ->get();
 
-        return view('admin.course.edit', compact('terms', 'course', 'subjects', 'syllabus', 'groups'));
+        $activity = Acitivitys::where('course_id', $request->id)
+            ->where('term_id', $course->term_id)->get();
+        return view('admin.course.edit', compact('terms', 'course', 'subjects', 'syllabus', 'groups', 'activity'));
     }
 
     public function listGroup(Request $request)
