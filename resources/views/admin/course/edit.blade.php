@@ -200,8 +200,8 @@
                                                 <table class="table">
                                                     <tbody>
                                                     <tr>
-                                                        <td class="text-dark font-weight-bold"
-                                                            style="padding-top: 50px; width: 100px">Giảng Viên
+                                                        <td class="text-dark font-weight-bold" id="proffesor"
+                                                            style="width: 50px">Proffesor
                                                         </td>
                                                         <td>
                                                             <table class="table">
@@ -209,25 +209,58 @@
                                                                 <tr>
                                                                     <td></td>
                                                                     @foreach($groups as $group)
-                                                                        <td>{{ $group->group_name }}</td>
+                                                                        <td class="text-primary font-weight-bold"><a
+                                                                                href="{{ route('course.group', ['id' => $group->id]) }}">{{ $group->group_name }}</a>
+                                                                        </td>
                                                                     @endforeach
                                                                 </tr>
+                                                                @foreach($leaderActivity as $leader)
+                                                                    <tr>
+                                                                        <td class="text-primary font-weight-bold">{{ $leader->leader_login }}</td>
+                                                                        @foreach($groups as $group)
+                                                                                <?php
+                                                                                $numberActivity = \App\Models\Fu\Acitivitys::where('groupid', $group->id)
+                                                                                    ->where('leader_login', $leader->leader_login)
+                                                                                    ->get();
+                                                                                $totalActive = \App\Models\Fu\Acitivitys::where('groupid', $group->id)
+                                                                                    ->where('leader_login', $leader->leader_login)
+                                                                                    ->where('done', 1)
+                                                                                    ->get();
+                                                                                ?>
+                                                                            @if(count($numberActivity) > 0)
+                                                                                <td class="text-dark font-weight-bold">{{ count($totalActive) }}
+                                                                                    /<span>{{ count($numberActivity) }}</span>
+                                                                                </td>
+                                                                            @else
+                                                                                <td>
+                                                                                </td>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </tr>
+                                                                @endforeach
+
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-dark font-weight-bold">Grade</td>
+                                                        <td>Final Grade</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-dark font-weight-bold">Plan</td>
+                                                        <td>
+                                                            <table class="table">
+                                                                <tbody>
                                                                 <tr>
                                                                     <td></td>
-                                                                    <td>dfafdafdas</td>
-                                                                    <td>dfafdafdas</td>
-                                                                    <td>dfafdafdas</td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
                                                         </td>
                                                     </tr>
                                                     </tbody>
-                                                    {{--                                                        <th scope="row">3</th>--}}
-                                                    {{--                                                        <td>Larry</td>--}}
-                                                    {{--                                                        <td>the Bird</td>--}}
-                                                    {{--                                                        <td>@twitter</td>--}}
-                                                    {{--                                                    </tr>--}}
+
                                                 </table>
                                             </div>
                                         </div>

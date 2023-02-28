@@ -99,8 +99,17 @@ class CourseController extends Controller
             ->get();
 
         $activity = Acitivitys::where('course_id', $request->id)
-            ->where('term_id', $course->term_id)->get();
-        return view('admin.course.edit', compact('terms', 'course', 'subjects', 'syllabus', 'groups', 'activity'));
+            ->where('term_id', $course->term_id)
+            ->get();
+
+        $leaderActivity = Acitivitys::where('psubject_id', $subject_id)
+            ->where('term_id', $course->term_id)
+            ->select('leader_login')
+            ->distinct()
+            ->get();
+
+        return view('admin.course.edit', compact('terms', 'course',
+            'subjects', 'syllabus', 'groups', 'activity', 'leaderActivity'));
     }
 
     public function listGroup(Request $request)
@@ -118,6 +127,7 @@ class CourseController extends Controller
             ->where('pterm_id', $group->pterm_id)
             ->where('id', '!=', $id)
             ->get();
+
         return view('admin.course.list-group', compact('groupMember', 'group',
             'department', 'activityGroup', 'slots', 'courseResult', 'attendances', 'id', 'groupAnother'));
     }

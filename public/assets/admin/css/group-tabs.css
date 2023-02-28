@@ -8,3 +8,9 @@
     border-color: #2a4eff;
     color: white;
 }
+
+#proffesor {
+    padding: 0.75rem;
+    border-top: 1px solid #ebedf2;
+    vertical-align: inherit;
+}

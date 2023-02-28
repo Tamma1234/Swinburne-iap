@@ -216,7 +216,6 @@
                                             <tbody>
                                             <?php $i = 1 ?>
                                             @foreach($activityGroup as $item)
-
                                                 <tr class="{{ $item->done == 1 ? "table-primary" : "" }}">
                                                     <th scope="row"
                                                         class="{{ $item->done == 1 ? "text-success" : "" }}">{{ $i++ }}
@@ -316,6 +315,7 @@
                                             <tbody>
                                             <?php $i = 1 ?>
                                             @foreach($courseResult as $item)
+                                                <?php  ?>
                                                     <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
                                                     $attendances = \App\Models\Fu\Attendance::where('user_login', $item->student_login)
                                                         ->where('groupid', $id)
@@ -330,7 +330,8 @@
                                                     <td class="text-center">{{ $totalAttendance }}</td>
                                                     <td class="text-danger text-center">{{ $item->phan_tram_nghi }}%</td>
                                                     @foreach($activityGroup as $activity)
-                                                            <?php $attendance = \App\Models\Fu\Attendance::where('activity_id', $activity->id)
+                                                            <?php
+                                                            $attendance = \App\Models\Fu\Attendance::where('activity_id', $activity->id)
                                                             ->where('user_login', $item->student_login)
                                                             ->first();
                                                             ?>
