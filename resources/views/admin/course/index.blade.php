@@ -14,30 +14,71 @@
                         List Course
                     </h3>
                 </div>
-                <div class="col-sm-8 col-md-8">
-                    <form method="post">
-                        <input type="hidden" name="_token" value="nMeViEnqyBfzuEGxFbMoLj4lKUUcUJrDN4dAkGRl">
-                        <div class="form-row" style="margin-top: 22px; justify-content: center">
-                            <div class="form-group row col-md-6">
-                                <label class="col-3 col-form-label" for="inputState">Semester</label>
-                                <select class="form-control col-6" onchange="doSearch();" id="term_id">
-                                    <option value="">Chooose</option>
-                                    @foreach($terms as $item)
-                                        <option value="{{ $item->id }}">{{ $item->term_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group row col-md-6">
-                                <label class="col-4 col-form-label" for="inputState">Department</label>
-                                <select id="department_id"  class="form-control col-6" >
-                                    <option value="">Choose</option>
-                                    @foreach($department as $item)
-                                    <option value="{{ $item->id }}">{{ $item->department_name }}</option>
-                                    @endforeach
-                                </select>
+                {{--                <div class="col-sm-8 col-md-8">--}}
+                {{--                    <form method="post">--}}
+                {{--                        <input type="hidden" name="_token" value="nMeViEnqyBfzuEGxFbMoLj4lKUUcUJrDN4dAkGRl">--}}
+                {{--                        <div class="form-row" style="margin-top: 22px; justify-content: center">--}}
+                {{--                            <div class="form-group row col-md-6">--}}
+                {{--                                <label class="col-2 col-form-label" for="inputState">Semester</label>--}}
+                {{--                                <select class="form-control col-4" onchange="doSearch();" id="term_id">--}}
+                {{--                                    <option value="">Chooose</option>--}}
+                {{--                                    @foreach($terms as $item)--}}
+                {{--                                        <option value="{{ $item->id }}">{{ $item->term_name }}</option>--}}
+                {{--                                    @endforeach--}}
+                {{--                                </select>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="form-group row col-md-6">--}}
+                {{--                                <label class="col-3 col-form-label" for="inputState">Department</label>--}}
+                {{--                                <select id="department_id"  class="form-control col-4" >--}}
+                {{--                                    <option value="">Choose</option>--}}
+                {{--                                    @foreach($department as $item)--}}
+                {{--                                    <option value="{{ $item->id }}">{{ $item->department_name }}</option>--}}
+                {{--                                    @endforeach--}}
+                {{--                                </select>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </form>--}}
+                {{--                </div>--}}
+                <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 col-8">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12 order-2 order-xl-1">
+                            <div class="row align-items-center">
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Status:</label>
+                                        </div>
+                                        <select id="department_id" class="form-control">
+                                            <option value="">Choose</option>
+                                            @foreach($department as $item)
+                                                <option value="{{ $item->id }}">{{ $item->department_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Type:</label>
+                                        </div>
+                                        <select id="department_id" class="form-control">
+                                            <option value="">Choose</option>
+                                            @foreach($department as $item)
+                                                <option value="{{ $item->id }}">{{ $item->department_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                        <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
+                            <a href="#" class="btn btn-default kt-hidden">
+                                <i class="la la-cart-plus"></i> New Order
+                            </a>
+                            <div
+                                class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2 col-2 align-self-center">
                     <a href="{{ route('course.create') }}" class="btn pull-right hidden-sm-down btn-success"><i
@@ -67,14 +108,16 @@
                             ?>
                         <tr>
                             <td>{{$item->id}}</td>
-                            <td class="text-primary font-weight-bold"><a href="{{ route('course.edit', ['id' => $item->id]) }}">{{$corse_name}}</a> </td>
+                            <td class="text-primary font-weight-bold"><a
+                                    href="{{ route('course.edit', ['id' => $item->id]) }}">{{$corse_name}}</a></td>
                             <td>{{$subject_name}}</td>
                             <td>{{ $item->psubject_code }}</td>
                             <td>{{ $item->syllabus_name }}</td>
                             <td>{{ $item->num_of_group }}</td>
                             <td class="text-nowrap">
                                 <a href="{{ route('course.edit', ['id' => $item->id]) }}"
-                                   data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i class="flaticon-edit"></i>
+                                   data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i
+                                        class="flaticon-edit"></i>
                                 </a>
                             </td>
                         </tr>

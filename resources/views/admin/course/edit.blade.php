@@ -195,7 +195,7 @@
                                     <div class="kt-portlet__body">
 
                                         <!--begin::Section-->
-                                        <div class="kt-section">
+                                        <div class="kt-section" style="overflow: auto">
                                             <div class="kt-section__content">
                                                 <table class="table">
                                                     <tbody>
@@ -248,13 +248,37 @@
                                                         <td>Final Grade</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="text-dark font-weight-bold">Plan</td>
+                                                        <td class="text-dark font-weight-bold" id="plan">Plan</td>
                                                         <td>
                                                             <table class="table">
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td></td>
+                                                                    <td colspan="2">Session</td>
+                                                                    @foreach($syllabusCourse as $syllabus)
+                                                                        <td>{{ $syllabus->course_session }}</td>
+                                                                    @endforeach
                                                                 </tr>
+                                                                <tr>
+                                                                    <td colspan="2">Description</td>
+                                                                    @foreach($syllabusCourse as $syllabus)
+                                                                        <td>{{ $syllabus->description }}</td>
+                                                                    @endforeach
+                                                                </tr>
+                                                                @foreach($groups as $group)
+                                                                        <?php $activitys = \App\Models\Fu\Acitivitys::where('groupid', $group->id)->get();
+                                                                        $i = 1;
+                                                                        ?>
+                                                                    <tr>
+                                                                        <td colspan="2">{{ $group->group_name }}</td>
+                                                                        @foreach($activitys as $item)
+                                                                                <?php $day = date('d/m', strtotime($item->day)); ?>
+                                                                            <td class="text-primary"> {{ $day }}
+                                                                            <p class="text-danger">S{{ $item->slot }}</p>
+                                                                            <p class="text-danger">{{ $i++ }}</p>
+                                                                            </td>
+                                                                        @endforeach
+                                                                    </tr>
+                                                                @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </td>

@@ -13,6 +13,7 @@ use App\Models\Fu\Subjects;
 use App\Models\Fu\Terms;
 use App\Models\T7\CourseResult;
 use App\Models\T7\GradeSyllabus;
+use App\Models\T7\SyllabusPlan;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -97,7 +98,6 @@ class CourseController extends Controller
         $groups = Groups::where('psubject_id', $subject_id)
             ->where('pterm_id', $course->term_id)
             ->get();
-
         $activity = Acitivitys::where('course_id', $request->id)
             ->where('term_id', $course->term_id)
             ->get();
@@ -107,9 +107,12 @@ class CourseController extends Controller
             ->select('leader_login')
             ->distinct()
             ->get();
+        $syllabusCourse = SyllabusPlan::where('subject_id', $subject_id)
+            ->where('syllabus_id', $course->syllabus_id)
+            ->get();
 
         return view('admin.course.edit', compact('terms', 'course',
-            'subjects', 'syllabus', 'groups', 'activity', 'leaderActivity'));
+            'subjects', 'syllabus', 'groups', 'activity', 'leaderActivity', 'syllabusCourse'));
     }
 
     public function listGroup(Request $request)
