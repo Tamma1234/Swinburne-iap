@@ -2,6 +2,7 @@
 
 namespace App\Models\T7;
 
+use App\Models\Fu\Subjects;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

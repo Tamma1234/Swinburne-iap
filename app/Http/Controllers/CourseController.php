@@ -14,17 +14,19 @@ use App\Models\Fu\Terms;
 use App\Models\T7\CourseResult;
 use App\Models\T7\GradeSyllabus;
 use App\Models\T7\SyllabusPlan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $course = Course::all();
+        $term = Terms::orderBy('id', 'DESC')->first();
+        $course = Course::where('term_id', $term->id)->get();
         $terms = Terms::all();
         $department = Department::all();
 
-        return view('admin.course.index', compact('course', 'terms', 'department'));
+        return view('admin.course.index', compact('course', 'terms', 'department', 'term'));
     }
 
     public function createRooms()
@@ -66,24 +68,50 @@ class CourseController extends Controller
     public function doSearch(Request $request)
     {
         $term_id = $request->term_id;
-
+        $i = 1;
         $department_id = $request->department_id;
-        if ($term_id) {
+        if ($term_id && $department_id == null) {
             $output = "";
             $courses = Course::where('term_id', $term_id)->get();
             foreach ($courses as $course) {
+                $course_name = $course->psubject_name . ' ' . $course->pterm_name;
                 $output .= '<tr>';
-                $output .= '<td> ' . $course->id . '</td>';
-                $output .= '<td>' . $corse_name . '</td>';
-                $output .= '<td>' . $subject_name . '</td>';
+                $output .= '<td> ' . $i++ . '</td>';
+                $output .= '<td class="text-primary font-weight-bold">' . $course_name . '</td>';
+                $output .= '<td>' . $course->psubject_name . '</td>';
+                $output .= '<td>' . $course->psubject_code . '</td>';
+                $output .= '<td class="text-primary font-weight-bold">' . $course->syllabus_name . '</td>';
+                $output .= '<td>' . $course->num_of_group . '</td>';
+                $output .= '<td class="text-nowrap">';
+                $output .= '<a href="'. route('course.edit', ['id' => $course->id]) .'" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
+                $output .= '</td>';
+                $output .= '</tr>';
+
+            }
+            $output .= '<input type="hidden" id="totalCourse" value="'.count($courses).'">';
+            return $output;
+        } elseif ($term_id && $department_id) {
+            $output = "";
+            $department_term = Course::join('fu_subject', 'fu_course.subject_id', '=', 'fu_subject.id')
+            ->where('fu_course.term_id', $term_id)
+            ->where('fu_subject.department_id', $department_id)
+            ->get();
+
+            foreach ($department_term as $item) {
+                $course_name = $item->psubject_name . ' ' . $item->pterm_name;
+                $output .= '<tr>';
+                $output .= '<td> ' . $i++ . '</td>';
+                $output .= '<td class="text-primary font-weight-bold">' . $course_name . '</td>';
+                $output .= '<td>' . $item->psubject_name . '</td>';
                 $output .= '<td>' . $item->psubject_code . '</td>';
-                $output .= '<td>' . $item->syllabus_name . '</td>';
+                $output .= '<td class="text-primary font-weight-bold">' . $item->syllabus_name . '</td>';
                 $output .= '<td>' . $item->num_of_group . '</td>';
                 $output .= '<td class="text-nowrap">';
-                $output .= '<a href="" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
+                $output .= '<a href="'. route('course.edit', ['id' => $item->id]) .'" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
                 $output .= '</td>';
                 $output .= '</tr>';
             }
+            $output .= '<input type="hidden" id="totalCourse" value="'.count($department_term).'">';
             return $output;
         }
     }
@@ -133,5 +161,10 @@ class CourseController extends Controller
 
         return view('admin.course.list-group', compact('groupMember', 'group',
             'department', 'activityGroup', 'slots', 'courseResult', 'attendances', 'id', 'groupAnother'));
+    }
+
+    public function listSubject(Request $request) {
+        $subjects = Subjects::all();
+        return view('admin.course.list-subject', compact('subjects'));
     }
 }

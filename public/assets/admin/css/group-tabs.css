@@ -18,3 +18,7 @@
 #plan {
     vertical-align: inherit;
 }
+
+td a.version:hover {
+    color: #d47708;
+}

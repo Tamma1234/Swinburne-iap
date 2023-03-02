@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('search', 'CourseController@doSearch')->name('course.search');
         Route::get('edit/{id}', 'CourseController@edit')->name('course.edit');
         Route::get('list-group/{id}', 'CourseController@listGroup')->name('course.group');
-//        Route::get('search', 'RoomController@searchDate')->name('rooms.search');
+        Route::get('list-subject', 'CourseController@listSubject')->name('course.list-subject');
 //        Route::get('active-room/{id}', 'RoomController@activeRooms')->name('rooms.active');
 //        Route::get('update-room/{id}', 'RoomController@updateRooms')->name('rooms.update');
 //        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');

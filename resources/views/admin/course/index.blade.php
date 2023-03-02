@@ -42,16 +42,26 @@
                 <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 col-8">
                     <div class="row align-items-center">
                         <div class="col-xl-12 order-2 order-xl-1">
-                            <div class="row align-items-center">
+                            <div class="total-record text-center">
+                                <p>Total: <span class="text-danger" id="total">{{ count($course) }}</span> record</p>
+                            </div>
+                            <div class="list-setting text-center">
+                                <p><a href="" >Add new course</a> |
+                                    <a href="" >Input Course excel</a> |
+                                    <a href="{{ route('course.list-subject') }}" >Unit</a> |
+                                    <a href="" >Semester</a>
+                                </p>
+                            </div>
+                            <div class="row align-items-center" style="justify-content: center">
                                 <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
                                     <div class="kt-form__group kt-form__group--inline">
                                         <div class="kt-form__label">
                                             <label>Status:</label>
                                         </div>
-                                        <select id="department_id" class="form-control">
-                                            <option value="">Choose</option>
-                                            @foreach($department as $item)
-                                                <option value="{{ $item->id }}">{{ $item->department_name }}</option>
+                                        <select id="term_id" class="form-control" onchange="doSearch()">
+                                            @foreach($terms as $item)
+                                                <option
+                                                    {{ $term->id = $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -61,8 +71,8 @@
                                         <div class="kt-form__label">
                                             <label>Type:</label>
                                         </div>
-                                        <select id="department_id" class="form-control">
-                                            <option value="">Choose</option>
+                                        <select id="department_id" class="form-control" onchange="doSearch()">
+                                            <option value="">Select</option>
                                             @foreach($department as $item)
                                                 <option value="{{ $item->id }}">{{ $item->department_name }}</option>
                                             @endforeach
@@ -70,13 +80,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 order-1 order-xl-2 kt-align-right">
-                            <a href="#" class="btn btn-default kt-hidden">
-                                <i class="la la-cart-plus"></i> New Order
-                            </a>
-                            <div
-                                class="kt-separator kt-separator--border-dashed kt-separator--space-lg d-xl-none"></div>
                         </div>
                     </div>
                 </div>
@@ -132,6 +135,16 @@
 
 @section('script')
     <script>
+        // $(document).ready(function() {
+        //     $('#term_id').change(function() {
+        //         var url = $(this).val();
+        //         if (url) {
+        //             window.location = url;
+        //         }
+        //         return false;
+        //     })
+        // })
+
         function doSearch() {
             var term_id = $('#term_id').val();
             var department_id = $('#department_id').val();
@@ -141,7 +154,9 @@
                 method: 'GET',
                 data: {term_id: term_id, department_id: department_id, _token: _token},
                 success: function (data) {
-
+                    $('#tbody').html(data);
+                    var totalCourse = $('#totalCourse').val();
+                    $('#total').html(totalCourse)
                 }
             });
         }
@@ -170,61 +185,60 @@
             // }, 10000); // 3 seconds
         });
     </script>
-    <script>
-        //search with stude_status
-        $(document).ready(function () {
-            $('#study_status').change(function () {
-                $.ajax({
-                    url: '{{ route('users.post.search') }}',
-                    type: 'post',
-                    data: $('form').serialize(),
-                }).done(function (response) {
-                    $('#form-table-search').empty();
-                    $('#form-table-search').html(response);
-                })
-            });
-        });
+    {{--    <script>--}}
+    {{--        //search with stude_status--}}
+    {{--        $(document).ready(function () {--}}
+    {{--            $('#study_status').change(function () {--}}
+    {{--                $.ajax({--}}
+    {{--                    url: '{{ route('users.post.search') }}',--}}
+    {{--                    type: 'post',--}}
+    {{--                    data: $('form').serialize(),--}}
+    {{--                }).done(function (response) {--}}
+    {{--                    $('#form-table-search').empty();--}}
+    {{--                    $('#form-table-search').html(response);--}}
+    {{--                })--}}
+    {{--            });--}}
+    {{--        });--}}
 
-        // search with user_level
-        $('#user_level').change(function () {
-            $.ajax({
-                url: "{{ route('users.post.search') }}",
-                type: 'post',
-                data: $('form').serialize()
-            }).done(function (response) {
-                // // Gọi hàm renderCart trả về cart item con
-                $('#form-table-search').empty();
-                $('#form-table-search').html(response);
-            });
-        });
+    {{--        // search with user_level--}}
+    {{--        $('#user_level').change(function () {--}}
+    {{--            $.ajax({--}}
+    {{--                url: "{{ route('users.post.search') }}",--}}
+    {{--                type: 'post',--}}
+    {{--                data: $('form').serialize()--}}
+    {{--            }).done(function (response) {--}}
+    {{--                // // Gọi hàm renderCart trả về cart item con--}}
+    {{--                $('#form-table-search').empty();--}}
+    {{--                $('#form-table-search').html(response);--}}
+    {{--            });--}}
+    {{--        });--}}
 
-        // search with curriculum
-        $('#curriculum').change(function () {
-            $.ajax({
-                url: "{{ route('users.post.search') }}",
-                type: 'post',
-                data: $('form').serialize()
-            }).done(function (response) {
-                // // Gọi hàm renderCart trả về cart item con
-                $('#form-table-search').empty();
-                $('#form-table-search').html(response);
-            });
-        });
+    {{--        // search with curriculum--}}
+    {{--        $('#curriculum').change(function () {--}}
+    {{--            $.ajax({--}}
+    {{--                url: "{{ route('users.post.search') }}",--}}
+    {{--                type: 'post',--}}
+    {{--                data: $('form').serialize()--}}
+    {{--            }).done(function (response) {--}}
+    {{--                // // Gọi hàm renderCart trả về cart item con--}}
+    {{--                $('#form-table-search').empty();--}}
+    {{--                $('#form-table-search').html(response);--}}
+    {{--            });--}}
+    {{--        });--}}
 
-        $(document).ready(function () {
-            $('#btn-form-search').click(function (event) {
-                event.preventDefault();
-                $.ajax({
-                    url: '{{ route('users.post.search') }}',
-                    type: 'post',
-                    data: $('form').serialize(),
-                })
-                    .done(function (response) {
-                        $('#form-table-search').empty();
-                        $('#form-table-search').html(response);
-                    })
-            })
-        })
-    </script>
+    {{--        $(document).ready(function () {--}}
+    {{--            $('#btn-form-search').click(function (event) {--}}
+    {{--                event.preventDefault();--}}
+    {{--                $.ajax({--}}
+    {{--                    url: '{{ route('users.post.search') }}',--}}
+    {{--                    type: 'post',--}}
+    {{--                    data: $('form').serialize(),--}}
+    {{--                })--}}
+    {{--                    .done(function (response) {--}}
+    {{--                        $('#form-table-search').empty();--}}
+    {{--                        $('#form-table-search').html(response);--}}
+    {{--                    })--}}
+    {{--            })--}}
+    {{--        })--}}
+    {{--    </script>--}}
 @endsection
-
