@@ -11,7 +11,7 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                     <h3 class="kt-portlet__head-title">
-                        Basic
+                        List User
                     </h3>
                 </div>
                 <div class="col-sm-12 col-md-10">

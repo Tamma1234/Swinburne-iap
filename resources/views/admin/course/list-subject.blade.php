@@ -17,44 +17,43 @@
                 <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 col-8">
                     <div class="row align-items-center">
                         <div class="col-xl-12 order-2 order-xl-1">
-{{--                            <div class="total-record text-center">--}}
-{{--                                <p>Total: <span class="text-danger" id="total">{{ count($course) }}</span> record</p>--}}
-{{--                            </div>--}}
-{{--                            <div class="list-setting text-center">--}}
-{{--                                <p><a href="" >Add new course</a> |--}}
-{{--                                    <a href="" >Input Course excel</a> |--}}
-{{--                                    <a href="{{ route('course.list-subject') }}" >Unit</a> |--}}
-{{--                                    <a href="" >Semester</a>--}}
-{{--                                </p>--}}
-{{--                            </div>--}}
-{{--                            <div class="row align-items-center" style="justify-content: center">--}}
-{{--                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">--}}
-{{--                                    <div class="kt-form__group kt-form__group--inline">--}}
-{{--                                        <div class="kt-form__label">--}}
-{{--                                            <label>Status:</label>--}}
-{{--                                        </div>--}}
-{{--                                        <select id="term_id" class="form-control" onchange="doSearch()">--}}
-{{--                                            @foreach($terms as $item)--}}
-{{--                                                <option--}}
-{{--                                                    {{ $term->id = $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">--}}
-{{--                                    <div class="kt-form__group kt-form__group--inline">--}}
-{{--                                        <div class="kt-form__label">--}}
-{{--                                            <label>Type:</label>--}}
-{{--                                        </div>--}}
+                            <div class="total-record text-center">
+                                <p>Total: <span class="text-danger font-weight-bold" id="total">{{ count($subjects) }}</span> record</p>
+                            </div>
+                            <div class="list-setting text-center">
+                                <p><a class="version font-weight-bold" href="" >Create new</a> |
+                                    <a class="version font-weight-bold" href="" >Cập nhập từ HO</a>
+                                </p>
+                            </div>
+                            <div class="row align-items-center" style="justify-content: center">
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Department:</label>
+                                        </div>
+                                        <select id="department_id" class="form-control">
+                                            <option value="0">Select</option>
+                                            @foreach($departments as $item)
+                                                <option value="{{ $item->id }}">{{ $item->department_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Level:</label>
+                                        </div>
+                                        <input type="text" class="form-control">
 {{--                                        <select id="department_id" class="form-control" onchange="doSearch()">--}}
 {{--                                            <option value="">Select</option>--}}
 {{--                                            @foreach($department as $item)--}}
 {{--                                                <option value="{{ $item->id }}">{{ $item->department_name }}</option>--}}
 {{--                                            @endforeach--}}
 {{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,35 +65,32 @@
             <div class="kt-portlet__body" id="form-table-search">
                 <!--begin: Datatable -->
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
-                    <thead>
+                    <thead class="table-primary">
                     <tr>
-                        <th>Department Name</th>
-                        <th>Subject Name</th>
-                        <th>Subject Code</th>
-                        <th>Version</th>
-                        <th>Conversion Code</th>
-                        <th>Number Of Credit</th>
+                        <th colspan="1" style="width: 115px">Department Name</th>
+                        <th colspan="1">Subject Name</th>
+                        <th colspan="1" style="width: 115px">Subject Code</th>
+                        <th colspan="1">Version</th>
+                        <th colspan="1" style="width: 115px">Conversion Code</th>
+                        <th colspan="1" style="width: 115px">Number Of Credit</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
                     @foreach($subjects as $item)
                         <tr>
                             <td>{{ $item->departments ? $item->departments->department_name : "" }}</td>
-                            <td class="version font-weight-bold"><a
-                                    href="{{ route('course.edit', ['id' => $item->id]) }}">{{$item->subject_name}}</a></td>
-
+                            <td><a class="version font-weight-bold"
+                                   href="{{ route('course.edit', ['id' => $item->id]) }}">{{$item->subject_name}}</a></td>
                             <td>{{ $item->subject_code }}</td>
                             <td>
                                 @foreach($item->gradeSyllabus as $grade)
-                               <a href="#" class="version font-weight-bold"><p>{{ $grade->syllabus_name }}</p></a>
+                               <a href="#" class="version font-weight-bold">{{ $grade->syllabus_name }}</a> <span class="text-dark font-weight-bold">({{ $grade->syllabus_code }})</span>
+                                    <br>
                                 @endforeach
                             </td>
-                            <td>{{ $item->num_of_credit }}</td>
-                            <td class="text-nowrap">
-                                <a href="{{ route('course.edit', ['id' => $item->id]) }}"
-                                   data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i
-                                        class="flaticon-edit"></i>
-                                </a>
+                            <td>{{ $item->subject_code }}</td>
+                            <td>
+                                {{ $item->num_of_credit }}
                             </td>
                         </tr>
                     @endforeach
@@ -130,5 +126,23 @@
             //     // console.log(currentInt);
             // }, 10000); // 3 seconds
         });
+
+        $(document).ready(function () {
+            $('#department_id').change(function () {
+                var department_id = $('#department_id').val();
+                $.ajax({
+                    url: '{{ route('subjects.search') }}',
+                    type: 'get',
+                    data: { department_id:department_id },
+                }).done(function (response) {
+                    $('#tbody').empty();
+                    $('#tbody').html(response);
+                    var totalSubject = $('#totalSubject').val();
+                    $('#total').html(totalSubject)
+                })
+            });
+        });
     </script>
+
+
 @endsection

@@ -19,6 +19,6 @@
     vertical-align: inherit;
 }
 
-td a.version:hover {
+a.version:hover {
     color: #d47708;
 }
