@@ -75,18 +75,19 @@ class CourseController extends Controller
             $courses = Course::where('term_id', $term_id)->get();
             foreach ($courses as $course) {
                 $course_name = $course->psubject_name . ' ' . $course->pterm_name;
+                $syllabus_name = $course->syllabus ? $course->syllabus->syllabus_name : "";
+                $syllybus_id = $course->syllabus ? $course->syllabus->id : "";
                 $output .= '<tr>';
                 $output .= '<td> ' . $i++ . '</td>';
-                $output .= '<td class="text-primary font-weight-bold">' . $course_name . '</td>';
+                $output .= '<td class="text-primary font-weight-bold"><a class="version" href="'.route('course.edit', ['id' => $course->id]).'">' . $course_name . '</a></td>';
                 $output .= '<td>' . $course->psubject_name . '</td>';
                 $output .= '<td>' . $course->psubject_code . '</td>';
-                $output .= '<td class="text-primary font-weight-bold">' . $course->syllabus_name . '</td>';
+                $output .= '<td class="text-primary font-weight-bold"><a class="version" href="'.route('subject.create', ['id' => $syllybus_id]).'">' . $syllabus_name . '</a></td>';
                 $output .= '<td>' . $course->num_of_group . '</td>';
                 $output .= '<td class="text-nowrap">';
                 $output .= '<a href="' . route('course.edit', ['id' => $course->id]) . '" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
                 $output .= '</td>';
                 $output .= '</tr>';
-
             }
             $output .= '<input type="hidden" id="totalCourse" value="' . count($courses) . '">';
             return $output;

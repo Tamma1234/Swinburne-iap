@@ -17,4 +17,8 @@ class GradeSyllabus extends Model
         $this->connection = session('campus_db');
         parent::__construct($attributes);
     }
+
+    public function subjects() {
+        return $this->belongsTo(Subjects::class, 'subject_id', 'id');
+    }
 }

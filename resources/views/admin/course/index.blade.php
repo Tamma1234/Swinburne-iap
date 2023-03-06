@@ -46,7 +46,7 @@
                                 <p>Total: <span class="text-danger" id="total">{{ count($course) }}</span> record</p>
                             </div>
                             <div class="list-setting text-center">
-                                <p><a href="" >Add new course</a> |
+                                <p><a href="{{ route('course.create') }}" >Add new course</a> |
                                     <a href="" >Input Course excel</a> |
                                     <a href="{{ route('course.list-subject') }}" >Unit</a> |
                                     <a href="" >Semester</a>
@@ -111,11 +111,12 @@
                             ?>
                         <tr>
                             <td>{{$item->id}}</td>
-                            <td class="text-primary font-weight-bold"><a
+                            <td class="text-primary font-weight-bold"><a class="version"
                                     href="{{ route('course.edit', ['id' => $item->id]) }}">{{$corse_name}}</a></td>
                             <td>{{$subject_name}}</td>
                             <td>{{ $item->psubject_code }}</td>
-                            <td>{{ $item->syllabus_name }}</td>
+                            <td class="text-primary font-weight-bold"><a href="{{ route('subject.create', ['id' => $item->id]) }}"
+                                class="version">{{ $item->syllabus ? $item->syllabus->syllabus_name : "" }}</a></td>
                             <td>{{ $item->num_of_group }}</td>
                             <td class="text-nowrap">
                                 <a href="{{ route('course.edit', ['id' => $item->id]) }}"

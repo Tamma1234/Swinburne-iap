@@ -72,6 +72,15 @@ Route::middleware('auth')->group(function () {
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
+    //Subjects
+    Route::group(['prefix' => 'subject'], function () {
+        Route::get('create/{id}', 'SubjectController@createSubject')->name('subject.create');
+
+//        Route::get('update-room/{id}', 'RoomController@updateRooms')->name('rooms.update');
+//        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
+//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
+
     Route::group(['prefix' => 'term'], function () {
         Route::get('index', 'TermController@index')->name('term.index');
         Route::post('list-course', 'CourseController@listCourse')->name('list.course');
