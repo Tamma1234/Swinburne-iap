@@ -1,7 +1,7 @@
 @extends('admin.layouts.main')
 @section('title', 'Index')
 @section('content')
-    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Course', 'value' => "List Course", 'value2' => ""])
+    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Subject', 'value' => "List Subject", 'value2' => ""])
 
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile">
@@ -17,7 +17,7 @@
             </div>
             <div class="kt-portlet__body" id="form-table-search">
                 <!--begin: Datatable -->
-                <table class="table table-striped- table-bordered table-hover table-checkable" >
+                <table class="table table-striped- table-bordered table-hover table-checkable">
                     <thead class="table-primary">
                     <tr>
                         <th>Department</th>
@@ -31,43 +31,43 @@
                     </tr>
                     </thead>
                     <tbody id="tbody">
-                        <tr>
-                            <td>{{ $subject->departments ? $subject->departments->department_name : ""  }}</td>
-                            <td>{{ $syllabus->subject_code }}</td>
-                            <td><input type="text" value="{{$syllabus->syllabus_name}}"> </td>
-                            <td><input type="text" value="{{$syllabus->syllabus_name}}"> </td>
-                            <td><input type="text" value="{{$syllabus->subject_code}}"> </td>
-                            <td><input type="text" value="{{$syllabus->subject_code}}"> </td>
-                            <td>{{ $subject->level }}</td>
-                            <td>{{ $subject->num_of_credit }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $subject->departments ? $subject->departments->department_name : ""  }}</td>
+                        <td>{{ $syllabus->subject_code }}</td>
+                        <td><input type="text" value="{{$syllabus->syllabus_name}}"></td>
+                        <td><input type="text" value="{{$syllabus->syllabus_name}}"></td>
+                        <td><input type="text" value="{{$syllabus->subject_code}}"></td>
+                        <td><input type="text" value="{{$syllabus->subject_code}}"></td>
+                        <td>{{ $subject->level }}</td>
+                        <td>{{ $subject->num_of_credit }}</td>
+                    </tr>
                     </tbody>
                 </table>
                 <!--end: Datatable -->
                 <ul class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" style="border-bottom: 1px solid">
                     <li class="nav-item">
-                        <a href="#" class="nav-link btn btn-primary" style="color: #fff">
+                        <a href="{{ route('subject.list', ['id' => $subject->id, 'view_child' => 1]) }}" class="nav-link btn btn-primary" style="color: #fff">
                             Version
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link btn btn-primary" style="color: #fff">
+                        <a href="{{ route('subject.list', ['id' => $subject->id, 'view_child' => 2]) }}" class="nav-link btn btn-primary" style="color: #fff">
                             Group
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link btn btn-primary" style="color: #fff">
+                        <a href="{{ route('subject.list', ['id' => $subject->id, 'view_child' => 3]) }}" class="nav-link btn btn-primary" style="color: #fff">
                             Separation Of Subjects
                         </a>
                     </li>
                 </ul>
                 <div>
-                    <p class="kt-portlet__head-title font-weight-bold btn btn-success btn-sm" >
+                    <p class="kt-portlet__head-title font-weight-bold btn btn-success btn-sm">
                         Kiểm tra lỗi
                     </p>
                 </div>
 
-                <table class="table table-striped- table-bordered table-hover table-checkable" >
+                <table class="table table-striped- table-bordered table-hover table-checkable">
                     <thead class="table-primary">
                     <tr>
                         <th>TÊN KHUNG CHƯƠNG TRÌNH HỌC</th>
@@ -89,6 +89,73 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <ul class="nav nav-tabs-active  role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-secondary font-weight-bold" data-toggle="tab" href="#kt_widget4_tab1_content" role="tab"
+                           aria-selected="true">
+                            Lịch học
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold btn btn-secondary" data-toggle="tab" href="#kt_widget4_tab2_content" role="tab"
+                           aria-selected="false">
+                            Nhóm đầu điểm
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="kt_widget4_tab1_content">
+                        <table class="table">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>Buổi học thử</th>
+                                <th>Loại buổi học</th>
+                                <th>Nhóm buổi học</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            @foreach($syllabusPlan as $item)
+                            <tr>
+                                <td><input type="text" value="{{ $item->course_session }}" size="3"></td>
+                                <td>
+                                    <select>
+                                        @foreach($session_type as $session)
+                                            <option {{ $session->id == $item->session_type ? "selected" : "" }} value="{{ $session->id }}">{{ $session->session_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td><input type="text" value="{{$item->noi_dung}}"></td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="kt_widget4_tab2_content">
+                        <table class="table table-striped- table-bordered table-hover table-checkable">
+                            <thead class="table-primary">
+                            <tr>
+                                <th>Tên nhóm đầu điểm</th>
+                                <th>Trọng số</th>
+                                <th>Số đầu điểm</th>
+                                <th>Điểm tối thiểu</th>
+                                <th>Xem</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            @if($gradeGroup)
+                                <tr>
+                                    <td><input type="text" value="{{ $gradeGroup->grade_group_name }}"></td>
+                                    <td><input type="text" value="{{$gradeGroup->weight}}"></td>
+                                    <td><input type="text" value="{{ $gradeGroup->number_grade }}"></td>
+                                    <td><input type="text" value="{{ $gradeGroup->minimum_required }}"></td>
+                                    <td><a href="{{ route('course.index') }}">Chi tiết</a></td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -136,20 +203,20 @@
             // }, 10000); // 3 seconds
         });
     </script>
-    {{--    <script>--}}
-    {{--        //search with stude_status--}}
-    {{--        $(document).ready(function () {--}}
-    {{--            $('#study_status').change(function () {--}}
-    {{--                $.ajax({--}}
-    {{--                    url: '{{ route('users.post.search') }}',--}}
-    {{--                    type: 'post',--}}
-    {{--                    data: $('form').serialize(),--}}
-    {{--                }).done(function (response) {--}}
-    {{--                    $('#form-table-search').empty();--}}
-    {{--                    $('#form-table-search').html(response);--}}
-    {{--                })--}}
-    {{--            });--}}
-    {{--        });--}}
+        <script>
+            //search with stude_status
+            $(document).ready(function () {
+                $('#study_status').change(function () {
+                    $.ajax({
+                        url: '{{ route('users.post.search') }}',
+                        type: 'post',
+                        data: $('form').serialize(),
+                    }).done(function (response) {
+                        $('#form-table-search').empty();
+                        $('#form-table-search').html(response);
+                    })
+                });
+            });
 
     {{--        // search with user_level--}}
     {{--        $('#user_level').change(function () {--}}

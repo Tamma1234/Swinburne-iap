@@ -14,31 +14,6 @@
                         List Course
                     </h3>
                 </div>
-                {{--                <div class="col-sm-8 col-md-8">--}}
-                {{--                    <form method="post">--}}
-                {{--                        <input type="hidden" name="_token" value="nMeViEnqyBfzuEGxFbMoLj4lKUUcUJrDN4dAkGRl">--}}
-                {{--                        <div class="form-row" style="margin-top: 22px; justify-content: center">--}}
-                {{--                            <div class="form-group row col-md-6">--}}
-                {{--                                <label class="col-2 col-form-label" for="inputState">Semester</label>--}}
-                {{--                                <select class="form-control col-4" onchange="doSearch();" id="term_id">--}}
-                {{--                                    <option value="">Chooose</option>--}}
-                {{--                                    @foreach($terms as $item)--}}
-                {{--                                        <option value="{{ $item->id }}">{{ $item->term_name }}</option>--}}
-                {{--                                    @endforeach--}}
-                {{--                                </select>--}}
-                {{--                            </div>--}}
-                {{--                            <div class="form-group row col-md-6">--}}
-                {{--                                <label class="col-3 col-form-label" for="inputState">Department</label>--}}
-                {{--                                <select id="department_id"  class="form-control col-4" >--}}
-                {{--                                    <option value="">Choose</option>--}}
-                {{--                                    @foreach($department as $item)--}}
-                {{--                                    <option value="{{ $item->id }}">{{ $item->department_name }}</option>--}}
-                {{--                                    @endforeach--}}
-                {{--                                </select>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </form>--}}
-                {{--                </div>--}}
                 <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10 col-8">
                     <div class="row align-items-center">
                         <div class="col-xl-12 order-2 order-xl-1">
@@ -155,7 +130,7 @@
                 method: 'GET',
                 data: {term_id: term_id, department_id: department_id, _token: _token},
                 success: function (data) {
-                    $('#tbody').html(data);
+                    $('#form-table-search').html(data);
                     var totalCourse = $('#totalCourse').val();
                     $('#total').html(totalCourse)
                 }

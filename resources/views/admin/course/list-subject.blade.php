@@ -39,20 +39,20 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-                                    <div class="kt-form__group kt-form__group--inline">
-                                        <div class="kt-form__label">
-                                            <label>Search:</label>
-                                        </div>
-                                        <input type="text" class="form-control">
+{{--                                <div class="col-md-3 kt-margin-b-20-tablet-and-mobile">--}}
+{{--                                    <div class="kt-form__group kt-form__group--inline">--}}
+{{--                                        <div class="kt-form__label">--}}
+{{--                                            <label>Search:</label>--}}
+{{--                                        </div>--}}
+{{--                                        <input type="text" class="form-control">--}}
 {{--                                        <select id="department_id" class="form-control" onchange="doSearch()">--}}
 {{--                                            <option value="">Select</option>--}}
 {{--                                            @foreach($department as $item)--}}
 {{--                                                <option value="{{ $item->id }}">{{ $item->department_name }}</option>--}}
 {{--                                            @endforeach--}}
 {{--                                        </select>--}}
-                                    </div>
-                                </div>
+{{--                                    </div>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <td>{{ $item->subject_code }}</td>
                             <td>
                                 @foreach($item->gradeSyllabus as $grade)
-                               <a href="#" class="version font-weight-bold">{{ $grade->syllabus_name }}</a> <span class="text-dark font-weight-bold">({{ $grade->syllabus_code }})</span>
+                               <a href="{{ route('subject.create', ['id' => $item->id]) }}" class="version font-weight-bold">{{ $grade->syllabus_name }}</a> <span class="text-dark font-weight-bold">({{ $grade->syllabus_code }})</span>
                                     <br>
                                 @endforeach
                             </td>

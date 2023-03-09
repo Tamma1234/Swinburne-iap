@@ -75,8 +75,8 @@ Route::middleware('auth')->group(function () {
     //Subjects
     Route::group(['prefix' => 'subject'], function () {
         Route::get('create/{id}', 'SubjectController@createSubject')->name('subject.create');
-
-//        Route::get('update-room/{id}', 'RoomController@updateRooms')->name('rooms.update');
+        Route::get('list/{id}/view_child/{view_child}', 'SubjectController@getSubject')->name('subject.list');
+        Route::get('search', 'SubjectController@searchTerm')->name('search.term');
 //        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });

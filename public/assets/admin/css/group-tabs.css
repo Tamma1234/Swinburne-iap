@@ -22,3 +22,10 @@
 a.version:hover {
     color: #d47708;
 }
+
+.nav-tabs-active li.nav-item a.nav-link.active {
+    background-color: #d0d4f5;
+    border-color: #d0d4f5;
+    border-radius: inherit;
+    color: #595d6e;
+}

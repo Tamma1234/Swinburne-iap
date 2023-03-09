@@ -19,6 +19,9 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $term = Terms::orderBy('id', 'DESC')->first();
@@ -29,6 +32,9 @@ class CourseController extends Controller
         return view('admin.course.index', compact('course', 'terms', 'department', 'term'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function createRooms()
     {
         $terms = Terms::all();
@@ -38,6 +44,10 @@ class CourseController extends Controller
         return view('admin.course.create', compact('terms', 'subjects', 'syllabus'));
     }
 
+    /**
+     * @param Request $request
+     * @return string
+     */
     public function listCourse(Request $request)
     {
         $data = $request->all();
@@ -65,6 +75,10 @@ class CourseController extends Controller
         dd($request->all());
     }
 
+    /**
+     * @param Request $request
+     * @return string|void
+     */
     public function doSearch(Request $request)
     {
         $term_id = $request->term_id;
@@ -72,51 +86,40 @@ class CourseController extends Controller
         $department_id = $request->department_id;
         if ($term_id && $department_id == null) {
             $output = "";
-            $courses = Course::where('term_id', $term_id)->get();
-            foreach ($courses as $course) {
-                $course_name = $course->psubject_name . ' ' . $course->pterm_name;
-                $syllabus_name = $course->syllabus ? $course->syllabus->syllabus_name : "";
-                $syllybus_id = $course->syllabus ? $course->syllabus->id : "";
-                $output .= '<tr>';
-                $output .= '<td> ' . $i++ . '</td>';
-                $output .= '<td class="text-primary font-weight-bold"><a class="version" href="'.route('course.edit', ['id' => $course->id]).'">' . $course_name . '</a></td>';
-                $output .= '<td>' . $course->psubject_name . '</td>';
-                $output .= '<td>' . $course->psubject_code . '</td>';
-                $output .= '<td class="text-primary font-weight-bold"><a class="version" href="'.route('subject.create', ['id' => $syllybus_id]).'">' . $syllabus_name . '</a></td>';
-                $output .= '<td>' . $course->num_of_group . '</td>';
-                $output .= '<td class="text-nowrap">';
-                $output .= '<a href="' . route('course.edit', ['id' => $course->id]) . '" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
-                $output .= '</td>';
-                $output .= '</tr>';
-            }
-            $output .= '<input type="hidden" id="totalCourse" value="' . count($courses) . '">';
-            return $output;
+            $course = Course::where('term_id', $term_id)->get();
+//            foreach ($courses as $course) {
+//                $course_name = $course->psubject_name . ' ' . $course->pterm_name;
+//                $syllabus_name = $course->syllabus ? $course->syllabus->syllabus_name : "";
+//                $syllybus_id = $course->syllabus ? $course->syllabus->id : "";
+//                $output .= '<tr>';
+//                $output .= '<td> ' . $i++ . '</td>';
+//                $output .= '<td class="text-primary font-weight-bold"><a class="version" href="'.route('course.edit', ['id' => $course->id]).'">' . $course_name . '</a></td>';
+//                $output .= '<td>' . $course->psubject_name . '</td>';
+//                $output .= '<td>' . $course->psubject_code . '</td>';
+//                $output .= '<td class="text-primary font-weight-bold"><a class="version" href="'.route('subject.create', ['id' => $syllybus_id]).'">' . $syllabus_name . '</a></td>';
+//                $output .= '<td>' . $course->num_of_group . '</td>';
+//                $output .= '<td class="text-nowrap">';
+//                $output .= '<a href="' . route('course.edit', ['id' => $course->id]) . '" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
+//                $output .= '</td>';
+//                $output .= '</tr>';
+//            }
+//            $output .= '<input type="hidden" id="totalCourse" value="' . count($courses) . '">';
+            return view('admin.course.search-term', compact('course'));
         } elseif ($term_id && $department_id) {
-            $output = "";
-            $department_term = Course::join('fu_subject', 'fu_course.subject_id', '=', 'fu_subject.id')
+            $course = Course::join('fu_subject', 'fu_course.subject_id', '=', 'fu_subject.id')
                 ->where('fu_course.term_id', $term_id)
                 ->where('fu_subject.department_id', $department_id)
                 ->get();
+//            $output .= '<input type="hidden" id="totalCourse" value="' . count($department_term) . '">';
+            return view('admin.course.search-term', compact('course'));
 
-            foreach ($department_term as $item) {
-                $course_name = $item->psubject_name . ' ' . $item->pterm_name;
-                $output .= '<tr>';
-                $output .= '<td> ' . $i++ . '</td>';
-                $output .= '<td class="text-primary font-weight-bold">' . $course_name . '</td>';
-                $output .= '<td>' . $item->psubject_name . '</td>';
-                $output .= '<td>' . $item->psubject_code . '</td>';
-                $output .= '<td class="text-primary font-weight-bold">' . $item->syllabus_name . '</td>';
-                $output .= '<td>' . $item->num_of_group . '</td>';
-                $output .= '<td class="text-nowrap">';
-                $output .= '<a href="' . route('course.edit', ['id' => $item->id]) . '" data-toggle="tooltip" data-original-title="Edit"><i class="flaticon-edit"></i></a>';
-                $output .= '</td>';
-                $output .= '</tr>';
-            }
-            $output .= '<input type="hidden" id="totalCourse" value="' . count($department_term) . '">';
-            return $output;
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit(Request $request)
     {
         $course = Course::find($request->id);
@@ -144,6 +147,10 @@ class CourseController extends Controller
             'subjects', 'syllabus', 'groups', 'activity', 'leaderActivity', 'syllabusCourse'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function listGroup(Request $request)
     {
         $id = $request->id;
@@ -164,6 +171,10 @@ class CourseController extends Controller
             'department', 'activityGroup', 'slots', 'courseResult', 'attendances', 'id', 'groupAnother'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function listSubject(Request $request)
     {
         $subjects = Subjects::all();
@@ -171,6 +182,10 @@ class CourseController extends Controller
         return view('admin.course.list-subject', compact('subjects', 'departments'));
     }
 
+    /**
+     * @param Request $request
+     * @return string
+     */
     public function subjectSearch(Request $request)
     {
         $department_id = $request->department_id;
@@ -186,7 +201,7 @@ class CourseController extends Controller
                 $output .= '<td>' . $item->subject_code . '</td>';
                 $output .= '<td class="text-primary font-weight-bold">';
                 foreach ($item->gradeSyllabus as $grade) {
-                    $output .= '<a href="#" class="version font-weight-bold">'.$grade->syllabus_name.' </a>';
+                    $output .= '<a href="'. route('subject.create', ['id' => $grade->id]) .'" class="version font-weight-bold">'.$grade->syllabus_name.' </a>';
                     $output .= '<span class="text-dark font-weight-bold">('.$grade->syllabus_code.')</span>';
                     $output .= '<br>';
                 }
