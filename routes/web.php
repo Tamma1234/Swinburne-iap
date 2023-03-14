@@ -81,6 +81,14 @@ Route::middleware('auth')->group(function () {
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
+
+    //Groups
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('index', 'GroupController@index')->name('group.index');
+        Route::get('search', 'GroupController@search')->name('group.search');
+//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
+
     Route::group(['prefix' => 'term'], function () {
         Route::get('index', 'TermController@index')->name('term.index');
         Route::post('list-course', 'CourseController@listCourse')->name('list.course');

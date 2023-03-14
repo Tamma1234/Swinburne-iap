@@ -1,5 +1,4 @@
 @extends('admin.layouts.table')
-
 @section('content')
         <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
             <thead>

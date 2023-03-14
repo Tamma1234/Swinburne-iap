@@ -21,4 +21,8 @@ class Groups extends Model
     public function syllabus() {
         return $this->hasOne(GradeSyllabus::class, 'id', 'syllabus_id');
     }
+
+    public function activitys() {
+        return $this->hasMany(Acitivitys::class, 'groupid', 'id');
+    }
 }

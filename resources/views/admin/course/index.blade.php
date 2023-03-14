@@ -87,7 +87,8 @@
                         <tr>
                             <td>{{$item->id}}</td>
                             <td class="text-primary font-weight-bold"><a class="version"
-                                    href="{{ route('course.edit', ['id' => $item->id]) }}">{{$corse_name}}</a></td>
+                                    href="{{ route('course.edit', ['id' => $item->id]) }}">{{$corse_name}}</a>
+                            </td>
                             <td>{{$subject_name}}</td>
                             <td>{{ $item->psubject_code }}</td>
                             <td class="text-primary font-weight-bold"><a href="{{ route('subject.create', ['id' => $item->id]) }}"
