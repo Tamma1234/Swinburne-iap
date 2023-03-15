@@ -85,7 +85,8 @@ Route::middleware('auth')->group(function () {
     //Groups
     Route::group(['prefix' => 'group'], function () {
         Route::get('index', 'GroupController@index')->name('group.index');
-        Route::get('search', 'GroupController@search')->name('group.search');
+        Route::get('group-search', 'GroupController@search')->name('group.search');
+        Route::post('/search', 'GroupController@postSearch');
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 

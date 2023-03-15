@@ -6,7 +6,7 @@
             <div class="row">
                 Text
                 <select id="term_id" name="term_id" onchange="doSearch()">
-                    <option value="0">Select</option>
+                    <option value="">Select</option>
                     @foreach($terms as $item)
                         <option
                             {{ $item->id == $term_id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>
@@ -16,7 +16,7 @@
                 <select id="department_id" name="department_id" onchange="doSearch()">
                     <option value="">select</option>
                     @foreach($departments as $department)
-                        <option
+                        <option {{ $department_id == $department->id ? "selected" : "" }}
                             value="{{ $department->id }}">{{ $department->department_name }}</option>
                     @endforeach
                 </select>
@@ -24,7 +24,7 @@
                 <select id="course_id" name="course_id" onchange="doSearch()">
                     <option value="">select</option>
                     @foreach($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->psubject_code }} - {{ $course->psubject_name }}</option>
+                        <option {{ $course_id == $course->id ? "selected" : ""}} value="{{ $course->id }}">{{ $course->psubject_code }} - {{ $course->psubject_name }}</option>
                     @endforeach
                 </select>
                 Status

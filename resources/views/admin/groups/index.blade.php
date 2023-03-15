@@ -41,9 +41,10 @@
                     <form action="" method="post" style="margin: auto">
                         @csrf
                         <div class="row" style="padding-left: 20px; margin: auto">
+                           <example-component></example-component>
                                 Text
                                 <select id="term_id" name="term_id" onchange="doSearch()">
-                                    <option value="0">Select</option>
+                                    <option value="">Select</option>
                                     @foreach($terms as $item)
                                         <option
                                             {{ $term->id == $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>
@@ -66,7 +67,7 @@
                                 </select>
                             Status
                             <select name="group_status">
-                                <option>select</option>
+                                <option value="">select</option>
                                 <option value="PLAN">Mới đặt lịch</option>
                                 <option value="START">Đang học</option>
                                 <option value="WAIT">Chờ thi</option>
@@ -157,6 +158,12 @@
 @endsection
 
 @section('script')
+<script>
+    import App from "../../../js/App";
+    export default {
+        components: {App}
+    }
+</script>
     <script>
         {{--$(document).ready(function () {--}}
         {{--    $('#term_id').change(function () {--}}

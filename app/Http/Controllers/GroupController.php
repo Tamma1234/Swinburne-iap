@@ -24,22 +24,53 @@ class GroupController extends Controller
 
     public function search(Request $request)
     {
-        $data = $request->all();
         $term_id = $request->term_id;
-        if ($data['term_id'] == 0) {
-            $coures = Course::all();
-            return view('admin.groups.search', compact('coures'));
-        }
-        $groups = Groups::where('pterm_id', $term_id)->get();
+        $department_id = $request->department_id;
+        $course_id = $request->course_id;
+//        $groups = Groups::where('pterm_id', $term_id)->get();
         $term = Terms::orderBy('id', 'DESC')->first();
         $terms = Terms::all();
         $departments = Department::all();
         $courses = Course::where('term_id', $term_id)->get();
         $blocks = Block::where('term_id', $term_id)->get();
+
+        if ($term_id == null) {
+            $groups = Groups::all();
+
+            return view('admin.groups.search', compact('groups', 'term', 'terms',
+                'departments', 'courses', 'blocks', 'term_id', 'department_id'));
+        } else {
+            if ($term_id && $department_id && $course_id == null) {
+                $groups = Groups::join('fu_subject', 'fu_group.psubject_id', 'fu_subject.id')
+                ->where('pterm_id', $term_id)->where('fu_subject.department_id', $department_id)->get();
+
+                return view('admin.groups.search', compact('groups', 'term', 'terms',
+                    'departments', 'courses', 'blocks', 'term_id', 'department_id', 'course_id'));
+            } elseif ($term_id && $department_id && $course_id) {
+                $groups = Groups::join('fu_subject', 'fu_group.psubject_id', 'fu_subject.id')
+                    ->join('fu_course', 'fu_subject.id', 'fu_course.subject_id')
+                    ->where('pterm_id', $term_id)->where('fu_subject.department_id', $department_id)
+                    ->where('fu_course.id', $course_id)
+                    ->get();
+
+                return view('admin.groups.search', compact('groups', 'term', 'terms',
+                    'departments', 'courses', 'blocks', 'term_id', 'department_id', 'course_id'));
+            }
+            $groups = Groups::where('pterm_id', $term_id)->get();
+
+            return view('admin.groups.search', compact('groups', 'term', 'terms',
+                'departments', 'courses', 'blocks', 'term_id', 'department_id', 'course_id'));
+        }
 //        if ($data['term_id'] == 0) {
 //            $groups = Groups::all();
 //            return view('admin.groups.search', compact('groups', 'term', 'terms', 'departments', 'courses', 'blocks', 'term_id'));
 //        }
-        return view('admin.groups.search', compact('groups', 'term', 'terms', 'departments', 'courses', 'blocks', 'term_id'));
+    }
+
+    public function postSearch(Request $request) {
+        $search = $request->name;
+        $dataName = Groups::where('psubject_name', 'LIKE', "%$search%")->get();
+        dd($dataName);
+        return $dataName;
     }
 }
