@@ -15,8 +15,8 @@
     kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
 <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
     <div class="kt-header-mobile__logo">
-        <a href="index.html">
-            <img alt="Logo" src="assets/media/logos/logo-light.png"/>
+        <a href="{{route('rooms.index')}}">
+            <img alt="Logo" style="width: 100px" src="{{asset('assets/admin/images/Logo_Technology.png')}}"/>
         </a>
     </div>
     <div class="kt-header-mobile__toolbar">

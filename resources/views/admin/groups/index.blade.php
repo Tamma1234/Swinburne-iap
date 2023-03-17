@@ -2,7 +2,6 @@
 @section('title', 'Index')
 @section('content')
     @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Group', 'value' => "List group", 'value2' => ""])
-
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
@@ -41,7 +40,6 @@
                     <form action="" method="post" style="margin: auto">
                         @csrf
                         <div class="row" style="padding-left: 20px; margin: auto">
-                           <example-component></example-component>
                                 Text
                                 <select id="term_id" name="term_id" onchange="doSearch()">
                                     <option value="">Select</option>
@@ -165,26 +163,25 @@
     }
 </script>
     <script>
-        {{--$(document).ready(function () {--}}
-        {{--    $('#term_id').change(function () {--}}
-        {{--        var action = $(this).attr('id');--}}
-        {{--        var term_id = $('#term_id').val();--}}
-        {{--        var result = "";--}}
-        {{--        if (action == 'term_id') {--}}
-        {{--            result = "block_id";--}}
-        {{--        }--}}
-        {{--        $.ajax({--}}
-        {{--            url: '{{ route('group.search') }}',--}}
-        {{--            type: 'get',--}}
-        {{--            data: {action: action, term_id: term_id},--}}
-        {{--        }).done(function (response) {--}}
-        {{--            $('#data-body').empty();--}}
-        {{--            $('#data-body').html(response);--}}
-        {{--            var totalGroup = $('#totalGroup').val();--}}
-        {{--            $('#total').html(totalGroup)--}}
-        {{--        })--}}
-        {{--    });--}}
-        {{--});--}}
+        $(document).ready(function () {
+            $('#kt_form_search').keyup(function () {
+                var value = $('#kt_form_search').val();
+                $("#select-value").show();
+                $.ajax({
+                    url: '{{ route('value.search') }}',
+                    type: 'get',
+                    data: {value: value},
+                }).done(function (response) {
+                    $('#select-value').empty();
+                    $('#select-value').html(response);
+                    $("body").on("click", function () {
+                        $("#select-value").hide();
+                    })
+                })
+            });
+
+
+        });
         function doSearch() {
             $.ajax({
                 url: '{{ route('group.search') }}',

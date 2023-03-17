@@ -34,4 +34,5 @@ class Room extends Model
     public function activity() {
         return $this->hasMany(Acitivitys::class, 'room_id', 'id');
     }
+
 }

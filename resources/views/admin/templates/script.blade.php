@@ -271,9 +271,7 @@
         });
         r.valid() && (location.href = '/redirect?campus_id=' + campus_id);
     });
-
 </script>
-
 <script>
     @if (session('msg-update'))
     swal("Notification", "{{ session('msg-update') }}!", "success");
@@ -318,7 +316,6 @@
         $(this).parents().find('.checkbox_childrent').prop('checked', $(this).prop('checked'));
         $(this).parents().find('.checkbox_wraper').prop('checked', $(this).prop('checked'));
     });
-
 </script>
 
 

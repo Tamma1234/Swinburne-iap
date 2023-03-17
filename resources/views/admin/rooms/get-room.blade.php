@@ -40,9 +40,9 @@
                                 <td>
                                     <select class="custom-select">
                                         <option value="0">Class room</option>
-                                        @foreach($room_type as $item)
-                                            <option {{ $room->room_type == $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
+{{--                                        @foreach($room_type as $item)--}}
+{{--                                            <option {{ $room->room_type == $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->name }}</option>--}}
+{{--                                        @endforeach--}}
                                     </select>
                                 </td>
                                 <td><input class="form-control" value="{{$room->valid_from}}"></td>

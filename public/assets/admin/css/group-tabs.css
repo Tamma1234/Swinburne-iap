@@ -29,3 +29,32 @@ a.version:hover {
     border-radius: inherit;
     color: #595d6e;
 }
+
+#style-select {
+    max-height: 300px;
+    overflow: auto;
+    position: absolute;
+    margin: auto;
+    z-index: 1;
+    background: #f7f8fa;
+    list-style: none;
+    left: auto;
+}
+
+#style-select li {
+    padding: 0px;
+    margin: 2px;
+}
+
+#style-select li a {
+    font-size: 12px;
+    color: #595d6e;
+    padding: 3px;
+}
+
+#style-select li a:hover {
+    border: 1px #fefefe solid;
+    background: #ee152a;
+    color: #fefefe;
+    border-radius: 20px;
+}

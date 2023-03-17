@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::get('edit/{id}', 'UserController@edit')->name('users.edit');
         Route::post('update/{id}', 'UserController@update')->name('users.update');
         // Cancel account
+        Route::get('profile/{id}', 'UserController@profile')->name('users.profile');
 
         Route::get('remove/{id}', 'UserController@delete')->name('users.remove');
         // List user delete
@@ -77,7 +78,6 @@ Route::middleware('auth')->group(function () {
         Route::get('create/{id}', 'SubjectController@createSubject')->name('subject.create');
         Route::get('list/{id}/view_child/{view_child}', 'SubjectController@getSubject')->name('subject.list');
         Route::get('search', 'SubjectController@searchTerm')->name('search.term');
-//        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
@@ -86,7 +86,10 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'group'], function () {
         Route::get('index', 'GroupController@index')->name('group.index');
         Route::get('group-search', 'GroupController@search')->name('group.search');
-        Route::post('/search', 'GroupController@postSearch');
+        Route::get('/search', 'GroupController@valueSearch')->name('value.search');
+        Route::get('schedule', 'GroupController@schedule')->name('group.schedule');
+        Route::get('search-schedule', 'GroupController@searchSchedule')->name('search.schedule');
+
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 

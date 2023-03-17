@@ -79,8 +79,7 @@ class RoomController extends Controller
      */
     public function listRooms () {
         $rooms = Room::all();
-        $room_type = RoomType::all();
-        return view('admin.rooms.get-room', compact('rooms', 'room_type'));
+        return view('admin.rooms.get-room', compact('rooms'));
     }
 
     /**

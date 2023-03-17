@@ -267,4 +267,11 @@ class UserController extends Controller
         $user = User::withTrashed()->where('id', $request->id)->forceDelete();
         return redirect()->route('users.trash')->with('msg-trash', 'Delete Account Successfully');
     }
+
+    public function profile(Request $request) {
+        $id = $request->id;
+        $user = User::find($id);
+
+        return view('admin.users.profile', compact('user'));
+    }
 }

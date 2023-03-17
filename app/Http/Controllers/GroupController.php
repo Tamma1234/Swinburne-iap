@@ -6,7 +6,11 @@ use App\Models\Fu\Block;
 use App\Models\Fu\Course;
 use App\Models\Fu\Department;
 use App\Models\Fu\Groups;
+use App\Models\Fu\Room;
+use App\Models\Fu\Slot;
 use App\Models\Fu\Terms;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -27,7 +31,6 @@ class GroupController extends Controller
         $term_id = $request->term_id;
         $department_id = $request->department_id;
         $course_id = $request->course_id;
-//        $groups = Groups::where('pterm_id', $term_id)->get();
         $term = Terms::orderBy('id', 'DESC')->first();
         $terms = Terms::all();
         $departments = Department::all();
@@ -67,10 +70,49 @@ class GroupController extends Controller
 //        }
     }
 
-    public function postSearch(Request $request) {
-        $search = $request->name;
-        $dataName = Groups::where('psubject_name', 'LIKE', "%$search%")->get();
-        dd($dataName);
-        return $dataName;
+    public function valueSearch(Request $request)
+    {
+        $value = $request->value;
+        $output = "";
+        if ($value == null) {
+            return $output;
+        } else {
+            $users = User::where('user_givenname', 'LIKE', "%$value%")
+                ->orWhere('user_surname', 'LIKE', "%$value%")
+                ->orWhere('user_middlename', 'LIKE', "%$value%")
+                ->orWhere('user_code', 'LIKE', "%$value%")
+                ->get();
+
+            $output .= '<ul id="style-select" class="dropdown-menu inner show">';
+            foreach ($users as $user) {
+                $stringName = $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname .' - '.
+                    $user->user_login .' - '. $user->user_code .' - '. $user->cmt;
+                $output .= '<li class="text-left"><a href="'. route('users.profile', ['id' => $user->id]) .'" class="version">'.$stringName.' </a></li>';
+            }
+            $output .= '</ul>';
+
+            return $output;
+        }
+    }
+
+    public function schedule() {
+        $slots = Slot::all();
+        $roomDK = Room::where('area_id', 4)->get();
+        $roomDT = Room::where('area_id', 9)->get();
+        $date = Carbon::now();
+        $day = $date->toDateString();
+        $formatDate = date('d/m/Y', strtotime($day));
+
+        return  view('admin.groups.schedule', compact('slots', 'roomDK', 'roomDT', 'formatDate', 'day'));
+    }
+
+    public function searchSchedule(Request $request) {
+        $date = $request->date;
+        $roomDK = Room::where('area_id', 4)->get();
+        $roomDT = Room::where('area_id', 9)->get();
+        $slots = Slot::all();
+        $formatDate = date('d/m/Y', strtotime($date));
+
+        return view('admin.groups.list-search-schedule', compact('slots', 'roomDK', 'roomDT', 'formatDate', 'date'));
     }
 }
