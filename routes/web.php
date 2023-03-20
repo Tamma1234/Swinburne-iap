@@ -89,8 +89,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/search', 'GroupController@valueSearch')->name('value.search');
         Route::get('schedule', 'GroupController@schedule')->name('group.schedule');
         Route::get('search-schedule', 'GroupController@searchSchedule')->name('search.schedule');
+        Route::get('create', 'GroupController@create')->name('group.create');
+        Route::get('store', 'GroupController@store')->name('group.store');
+        Route::post('list', 'GroupController@listGroup')->name('group.list');
 
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
+
+    Route::group(['prefix' => 'event'], function () {
+        Route::get('index', 'EventController@index')->name('event.index');
+        Route::get('add', 'EventController@create')->name('event.add');
+        Route::post('store', 'EventController@store')->name('event.store');
+        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
     });
 
     Route::group(['prefix' => 'term'], function () {

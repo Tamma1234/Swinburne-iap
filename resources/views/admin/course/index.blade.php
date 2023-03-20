@@ -59,8 +59,9 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-2 align-self-center">
-                    <a href="{{ route('course.create') }}" class="btn pull-right hidden-sm-down btn-success"><i
-                            class="mdi mdi-plus-circle"></i> Create</a>
+                    <a href="{{ route('course.create') }}" class="btn pull-right hidden-sm-down btn btn-primary"
+                       data-toggle="kt-tooltip" title="add"><i
+                            class="flaticon-add-circular-button"></i></a>
                 </div>
             </div>
             <div class="kt-portlet__body" id="form-table-search">

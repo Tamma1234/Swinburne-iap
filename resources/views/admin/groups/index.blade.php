@@ -20,8 +20,7 @@
                                 <p>Total: <span class="text-danger" id="total">{{ count($groups) }}</span> record</p>
                             </div>
                             <div class="list-setting text-center">
-                                <p><a class="version" href="{{ route('course.create') }}">Add new group</a> |
-                                    <a class="version" href="">Import student to group(CSV)</a> |
+                                <p><a class="version" href="">Import student to group(CSV)</a> |
                                     <a class="version" href="{{ route('course.list-subject') }}">Export groups from
                                         semmester</a> |
                                     <a class="version" href="">Import class schedule</a>
@@ -31,8 +30,9 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-2 align-self-center">
-                    <a href="{{ route('course.create') }}" class="btn pull-right hidden-sm-down btn-success"><i
-                            class="mdi mdi-plus-circle"></i> Create</a>
+                    <a href="{{ route('group.create') }}" class="btn pull-right hidden-sm-down btn btn-primary"
+                       data-toggle="kt-tooltip" title="add"><i
+                            class="flaticon-add-circular-button"></i></a>
                 </div>
             </div>
             <div id="data-body">

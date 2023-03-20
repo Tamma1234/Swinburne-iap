@@ -36,13 +36,14 @@
                         <div class="tab-content" id="tab-content">
                             <div class="tab-pane active" id="kt_widget5_tab1_content" aria-expanded="true">
                                 <div class="kt-widget5">
-                                    <table class="table table-striped- table-bordered table-hover table-checkable" >
+                                    <table class="table table-striped- table-bordered table-hover table-checkable">
                                         <thead style="background-color: #b3c1fd">
                                         <tr>
-                                            <th>Room</th>
+                                            <th style="padding-bottom: 20px">Room</th>
                                             @foreach($slots as $slot)
-                                            <th>Slot {{ $slot->id }}
-                                            <p>{{ $slot->slot_start }}</p></th>
+                                            <th class="text-center">Slot {{ $slot->id }}
+                                                <br>
+                                            {{ $slot->slot_start }}</th>
                                             @endforeach
                                         </tr>
                                         </thead>
@@ -52,7 +53,7 @@
                                                 ->where('day', "2019-11-04")->get();
                                                 ?>
                                             <tr>
-                                                <td>{{$room->room_name}}</td>
+                                                <td class="font-weight-bold">{{$room->room_name}}</td>
                                                 @foreach($slots as $slot)
                                                     <?php $activity = \App\Models\Fu\Acitivitys::where('room_id', $room->id)
                                                         ->where('slot', $slot->id)->where('day', $formatDate)
@@ -90,7 +91,7 @@
                                                 ->where('day', "2019-11-04")->get();
                                                 ?>
                                             <tr>
-                                                <td>{{$room->room_name}}</td>
+                                                <td class="font-weight-bold">{{$room->room_name}}</td>
                                                 @foreach($slots as $slot)
                                                         <?php $activity = \App\Models\Fu\Acitivitys::where('room_id', $room->id)
                                                         ->where('slot', $slot->id)->where('day', $formatDate)
@@ -112,8 +113,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!--end:: Widgets/Best Sellers-->
             </div>
         </div>
     </div>

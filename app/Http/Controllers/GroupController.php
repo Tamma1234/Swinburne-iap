@@ -15,6 +15,9 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $term = Terms::orderBy('id', 'DESC')->first();
@@ -26,6 +29,10 @@ class GroupController extends Controller
         return view('admin.groups.index', compact('groups', 'terms', 'departments', 'term', 'courses'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function search(Request $request)
     {
         $term_id = $request->term_id;
@@ -70,6 +77,10 @@ class GroupController extends Controller
 //        }
     }
 
+    /**
+     * @param Request $request
+     * @return string
+     */
     public function valueSearch(Request $request)
     {
         $value = $request->value;
@@ -95,6 +106,9 @@ class GroupController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function schedule() {
         $slots = Slot::all();
         $roomDK = Room::where('area_id', 4)->get();
@@ -106,6 +120,10 @@ class GroupController extends Controller
         return  view('admin.groups.schedule', compact('slots', 'roomDK', 'roomDT', 'formatDate', 'day'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function searchSchedule(Request $request) {
         $date = $request->date;
         $roomDK = Room::where('area_id', 4)->get();
@@ -114,5 +132,28 @@ class GroupController extends Controller
         $formatDate = date('d/m/Y', strtotime($date));
 
         return view('admin.groups.list-search-schedule', compact('slots', 'roomDK', 'roomDT', 'formatDate', 'date'));
+    }
+
+    public function create() {
+        $terms = Terms::all();
+        return view('admin.groups.create', compact('terms'));
+    }
+
+    public function store(Request $request) {
+        $data = $request->all();
+    }
+
+    public function listGroup(Request $request) {
+        $data = $request->all();
+        if ($data['action']) {
+            $output = "";
+            if ($data['action'] == "term_id") {
+                $course = Course::where('term_id', $data['id'])->get();
+                foreach ($course as $item) {
+                    $output .= '<option value="' . $item->psubject_code . ' ">' . $item->psubject_name . ' </option>';
+                }
+                return $output;
+            }
+        }
     }
 }
