@@ -81,7 +81,6 @@ Route::middleware('auth')->group(function () {
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
-
     //Groups
     Route::group(['prefix' => 'group'], function () {
         Route::get('index', 'GroupController@index')->name('group.index');
@@ -92,7 +91,6 @@ Route::middleware('auth')->group(function () {
         Route::get('create', 'GroupController@create')->name('group.create');
         Route::get('store', 'GroupController@store')->name('group.store');
         Route::post('list', 'GroupController@listGroup')->name('group.list');
-
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
@@ -101,6 +99,15 @@ Route::middleware('auth')->group(function () {
         Route::get('add', 'EventController@create')->name('event.add');
         Route::post('store', 'EventController@store')->name('event.store');
         Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
+    });
+
+    Route::group(['prefix' => 'Fee'], function () {
+        Route::get('index', 'FeeController@index')->name('fee.index');
+        Route::get('list/{id}', 'FeeController@listFeeStudent')->name('fees.list');
+        Route::get('list-student/{id}', 'FeeController@listStudent')->name('list.student');
+//        Route::get('add', 'EventController@create')->name('event.add');
+//        Route::post('store', 'EventController@store')->name('event.store');
+//        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
     });
 
     Route::group(['prefix' => 'term'], function () {
