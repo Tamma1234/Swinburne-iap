@@ -96,9 +96,12 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'event'], function () {
         Route::get('index', 'EventController@index')->name('event.index');
+        Route::get('detail/{id}', 'EventController@detail')->name('event.detail');
         Route::get('add', 'EventController@create')->name('event.add');
         Route::post('store', 'EventController@store')->name('event.store');
         Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
+        Route::get('student-delete/{id?}', 'EventController@deleteStudent')->name('student-delete');
+        Route::post('student-add', 'EventController@studentAdd')->name('student.add');
     });
 
     Route::group(['prefix' => 'Fee'], function () {
@@ -108,6 +111,29 @@ Route::middleware('auth')->group(function () {
 //        Route::get('add', 'EventController@create')->name('event.add');
 //        Route::post('store', 'EventController@store')->name('event.store');
 //        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
+    });
+
+    //Students
+    Route::group(['prefix' => 'queries'], function () {
+        Route::get('index', 'QueryController@Queries')->name('queries.index');
+        Route::post('search', 'QueryController@Search')->name('queries.search');
+    });
+
+    //Curriculum
+    Route::group(['prefix' => 'curriculum'], function () {
+        Route::get('index', 'CurriculumController@index')->name('curriculum.index');
+        Route::get('create', 'CurriculumController@create')->name('curriculum.create');
+        Route::get('store', 'CurriculumController@store')->name('curriculum.store');
+        Route::get('edit/{id}', 'CurriculumController@edit')->name('curriculum.edit');
+        Route::get('update/{id}', 'CurriculumController@update')->name('curriculum.update');
+//        Route::post('search', 'QueryController@Search')->name('queries.search');
+    });
+
+    //Queries
+    Route::group(['prefix' => 'evaluate'], function () {
+        Route::get('index', 'StudentController@Evaluate')->name('evaluate.index');
+        Route::get('detail/{id?}', 'StudentController@detail')->name('evaluate.detail');
+        Route::post('update/{id?}', 'StudentController@update')->name('evaluate.update');
     });
 
     Route::group(['prefix' => 'term'], function () {

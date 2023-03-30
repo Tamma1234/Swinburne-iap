@@ -23500,7 +23500,7 @@ strong {
 
 @media (min-width: 1025px) {
   .kt-form.kt-form--label-right .form-group label:not(.kt-checkbox):not(.kt-radio):not(.kt-option) {
-    text-align: right; } }
+     } }
 
 .kt-input-icon {
   position: relative;

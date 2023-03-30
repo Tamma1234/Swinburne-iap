@@ -11,7 +11,7 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                     <h3 class="kt-portlet__head-title">
-                        List Course
+                        List Event
                     </h3>
                 </div>
                 <div class="col-md-10 col-2 align-self-center">
@@ -45,7 +45,7 @@
                             <td>{{ $item->start_date }}</td>
                             <td>{{ $item->end_date }}</td>
                             <td class="text-nowrap">
-                                <a href=""
+                                <a href="{{ route('event.detail', ['id' => $item->id]) }}"
                                    data-original-title="Detail" data-toggle="kt-tooltip" title="Detail"><i
                                         class="flaticon-list-2"></i>
                                 </a>

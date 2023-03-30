@@ -77,7 +77,6 @@
                             </div>
                         </div>
                     </form>
-
                     <!--end::Form-->
                 </div>
             </div>
