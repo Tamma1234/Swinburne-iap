@@ -18,6 +18,7 @@ class Course extends Model
         'subject_id',
         'term_id',
         'subject_id',
+        'psubject_name',
         'psubject_code',
         'num_of_credit',
         'syllabus_id',

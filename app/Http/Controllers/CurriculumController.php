@@ -4,21 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Dra\Curriculum;
+use App\Models\Fu\Department;
 use Illuminate\Http\Request;
 
 class CurriculumController extends Controller
 {
     public function index() {
         $curriculums = Curriculum::all();
-        return view('admin.curriculums.index', compact('curriculums'));
+        $departments = Department::all();
+        return view('admin.curriculums.index', compact('curriculums', 'departments'));
     }
 
     public function create() {
-        return view('admin.curriculums.create');
+        $brands = Brand::all();
+        return view('admin.curriculums.create', compact('brands'));
     }
 
-    public function store() {
+    public function store(Request $request) {
+        $data = $request->all();
+        $curriculum = new Curriculum();
+        $curriculum->fill($data);
+        $curriculum->save();
 
+        return redirect()->route('curriculum.index')->with('msg-add', 'Create Curriculum Successful');
     }
 
     public function edit(Request $request) {
@@ -28,7 +36,17 @@ class CurriculumController extends Controller
         return view('admin.curriculums.edit', compact('curriculum', 'brands'));
     }
 
-    public function update() {
+    public function update(Request $request) {
+        $id = $request->id;
+        $data = $request->all();
+        $curriculum = Curriculum::find($id);
+        $curriculum->fill($data);
+        $curriculum->save();
 
+        return redirect()->route('curriculum.index')->with('msg-add', 'Update Curriculum Successful');
+    }
+
+    public function Search(Request $request) {
+        $department_id = $request->department_id;
     }
 }

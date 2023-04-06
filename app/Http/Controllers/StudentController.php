@@ -37,4 +37,8 @@ class StudentController extends Controller
 
         return response()->json(["success" => "Update Evaluate Successful"]);
     }
+
+    public function listStudentStatus(Request $request) {
+        return view('admin.students.index');
+    }
 }

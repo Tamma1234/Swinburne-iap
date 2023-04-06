@@ -23,135 +23,138 @@
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tên</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="name">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số giai đoạn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_of_period">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Mô tả</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="description">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Chương trình</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="program_id">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Hệ</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="mod_of_study">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_of_credit">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số môn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_of_subject">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Trạng Thái</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="status">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ bắt buộc</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_compulsory_credit">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số môn bắt buộc</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_compulsory_subject">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Danh mục các môn bắt buộc</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="compulsory_subject_list">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ tự chọn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_optional_credit">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số môn tự chọn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="number_optional_subject">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Danh mục các môn tự chọn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ tự chọn</label>
-                                <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="optional_subject_list">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành học</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="branch_object_id">
                                 </div>
                             </div>
                             <div class="form-group row">
                                     <label for="example-text-input" class="col-2 col-form-label">Chuyên ngành học:</label>
                                     <div class="col-6">
-                                        <select class="custom-select" id="syllabus" name="syllabus_id">
-                                            <option value="0">Select</option>
+                                        <select class="custom-select" name="brand_code">
+                                            <option value="0">Chọn chuyên ngành học</option>
+                                            @foreach($brands as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Khóa</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="khoa">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="nganh">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-2 col-form-label">Chuyên Ngành</label>
+                                <div class="col-6">
+                                    <input class="form-control" type="text" name="chuyen_nganh">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Nội dung</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="noi_dung">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành in bằng VI</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="nganh_in_bang">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành in bằng EN</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                    <input class="form-control" type="text" name="nganh_in_bang_en">
                                 </div>
                             </div>
                         </div>

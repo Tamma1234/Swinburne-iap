@@ -10,6 +10,7 @@ class Curriculum extends Model
     use HasFactory;
 
     protected $table = "dra_curriculum";
+    protected $guarded;
 
     public function __construct(array $attributes = [])
     {

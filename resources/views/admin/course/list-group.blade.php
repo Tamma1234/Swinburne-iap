@@ -110,7 +110,7 @@
                             <div class="tab-pane active " id="kt_widget5_tab1_content">
                                 <!--begin: Datatable -->
                                 <table class="table table-striped- table-bordered table-hover table-checkable"
-                                       id="example">
+                                       id="">
                                     <thead>
                                     <tr>
                                         <th>#</th>
@@ -148,6 +148,20 @@
                                     @endforeach
                                     </tbody>
                                 </table>
+                                <hr>
+                                <div class="form-group" style="margin-top: 20px">
+                                    <span class="col-2">Nhập mã hoặc tên đăng nhập của sinh viên (phân cách nhau bởi dấu phẩy ',')</span>
+                                    <div class="col-4">
+                                        <textarea class="form-control" id="student_name"></textarea>
+                                        <input type="button" value="Thêm" id="addStudent">
+                                        <input type="hidden" id="group_id" value="{{ $id }}">
+                                    </div>
+                                    <div class="col-4">
+                                        <ul id="error_type">
+                                        </ul>
+
+                                    </div>
+                                </div>
                                 <!--end: Datatable -->
                             </div>
                             <div class="tab-pane" id="kt_widget5_tab2_content">
@@ -200,47 +214,55 @@
                                     <hr/>
                                     <button type="button" class="btn btn-outline-brand">Sửa lịch
                                     </button>
-                                    <div class="kt-section__content">
-                                        <table class="table">
-                                            <thead class="table-active" style="color: white">
-                                            <tr>
-                                                <th>Buồi Học</th>
-                                                <th>Ngày Tháng</th>
-                                                <th>Ca</th>
-                                                <th>Mô Tả</th>
-                                                <th>Phòng</th>
-                                                <th>Giảng Viên</th>
-                                                <th>Giảng Viên 2</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php $i = 1 ?>
-                                            @foreach($activityGroup as $item)
-                                                <tr class="{{ $item->done == 1 ? "table-primary" : "" }}">
-                                                    <th scope="row"
-                                                        class="{{ $item->done == 1 ? "text-success" : "" }}">{{ $i++ }}
-                                                        - {{$item->done == 1 ? "Đã học" : "Chưa học" }}</th>
-                                                    <td><input type="text"
-                                                               {{ $item->done == 1 ? "disabled" : "" }} value="{{ $item->day }}"><span>{{ date('l', strtotime($date)) }}</span>
-                                                    </td>
-                                                    <td>
-                                                        <select class="custom-select choose" id="subject"
-                                                                name="subject_id" {{ $item->done == 1 ? "disabled" : "" }}>
-                                                            @foreach($slots as $slot)
-                                                                <option
-                                                                    value="{{ $item->id }}">{{ $slot->id .' - '. $slot->slot_start}} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td>{{ $item->description }}</td>
-                                                    <td>{{ $item->room_name }}</td>
-                                                    <td>{{ $item->leader_login }}</td>
-                                                    <td></td>
+                                    <form>
+                                        <div class="kt-section__content">
+                                            <table class="table">
+                                                <thead class="table-active" style="color: white">
+                                                <tr>
+                                                    <th>Buồi Học</th>
+                                                    <th>Ngày Tháng</th>
+                                                    <th>Ca</th>
+                                                    <th>Mô Tả</th>
+                                                    <th>Phòng</th>
+                                                    <th>Giảng Viên</th>
+                                                    <th>Giảng Viên 2</th>
                                                 </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </thead>
+                                                <tbody>
+                                                <?php $i = 1 ?>
+                                                @foreach($activityGroup as $item)
+                                                    <tr class="{{ $item->done == 1 ? "table-primary" : "" }}">
+                                                        <th scope="row"
+                                                            class="{{ $item->done == 1 ? "text-success" : "" }}">{{ $i++ }}
+                                                            - {{$item->done == 1 ? "Đã học" : "Chưa học" }}</th>
+                                                        <td><input type="date"
+                                                                   {{ $item->done == 1 ? "disabled" : "" }} value="{{ $item->day }}"><span>{{ date('l', strtotime($date)) }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <select class="custom-select choose" id="subject"
+                                                                    name="subject_id" {{ $item->done == 1 ? "disabled" : "" }}>
+                                                                @foreach($slots as $slot)
+                                                                    <option
+                                                                        {{ $item->slot == $slot->id ? "selected" : ""}}
+                                                                        value="{{ $item->id }}">{{ $slot->id .' - '. $slot->slot_start}} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" name="description"
+                                                                   value="{{ $item->description }}"></td>
+                                                        <td><input type="text" name="description"
+                                                                   value="{{ $item->room_name }}"></td>
+                                                        <td><input type="text" name="description"
+                                                                   value="{{ $item->leader_login }}"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn-primary">Xóa lịch</button>
+                                            <button type="button" class="btn-primary">Lưu</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="tab-pane" id="kt_widget5_tab3_content">
@@ -257,7 +279,8 @@
                                         </thead>
                                         <tbody>
                                         @foreach($courseResult as $item)
-                                                <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
+                                                <?php
+                                                $user = \App\Models\User::where('user_login', $item->student_login)->first();
                                                 $full_name = $user->user_surname . ' ' . $user->user_middlename . ' ' . $user->user_givenname;
                                                 ?>
                                             <tr>
@@ -315,7 +338,7 @@
                                             <tbody>
                                             <?php $i = 1 ?>
                                             @foreach($courseResult as $item)
-                                                <?php  ?>
+                                                    <?php ?>
                                                     <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
                                                     $attendances = \App\Models\Fu\Attendance::where('user_login', $item->student_login)
                                                         ->where('groupid', $id)
@@ -328,12 +351,13 @@
                                                     <td>{{ $item->student_login }}</td>
                                                     <td>{{ $user->user_code }}</td>
                                                     <td class="text-center">{{ $totalAttendance }}</td>
-                                                    <td class="text-danger text-center">{{ $item->phan_tram_nghi }}%</td>
+                                                    <td class="text-danger text-center">{{ $item->phan_tram_nghi }}%
+                                                    </td>
                                                     @foreach($activityGroup as $activity)
                                                             <?php
                                                             $attendance = \App\Models\Fu\Attendance::where('activity_id', $activity->id)
-                                                            ->where('user_login', $item->student_login)
-                                                            ->first();
+                                                                ->where('user_login', $item->student_login)
+                                                                ->first();
                                                             ?>
                                                         @if($activity->done == 1)
                                                             <td class="text-center">
@@ -347,8 +371,11 @@
                                                             <td class="text-center font-weight-bold">-</td>
                                                         @endif
                                                     @endforeach
-                                                    <td class="text-center" style="padding-bottom: 55px">{{ $totalAttendance }}</td>
-                                                    <td class="text-danger" style="padding-bottom: 55px">{{ $item->phan_tram_nghi }}%</td>
+                                                    <td class="text-center"
+                                                        style="padding-bottom: 55px">{{ $totalAttendance }}</td>
+                                                    <td class="text-danger"
+                                                        style="padding-bottom: 55px">{{ $item->phan_tram_nghi }}%
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -362,9 +389,12 @@
                                         <div class="kt-widget__wrapper">
                                             <div class="kt-widget__section">
                                                 @foreach($groupAnother as $item)
-                                                    <div class="kt-widget__blog" style="margin-right: 10px; border: 1px solid #a4a4a4; padding: 5px; border-radius: 13px">
+                                                    <div class="kt-widget__blog"
+                                                         style="margin-right: 10px; border: 1px solid #a4a4a4; padding: 5px; border-radius: 13px">
                                                         <i class="flaticon2-list-1"></i>
-                                                        <a href="{{ route('course.group', ['id' => $item->id]) }}" class="kt-widget__value kt-font-brand">{{ $item->group_name }}</a><span class="kt-widget__value">({{ $item->number_student }})</span>
+                                                        <a href="{{ route('course.group', ['id' => $item->id]) }}"
+                                                           class="kt-widget__value kt-font-brand">{{ $item->group_name }}</a><span
+                                                            class="kt-widget__value">({{ $item->number_student }})</span>
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -435,6 +465,28 @@
                     $('#form-table-search').html(response);
                 })
             });
+
+            $('#addStudent').on("click", function () {
+                let student_name = $('#student_name').val();
+                let group_id = $('#group_id').val();
+                $.ajax({
+                    url: "{{ route('add.student') }}",
+                    type: "get",
+                    data: {student_name: student_name, group_id: group_id}
+                }).done(function (data) {
+                    if (!$.isEmptyObject(data.errorType)) {
+                        let error = "";
+                        $.each(data.errorType, function (k, v) {
+                            error += '<li class="text-danger">'+ v + " already in class" +'</li>';
+                        })
+                        $('#error_type').html(error);
+                    } else {
+                        $('#tbody').empty();
+                        $('#tbody').html(data);
+                        $('#student_name').hide();
+                    }
+                })
+            })
         });
 
         // search with user_level

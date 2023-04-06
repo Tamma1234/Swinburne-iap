@@ -11,7 +11,7 @@ class Groups extends Model
     use HasFactory;
 
     protected $table = "fu_group";
-
+    protected $guarded;
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');

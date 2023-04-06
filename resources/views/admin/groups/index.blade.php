@@ -20,10 +20,10 @@
                                 <p>Total: <span class="text-danger" id="total">{{ count($groups) }}</span> record</p>
                             </div>
                             <div class="list-setting text-center">
-                                <p><a class="version" href="">Import student to group(CSV)</a> |
+                                <p><a class="version" href="{{ route('import.student') }}">Import student to group(CSV)</a> |
                                     <a class="version" href="{{ route('course.list-subject') }}">Export groups from
                                         semmester</a> |
-                                    <a class="version" href="">Import class schedule</a>
+                                    <a class="version" href="{{ route('import.class') }}">Import class schedule</a>
                                 </p>
                             </div>
                         </div>
@@ -116,8 +116,8 @@
                                 ?>
                             <tr class="text-center">
                                 <td>{{ $i++ }}</td>
-                                <td class="font-weight-bold"><a class="version"
-                                                                href="{{ route('course.group', ['id' => $item->id]) }}">{{ $item->group_name }}</a>
+                                <td class="font-weight-bold">
+                                    <a class="version" href="{{ route('course.group', ['id' => $item->id]) }}">{{ $item->group_name }}</a>
                                 </td>
                                 <td>{{ $item->psubject_code }}</td>
                                 <td>{{ $item->psubject_name }}</td>
@@ -138,7 +138,7 @@
                                 <td>{{ $start_day_format }}</td>
                                 <td>{{ $end_day_format }}</td>
                                 <td class="text-nowrap">
-                                    <a href="{{ route('course.edit', ['id' => $item->id]) }}"
+                                    <a href="{{ route('course.group', ['id' => $item->id]) }}"
                                        data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i
                                             class="flaticon-edit"></i>
                                     </a>

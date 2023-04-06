@@ -14,6 +14,7 @@ use App\Models\Fu\Terms;
 use App\Models\T7\CourseResult;
 use App\Models\T7\GradeSyllabus;
 use App\Models\T7\SyllabusPlan;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -50,29 +51,59 @@ class CourseController extends Controller
      */
     public function listCourse(Request $request)
     {
-        $data = $request->all();
-        if ($data['action']) {
-            $output = "";
-            if ($data['action'] == "term_id") {
-                $course = Course::where('term_id', $request->id)->get();
-                foreach ($course as $item) {
-                    $course_name = $item->psubject_code . ' - ' . $item->psubject_name;
-                    $output .= '<option value="' . $item->id . ' ">' . $course_name . ' </option>';
-                }
-            } else {
-                $syllabus = GradeSyllabus::where('subject_id', $request->id)->get();
-                foreach ($syllabus as $item) {
-                    $output .= '<option value="' . $item->id . ' ">' . $item->syllabus_name . ' </option>';
-                }
-            }
+        $syllabus = GradeSyllabus::where('subject_id', $request->subject_id)->get();
+        $output = "";
+        foreach ($syllabus as $item) {
+            $output .= '<option value="' . $item->id . ' ">' . $item->syllabus_name . '</option>';
         }
-
         return $output;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
-        dd($request->all());
+        $term = Terms::find($request->term_id);
+        $syllabus = GradeSyllabus::find($request->syllabus_id);
+        $subject = Subjects::find($request->subject_id);
+        $groups_name = $request->groups_name;
+        $user = auth()->user();
+        $groups_name_array = explode(",", $groups_name);
+        $course = Course::create([
+            'psubject_name' => $subject->subject_name,
+            'psubject_code' => $subject->subject_code,
+            'subject_id' => $request->subject_id,
+            'term_id' => $request->term_id,
+            'pterm_name' => $term->term_name,
+            'syllabus_id' => $request->syllabus_id,
+            'syllabus_name' => $syllabus->syllabus_name,
+            'attendance_required' => $request->attendance_required,
+            'grade_required' => $request->grade_required,
+            'num_of_group' => $request->num_of_group,
+            'lastmodifier_login' => $user->user_login
+        ]);
+        $course_id = $course->id;
+        $content = [];
+        foreach ($groups_name_array as $item) {
+          $content[] = [
+              'lastmodifier_login' => $user->user_login,
+              'type' => 1,
+              'body_id' => $course_id,
+              'group_name' => $item,
+              'psubject_name' => $subject->subject_name,
+              'pterm_name' => $term->term_name,
+              'psubject_code' => $subject->subject_code,
+              'syllabus_id' => $request->syllabus_id,
+              'attendance_required' => $request->attendance_required,
+              'pterm_id' => $request->term_id,
+              'psubject_id' => $request->subject_id,
+          ];
+        }
+        Groups::insert($content);
+
+        return redirect()->route('course.index')->with('msg-add', 'Create Course Successful');
     }
 
     /**
@@ -201,15 +232,15 @@ class CourseController extends Controller
                 $output .= '<td>' . $item->subject_code . '</td>';
                 $output .= '<td class="text-primary font-weight-bold">';
                 foreach ($item->gradeSyllabus as $grade) {
-                    $output .= '<a href="'. route('subject.create', ['id' => $grade->id]) .'" class="version font-weight-bold">'.$grade->syllabus_name.' </a>';
-                    $output .= '<span class="text-dark font-weight-bold">('.$grade->syllabus_code.')</span>';
+                    $output .= '<a href="' . route('subject.create', ['id' => $grade->id]) . '" class="version font-weight-bold">' . $grade->syllabus_name . ' </a>';
+                    $output .= '<span class="text-dark font-weight-bold">(' . $grade->syllabus_code . ')</span>';
                     $output .= '<br>';
                 }
                 $output .= '<td>' . $item->subject_code . '</td>';
                 $output .= '<td>' . $item->num_of_credit . '</td>';
                 $output .= '</tr>';
             }
-            $output .= '<input id="totalSubject" type="hidden" value="'. count($subjects).'">';
+            $output .= '<input id="totalSubject" type="hidden" value="' . count($subjects) . '">';
 
             return $output;
         } else {
@@ -223,15 +254,15 @@ class CourseController extends Controller
                 $output .= '<td>' . $item->subject_code . '</td>';
                 $output .= '<td class="text-primary font-weight-bold">';
                 foreach ($item->gradeSyllabus as $grade) {
-                    $output .= '<a href="#" class="version font-weight-bold">'.$grade->syllabus_name.' </a>';
-                    $output .= '<span class="text-dark font-weight-bold">('.$grade->syllabus_code.')</span>';
+                    $output .= '<a href="#" class="version font-weight-bold">' . $grade->syllabus_name . ' </a>';
+                    $output .= '<span class="text-dark font-weight-bold">(' . $grade->syllabus_code . ')</span>';
                     $output .= '<br>';
                 }
                 $output .= '<td>' . $item->subject_code . '</td>';
                 $output .= '<td>' . $item->num_of_credit . '</td>';
                 $output .= '</tr>';
             }
-            $output .= '<input id="totalSubject" type="hidden" value="'. count($subjects).'">';
+            $output .= '<input id="totalSubject" type="hidden" value="' . count($subjects) . '">';
 
             return $output;
         }

@@ -154,6 +154,13 @@
                                                 @endforeach
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <span style="margin-left: 30px">Nhập tên các lớp, phân tách bởi dấu (,)</span>
+                                            <div class="col-3">
+                                                <input type="text">
+                                                <input type="button" value="Thêm lớp">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

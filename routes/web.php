@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
     //Course
     Route::group(['prefix' => 'course'], function () {
         Route::get('index', 'CourseController@index')->name('course.index');
-        Route::post('list-course', 'CourseController@listCourse')->name('list.course');
+        Route::get('list-course', 'CourseController@listCourse')->name('list.course');
         Route::get('create-course', 'CourseController@createRooms')->name('course.create');
         Route::post('store', 'CourseController@store')->name('course.store');
         Route::get('search', 'CourseController@doSearch')->name('course.search');
@@ -68,9 +68,6 @@ Route::middleware('auth')->group(function () {
         Route::get('list-group/{id}', 'CourseController@listGroup')->name('course.group');
         Route::get('list-subject', 'CourseController@listSubject')->name('course.list-subject');
         Route::get('subject-search', 'CourseController@subjectSearch')->name('subjects.search');
-//        Route::get('update-room/{id}', 'RoomController@updateRooms')->name('rooms.update');
-//        Route::get('cancel-room/{id}', 'RoomController@cancelRooms')->name('rooms.cancel');
-//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
     //Subjects
@@ -89,9 +86,12 @@ Route::middleware('auth')->group(function () {
         Route::get('schedule', 'GroupController@schedule')->name('group.schedule');
         Route::get('search-schedule', 'GroupController@searchSchedule')->name('search.schedule');
         Route::get('create', 'GroupController@create')->name('group.create');
-        Route::get('store', 'GroupController@store')->name('group.store');
+        Route::get('add-student', 'GroupController@addStudent')->name('add.student');
+        Route::post('store', 'GroupController@store')->name('group.store');
         Route::post('list', 'GroupController@listGroup')->name('group.list');
-//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+        Route::get('import-class', 'GroupController@importClass')->name('import.class');
+        Route::post('post-class', 'GroupController@postImporClass')->name('post.import.class');
+        Route::get('import-student', 'GroupController@importStudent')->name('import.student');
     });
 
     Route::group(['prefix' => 'event'], function () {
@@ -113,7 +113,7 @@ Route::middleware('auth')->group(function () {
 //        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
     });
 
-    //Students
+    //Queries
     Route::group(['prefix' => 'queries'], function () {
         Route::get('index', 'QueryController@Queries')->name('queries.index');
         Route::post('search', 'QueryController@Search')->name('queries.search');
@@ -123,22 +123,28 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'curriculum'], function () {
         Route::get('index', 'CurriculumController@index')->name('curriculum.index');
         Route::get('create', 'CurriculumController@create')->name('curriculum.create');
-        Route::get('store', 'CurriculumController@store')->name('curriculum.store');
+        Route::post('store', 'CurriculumController@store')->name('curriculum.store');
         Route::get('edit/{id}', 'CurriculumController@edit')->name('curriculum.edit');
-        Route::get('update/{id}', 'CurriculumController@update')->name('curriculum.update');
-//        Route::post('search', 'QueryController@Search')->name('queries.search');
+        Route::post('update/{id}', 'CurriculumController@update')->name('curriculum.update');
+        Route::post('search', 'CurriculumController@Search')->name('curriculum.search');
     });
 
-    //Queries
+    //Evaluate
     Route::group(['prefix' => 'evaluate'], function () {
         Route::get('index', 'StudentController@Evaluate')->name('evaluate.index');
         Route::get('detail/{id?}', 'StudentController@detail')->name('evaluate.detail');
         Route::post('update/{id?}', 'StudentController@update')->name('evaluate.update');
     });
 
+    //Queries
+    Route::group(['prefix' => 'student'], function () {
+        Route::get('list', 'StudentController@listStudentStatus')->name('student.index');
+
+    });
+
     Route::group(['prefix' => 'term'], function () {
         Route::get('index', 'TermController@index')->name('term.index');
-        Route::post('list-course', 'CourseController@listCourse')->name('list.course');
+//        Route::post('list-course', 'CourseController@listCourse')->name('list.course');
         Route::get('create-term', 'TermController@createTerm')->name('term.create');
         Route::get('edit-term/{id}', 'TermController@edit')->name('term.edit');
         Route::post('update-term/{id}', 'TermController@update')->name('term.update');

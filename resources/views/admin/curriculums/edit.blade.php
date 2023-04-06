@@ -23,103 +23,97 @@
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tên</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->name }}">
+                                    <input class="form-control" type="text" name="name" value="{{ $curriculum->name }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số giai đoạn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_of_period }}">
+                                    <input class="form-control" type="text" name="number_of_period" value="{{ $curriculum->number_of_period }}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="example-text-input" class="col-2 col-form-label">Mô tả</label>
+                                <label for="example-text-input" class="col-2 col-form-label" >Mô tả</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->description }}">
+                                    <input class="form-control" type="text" name="description" value="{{ $curriculum->description }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Chương trình</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->program_id }}">
+                                    <input class="form-control" type="text" name="program_id" value="{{ $curriculum->program_id }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Hệ</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->mod_of_study }}">
+                                    <input class="form-control" type="text" name="mod_of_study" value="{{ $curriculum->mod_of_study }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_of_credit }}">
+                                    <input class="form-control" type="text" name="number_of_credit" value="{{ $curriculum->number_of_credit }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số môn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_of_subject }}">
+                                    <input class="form-control" type="text" name="number_of_subject" value="{{ $curriculum->number_of_subject }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Trạng Thái</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->status }}">
+                                    <input class="form-control" type="text" name="status" value="{{ $curriculum->status }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ bắt buộc</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_compulsory_credit }}">
+                                    <input class="form-control" type="text" name="number_compulsory_credit" value="{{ $curriculum->number_compulsory_credit }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số môn bắt buộc</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_compulsory_subject }}">
+                                    <input class="form-control" type="text" name="number_compulsory_subject" value="{{ $curriculum->number_compulsory_subject }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Danh mục các môn bắt buộc</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->compulsory_subject_list }}">
+                                    <input class="form-control" type="text" name="compulsory_subject_list" value="{{ $curriculum->compulsory_subject_list }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ tự chọn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_optional_credit }}">
+                                    <input class="form-control" type="text" name="number_optional_credit" value="{{ $curriculum->number_optional_credit }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Tổng số môn tự chọn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->number_optional_subject }}">
+                                    <input class="form-control" type="text" name="number_optional_subject" value="{{ $curriculum->number_optional_subject }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Danh mục các môn tự chọn</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->optional_subject_list }}">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="example-text-input" class="col-2 col-form-label">Tổng số tín chỉ tự chọn</label>
-                                <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->branch_object_id }}">
+                                    <input class="form-control" type="text" name="optional_subject_list"  value="{{ $curriculum->optional_subject_list }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành học</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->branch_object_id }}">
+                                    <input class="form-control" type="text" name="branch_object_id" value="{{ $curriculum->branch_object_id }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Chuyên ngành học:</label>
                                 <div class="col-6">
-                                    <select class="custom-select" id="syllabus" name="syllabus_id">
+                                    <select class="custom-select" name="brand_code">
                                         <option value="0">Chọn chuyên ngành học</option>
                                         @foreach($brands as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -130,31 +124,37 @@
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Khóa</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->khoa }}">
+                                    <input class="form-control" type="text" name="khoa" value="{{ $curriculum->khoa }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->nganh }}">
+                                    <input class="form-control" type="text" name="nganh" value="{{ $curriculum->nganh }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-2 col-form-label">Chuyên Ngành</label>
+                                <div class="col-6">
+                                    <input class="form-control" type="text" name="chuyen_nganh" value="{{ $curriculum->chuyen_nganh }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Nội dung</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->noi_dung }}">
+                                    <input class="form-control" type="text" name="noi_dung" value="{{ $curriculum->noi_dung }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành in bằng VI</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->nganh_in_bang }}">
+                                    <input class="form-control" type="text" name="nganh_in_bang" value="{{ $curriculum->nganh_in_bang }}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="example-text-input" class="col-2 col-form-label">Ngành in bằng EN</label>
                                 <div class="col-6">
-                                    <input class="form-control" type="text" value="{{ $curriculum->nganh_in_bang_en }}">
+                                    <input class="form-control" type="text" name="nganh_in_bang_en" value="{{ $curriculum->nganh_in_bang_en }}">
                                 </div>
                             </div>
                         </div>

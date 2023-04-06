@@ -17,8 +17,22 @@
                     <div class="row align-items-center">
                         <div class="col-xl-12 order-2 order-xl-1">
                             <div class="total-record text-center">
-                                <p>Total: <span class="text-danger" id="total">{{ count($curriculums) }}</span> record</p>
+                                <p>Total: <span class="text-danger" id="total">{{ count($curriculums) }}</span> record
+                                </p>
                             </div>
+
+                                <div class="form-group row" style="justify-content: center; margin: auto">
+                                    <label class="col-1 col-form-label">Bộ môn</label>
+                                    <div class="col-4">
+                                        <select id="deparment_id" class="form-control" name="term_id" onchange="doSearch()">
+                                            <option value="">Select</option>
+                                            @foreach($departments as $item)
+                                                <option
+                                                     value="{{ $item->id }}">{{ $item->department_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -29,44 +43,6 @@
                 </div>
             </div>
             <div id="data-body">
-{{--                <div class="kt-portlet">--}}
-{{--                    <form action="" method="post" style="margin: auto">--}}
-{{--                        @csrf--}}
-{{--                        <div class="row" style="padding-left: 20px; margin: auto">--}}
-{{--                                Text--}}
-{{--                                <select id="term_id" name="term_id" onchange="doSearch()">--}}
-{{--                                    <option value="">Select</option>--}}
-{{--                                    @foreach($terms as $item)--}}
-{{--                                        <option--}}
-{{--                                            {{ $term->id == $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            Subject--}}
-{{--                                <select id="department_id" name="department_id" onchange="doSearch()">--}}
-{{--                                    <option value="">select</option>--}}
-{{--                                    @foreach($departments as $department)--}}
-{{--                                        <option--}}
-{{--                                            value="{{ $department->id }}">{{ $department->department_name }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            Course--}}
-{{--                                <select id="course_id" name="course_id" onchange="doSearch()">--}}
-{{--                                    <option value="">select</option>--}}
-{{--                                    @foreach($courses as $course)--}}
-{{--                                        <option value="{{ $course->id }}">{{ $course->psubject_code }} - {{ $course->psubject_name }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            Status--}}
-{{--                            <select name="group_status">--}}
-{{--                                <option value="">select</option>--}}
-{{--                                <option value="PLAN">Mới đặt lịch</option>--}}
-{{--                                <option value="START">Đang học</option>--}}
-{{--                                <option value="WAIT">Chờ thi</option>--}}
-{{--                                <option value="DONE">Đã xong</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
                 <div class="kt-portlet__body" id="form-table-search">
                     <!--begin: Datatable -->
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
@@ -83,7 +59,7 @@
                         </thead>
                         <tbody id="tbody">
                         @foreach($curriculums as $item)
-                            <?php $countUser = \App\Models\User::where('curriculum_id', $item->id)->where('user_level', 3)->count(); ?>
+                                <?php $countUser = \App\Models\User::where('curriculum_id', $item->id)->where('user_level', 3)->count(); ?>
                             <tr class="text-center">
                                 <td class="font-weight-bold"><a class="version" href="">{{ $item->name }}</a>
                                 </td>
@@ -111,21 +87,21 @@
 @endsection
 
 @section('script')
-<script>
-    import App from "../../../js/App";
-    export default {
-        components: {App}
-    }
-</script>
+    <script>
+        import App from "../../../js/App";
+
+        export default {
+            components: {App}
+        }
+    </script>
     <script>
         $(document).ready(function () {
-            $('#kt_form_search').keyup(function () {
-                var value = $('#kt_form_search').val();
-                $("#select-value").show();
+            $('#deparment_id').on("change", function () {
+                var department_id = $('#deparment_id').val();
                 $.ajax({
-                    url: '{{ route('value.search') }}',
+                    url: '{{ route('curriculum.search') }}',
                     type: 'get',
-                    data: {value: value},
+                    data: {department_id: department_id},
                 }).done(function (response) {
                     $('#select-value').empty();
                     $('#select-value').html(response);
@@ -134,21 +110,7 @@
                     })
                 })
             });
-
-
         });
-        function doSearch() {
-            $.ajax({
-                url: '{{ route('group.search') }}',
-                type: 'get',
-                data: $('form').serialize(),
-            }).done(function (response) {
-                $('#data-body').empty();
-                $('#data-body').html(response);
-                var totalGroup = $('#totalGroup').val();
-                $('#total').html(totalGroup)
-            })
-        }
     </script>
     <script>
         $(document).ready(function () {

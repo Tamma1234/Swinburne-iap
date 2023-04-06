@@ -23,7 +23,7 @@
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>Học kỳ:</label>
-                                    <select class="custom-select choose" id="term_id" name="term_id">
+                                    <select class="custom-select" id="term_id" name="term_id">
                                         <option value="0">Select</option>
                                         @foreach($terms as $item)
                                             <option value="{{ $item->id }}">{{ $item->term_name }}</option>
@@ -39,9 +39,9 @@
                                     <label>Môn học:</label>
                                     <select class="custom-select choose" id="subject" name="subject_id">
                                         <option value="0">Select</option>
-{{--                                        @foreach($subjects as $item)--}}
-{{--                                            <option value="{{ $item->id }}">{{ $item->subject_code .' - '. $item->subject_name }}</option>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($subjects as $item)
+                                            <option value="{{ $item->id }}">{{ $item->subject_code .' - '. $item->subject_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 {{--                                @error('role_name')--}}
@@ -102,21 +102,14 @@
     <script>
         $(document).ready(function () {
             $('.choose').on('change', function () {
-                var action = $(this).attr('id');
-                var id = $(this).val();
+                var subject_id = $(this).val();
                 var _token = $('input[name="_token"]').val();
-                var result = "";
-                if (action == 'term_id') {
-                    result = "subject";
-                } else {
-                    result = "syllabus";
-                }
                 $.ajax({
                     url: "{{ route('list.course') }}",
-                    method: 'POST',
-                    data: {action: action, id: id, _token: _token},
+                    method: 'get',
+                    data: {subject_id: subject_id, _token: _token},
                     success: function (data) {
-                        $('#' + result).html(data);
+                        $('#syllabus').html(data);
                     }
                 });
             })

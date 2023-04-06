@@ -101,7 +101,7 @@
                     <td>{{ $start_day_format }}</td>
                     <td>{{ $end_day_format }}</td>
                     <td class="text-nowrap">
-                        <a href="{{ route('course.edit', ['id' => $item->id]) }}"
+                        <a href="{{ route('course.group', ['id' => $item->id]) }}"
                            data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i
                                 class="flaticon-edit"></i>
                         </a>

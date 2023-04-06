@@ -39,9 +39,9 @@
                                     <label>Bộ môn:</label>
                                     <select class="custom-select choose" id="department" name="department_id">
                                         <option value="0">Select</option>
-{{--                                        @foreach($subjects as $item)--}}
-{{--                                            <option value="{{ $item->id }}">{{ $item->subject_code .' - '. $item->subject_name }}</option>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($departments as $item)
+                                            <option value="{{ $item->id }}">{{ $item->department_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 {{--                                @error('role_name')--}}
@@ -57,6 +57,12 @@
 {{--                                            <option value="{{ $item->id }}">{{ $item->syllabus_name }}</option>--}}
 {{--                                        @endforeach--}}
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>Tên các lớp ngăn cách nhau bằng dấu (,):</label>
+                                    <textarea name="group_name" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -81,21 +87,18 @@
     <script>
         $(document).ready(function () {
             $('.choose').on('change', function () {
-                var action = $(this).attr('id');
-                var id = $(this).val();
-                var _token = $('input[name="_token"]').val();
-                var result = "";
-                if (action == 'term_id') {
-                    result = "course";
-                } else {
-                    result = "course";
-                }
+                // var _token = $('input[name="_token"]').val();
                 $.ajax({
                     url: "{{ route('group.list') }}",
                     method: 'POST',
-                    data: {action: action, id: id, _token: _token},
+                    data : $('form').serialize(),
+                    // data: {action: action, id: id, _token: _token},
                     success: function (data) {
-                        $('#' + result).html(data);
+                        let output = "";
+                        $.each(data, function (k, v) {
+                            output += '<option value="' + v['id'] + ' ">' + v['psubject_code'] + ' - ' + v['psubject_name'] + ' </option>';
+                        })
+                        $('#course').html(output);
                     }
                 });
             })
