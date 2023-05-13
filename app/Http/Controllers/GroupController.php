@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GroupMemberRequest;
+use App\Imports\ClassImport;
+use App\Imports\GroupImport;
+use App\Imports\UsersImport;
 use App\Models\Fu\Block;
 use App\Models\Fu\Course;
 use App\Models\Fu\Department;
@@ -18,6 +21,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GroupController extends Controller
 {
@@ -237,10 +241,17 @@ class GroupController extends Controller
         return view('admin.groups.import-class');
     }
 
-    function postImporClass(Request $request) {
-//        $request->validate([
-//            'file' => 'required|mimes:xlsx'
-//        ]);
-        dd($request->file('file'));
+    function postImportClass(Request $request) {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
+        $groupImport = new GroupImport();
+        $groupsInput =  Excel::toCollection($groupImport, $request->file('file'));
+        $groupImport->import($groupsInput);
+//        dd(1);
+//        $import =  Excel::toCollection(new GroupImport, $request->file('file'));
+//        dd($import);
+//        Excel::import(new GroupImport, $request->file('file'));
+//        dd($file);
     }
 }

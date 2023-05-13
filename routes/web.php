@@ -90,7 +90,7 @@ Route::middleware('auth')->group(function () {
         Route::post('store', 'GroupController@store')->name('group.store');
         Route::post('list', 'GroupController@listGroup')->name('group.list');
         Route::get('import-class', 'GroupController@importClass')->name('import.class');
-        Route::post('post-class', 'GroupController@postImporClass')->name('post.import.class');
+        Route::post('post-class', 'GroupController@postImportClass')->name('post.import.class');
         Route::get('import-student', 'GroupController@importStudent')->name('import.student');
     });
 

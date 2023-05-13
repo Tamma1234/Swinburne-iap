@@ -12,6 +12,7 @@ class Groups extends Model
 
     protected $table = "fu_group";
     protected $guarded;
+
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');

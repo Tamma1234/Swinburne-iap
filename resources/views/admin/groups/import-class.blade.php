@@ -76,7 +76,7 @@
                                         <strong>Nhập</strong>:</p>
                                 </div>
                             </div>
-                            <form method="POST" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('post.import.class') }}" enctype="multipart/form-data">
                                 @csrf
                                 <table class="table">
                                     <thead>
@@ -91,7 +91,7 @@
                                         <td><input type="checkbox" checked name="auto"></td>
                                     </tr>
                                     <tr>
-                                        <td><input type="button" onclick="importClass()" value="Nhập" name="submit"></td>
+                                        <td><input type="submit" class="btn-primary" value="Nhập"></td>
                                         <td></td>
                                     </tr>
                                     </tbody>
@@ -130,16 +130,16 @@
                     // }, 10000); // 3 seconds
                 });
 
-                function importClass() {
-                    var file = $('#file').val();
-                    var _token = $('input[name="_token"]').val();
-                    $.ajax({
-                        url : "{{ route('post.import.class') }}",
-                        type: 'post',
-                        data : {file:file,_token:_token}
-                    }).done(function (data) {
+                {{--function importClass() {--}}
+                {{--    var file = $('#file').val();--}}
+                {{--    var _token = $('input[name="_token"]').val();--}}
+                {{--    $.ajax({--}}
+                {{--        url : "{{ route('post.import.class') }}",--}}
+                {{--        type: 'post',--}}
+                {{--        data : {file:file,_token:_token}--}}
+                {{--    }).done(function (data) {--}}
 
-                    })
-                }
+                {{--    })--}}
+                {{--}--}}
             </script>
 @endsection
