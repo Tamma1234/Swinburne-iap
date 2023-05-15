@@ -6,7 +6,8 @@ use App\Models\Fu\Groups;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class GroupImport extends BaseImport {
+class GroupImport extends BaseImport
+{
     /**
      * Import data.
      *
@@ -19,6 +20,7 @@ class GroupImport extends BaseImport {
         $quantity = 0;
         foreach ($collection as $childCollection) {
             $keys = $childCollection[0]->toArray();
+
             $childCollection->forget(0);
             foreach ($childCollection as $value) {
                 foreach ($keys as $index => $field) {
@@ -27,9 +29,14 @@ class GroupImport extends BaseImport {
                 ++$quantity;
             }
         }
+        $group = [];
+        foreach ($input as $key => $value) {
+            $group[] = $value['group_name'];
+            }
+        $group_name = Groups::select('group_name')->groupBy('group_name')->pluck('group_name')->toArray();
+        $array_that = array_diff($group, $group_name);
+        dd($array_that);
+        dd($group);
         dd($input);
-        Groups::insert($input);
-
-        //TODO: Insert DB
     }
 }
