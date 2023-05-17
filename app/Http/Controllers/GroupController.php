@@ -245,9 +245,11 @@ class GroupController extends Controller
         $request->validate([
             'file' => 'required|mimes:xlsx'
         ]);
+
         $groupImport = new GroupImport();
         $groupsInput =  Excel::toCollection($groupImport, $request->file('file'));
         $groupImport->import($groupsInput);
+        return redirect()->route('import.class')->with('');
 //        dd(1);
 //        $import =  Excel::toCollection(new GroupImport, $request->file('file'));
 //        dd($import);

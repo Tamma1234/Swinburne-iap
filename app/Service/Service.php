@@ -7,11 +7,11 @@ class Service
     /**
      * Get send mail service.
      *
-     * @return SendMailService
+     * @return GroupService
      */
-    public static function getSendMail()
+    public static function getGroup()
     {
-        return app(SendMailService::class);
+        return app(GroupService::class);
     }
 
     /**
@@ -26,6 +26,6 @@ class Service
 
     public static function confirmSendMail()
     {
-        return app(SendMailService::class);
+        return app(CheckGroupName::class);
     }
 }

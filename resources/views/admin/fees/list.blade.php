@@ -36,12 +36,14 @@
                     <tbody id="tbody">
                     <?php $i = 1 ?>
                     @foreach($fees as $item)
-                            <?php $user = \App\Models\User::where('user_login', $item->student_login)->first();
+                            <?php
+                            $user = \App\Models\User::where('user_login', $item->student_login)->first();
+                            $user_login = $user->user_login;
                             $subjects = \App\Models\T7\CourseResult::selectRaw("GROUP_CONCAT(psubject_code) as subjectcode")
-                                ->where('student_login', $user->user_login)
+                                ->where('student_login', $user_login)
                                 ->where('term_id', $item->term)
                                 ->first();
-                            $statusFee = \App\Models\FeeT::where('term', $item->term)->where('student_login', $user->user_login)
+                            $statusFee = \App\Models\FeeT::where('term', $item->term)->where('student_login', $user_login)
                                 ->where('status', 0)
                                 ->count();
                             $count_fee_term = \App\Models\FeeT::where('term', $item->term)->where('student_login', $user->user_login)

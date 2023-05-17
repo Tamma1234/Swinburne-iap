@@ -31,7 +31,6 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label>User Surname:</label>
-
                                     <input type="text" disabled name="user_surname" class="form-control"
                                            id="exampleInputEmail1"
                                            placeholder="Enter User surname" value="{{$user->user_surname}}">

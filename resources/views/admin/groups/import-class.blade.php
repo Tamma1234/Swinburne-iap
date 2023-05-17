@@ -76,7 +76,7 @@
                                         <strong>Nhập</strong>:</p>
                                 </div>
                             </div>
-                            <form method="POST" action="{{ route('post.import.class') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('post.import.class') }}"  enctype="multipart/form-data">
                                 @csrf
                                 <table class="table">
                                     <thead>
@@ -142,4 +142,20 @@
                 {{--    })--}}
                 {{--}--}}
             </script>
+        <script>
+            {{--$(document).ready(function () {--}}
+            {{--    $('.btn-primary').click(function () {--}}
+            {{--        var file = $("input[name='files']").val();--}}
+            {{--        var _token = $('input[name="_token"]').val();--}}
+            {{--        $.ajax({--}}
+            {{--            url: '{{ route('post.import.class') }}',--}}
+            {{--            type: 'post',--}}
+            {{--            data: {_token:_token, file:file},--}}
+            {{--        }).done(function (response) {--}}
+
+            {{--        })--}}
+            {{--    });--}}
+            {{--});--}}
+        </script>
+
 @endsection
