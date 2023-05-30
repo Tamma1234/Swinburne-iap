@@ -100,7 +100,13 @@
                         </div>
                     </div>
                 </div>
-
+                @if(Session::has('message'))
+                    @foreach(Session::get('message') as $item)
+                        <div class="alert alert-solid-danger alert-bold col-xl-6" role="alert" style="margin-left: 20px">
+                            <div class="alert-text">{{ $item }}</div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
         @endsection

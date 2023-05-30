@@ -103,12 +103,12 @@
                                 $end_day = $item->end_date;
                                 $end_day_format = date('d-m-Y', strtotime($end_day));
 
-                                $activityGroup = \App\Models\Fu\Acitivitys::selectRaw('count(*) as slot_count, slot')
+                                $activityGroup = \App\Models\Fu\Activitys::selectRaw('count(*) as slot_count, slot')
                                     ->where('groupid', $item->id)
                                     ->groupBy('slot')
                                     ->distinct()
                                     ->get();
-                                $activityGroupLeader = \App\Models\Fu\Acitivitys::selectRaw('count(*) as leader_count, leader_login')
+                                $activityGroupLeader = \App\Models\Fu\Activitys::selectRaw('count(*) as leader_count, leader_login')
                                     ->where('groupid', $item->id)
                                     ->groupBy('leader_login')
                                     ->distinct()

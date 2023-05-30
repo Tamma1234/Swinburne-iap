@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fu\Acitivitys;
+use App\Models\Fu\Activitys;
 use App\Models\Fu\Areas;
 use App\Models\Fu\Bookrooms;
 use App\Models\Fu\Campus;
@@ -30,9 +30,9 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $activity = new Acitivitys();
+        $activity = new Activitys();
 //        $activity = Bookrooms::whereRaw("id NOT IN (SELECT id FROM fu_activity)")->get();
-//        $bookRoom = Acitivitys::select('id')
+//        $bookRoom = Activitys::select('id')
 //        ->whereNotIn('id', $activitys)
 //            ->get();
         $rooms = Room::orderBy('id', 'asc')->get();
@@ -197,10 +197,10 @@ class RoomController extends Controller
                         ];
                     }
                 }
-                $id = Acitivitys::create($create)->id;
-                $bookRoom = Acitivitys::find($id);
-                $psubject_id = Acitivitys::find($id)->psubject_id;
-                $group_id = Acitivitys::find($id)->groupid;
+                $id = Activitys::create($create)->id;
+                $bookRoom = Activitys::find($id);
+                $psubject_id = Activitys::find($id)->psubject_id;
+                $group_id = Activitys::find($id)->groupid;
                 $area_name = $bookRoom->areas ? $bookRoom->areas->area_name : "";
 
                 if ($psubject_id != null && $group_id != null) {
@@ -238,10 +238,10 @@ class RoomController extends Controller
                     'des_cancel_room' => ""
                 ];
 
-                $id = Acitivitys::create($create)->id;
-                $bookRoom = Acitivitys::find($id);
-                $psubject_id = Acitivitys::find($id)->psubject_id;
-                $group_id = Acitivitys::find($id)->groupid;
+                $id = Activitys::create($create)->id;
+                $bookRoom = Activitys::find($id);
+                $psubject_id = Activitys::find($id)->psubject_id;
+                $group_id = Activitys::find($id)->groupid;
                 $area_name = $bookRoom->areas ? $bookRoom->areas->area_name : "";
 
                 if ($psubject_id != null && $group_id != null) {
@@ -269,7 +269,7 @@ class RoomController extends Controller
      */
     public function activeRooms(Request $request)
     {
-        $activity = Acitivitys::find($request->id);
+        $activity = Activitys::find($request->id);
         $user = auth()->user();
 
         return view('admin.rooms.detail', compact('activity', 'user'));
@@ -281,7 +281,7 @@ class RoomController extends Controller
      */
     public function updateRooms(Request $request)
     {
-        $activity = Acitivitys::find($request->id);
+        $activity = Activitys::find($request->id);
         $id = $request->id;
         $user = User::where('user_login', $activity->leader_login)->first();
         $email = $user->user_email;
@@ -321,7 +321,7 @@ class RoomController extends Controller
      */
     public function storeCancel(Request $request)
     {
-        $activity = Acitivitys::find($request->id);
+        $activity = Activitys::find($request->id);
         $user = User::where('user_login', $activity->leader_login)->first();
         $email = $user->user_email;
         $activity->des_cancel_room = $request->des_cancel_room;

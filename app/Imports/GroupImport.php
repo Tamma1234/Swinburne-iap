@@ -30,6 +30,8 @@ class GroupImport extends BaseImport
                 ++$quantity;
             }
         }
-        Service::getGroup()->checkGroupName($input);
+        $import = Service::getGroup()->checkGroupName($input);
+
+        return $import;
     }
 }

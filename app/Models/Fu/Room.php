@@ -32,7 +32,7 @@ class Room extends Model
     }
 
     public function activity() {
-        return $this->hasMany(Acitivitys::class, 'room_id', 'id');
+        return $this->hasMany(Activitys::class, 'room_id', 'id');
     }
 
 }

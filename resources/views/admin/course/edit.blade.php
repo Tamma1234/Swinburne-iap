@@ -226,10 +226,10 @@
                                                                         <td class="text-primary font-weight-bold">{{ $leader->leader_login }}</td>
                                                                         @foreach($groups as $group)
                                                                                 <?php
-                                                                                $numberActivity = \App\Models\Fu\Acitivitys::where('groupid', $group->id)
+                                                                                $numberActivity = \App\Models\Fu\Activitys::where('groupid', $group->id)
                                                                                     ->where('leader_login', $leader->leader_login)
                                                                                     ->get();
-                                                                                $totalActive = \App\Models\Fu\Acitivitys::where('groupid', $group->id)
+                                                                                $totalActive = \App\Models\Fu\Activitys::where('groupid', $group->id)
                                                                                     ->where('leader_login', $leader->leader_login)
                                                                                     ->where('done', 1)
                                                                                     ->get();
@@ -271,7 +271,7 @@
                                                                     @endforeach
                                                                 </tr>
                                                                 @foreach($groups as $group)
-                                                                        <?php $activitys = \App\Models\Fu\Acitivitys::where('groupid', $group->id)->get();
+                                                                        <?php $activitys = \App\Models\Fu\Activitys::where('groupid', $group->id)->get();
                                                                         $i = 1;
                                                                         ?>
                                                                     <tr>

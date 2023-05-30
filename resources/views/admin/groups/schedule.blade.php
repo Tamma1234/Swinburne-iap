@@ -49,13 +49,13 @@
                                         </thead>
                                         <tbody>
                                         @foreach($roomDT as $room)
-                                            <?php $activitys = \App\Models\Fu\Acitivitys::where('room_id', $room->id)
+                                            <?php $activitys = \App\Models\Fu\Activitys::where('room_id', $room->id)
                                                 ->where('day', "2019-11-04")->get();
                                                 ?>
                                             <tr>
                                                 <td class="font-weight-bold">{{$room->room_name}}</td>
                                                 @foreach($slots as $slot)
-                                                    <?php $activity = \App\Models\Fu\Acitivitys::where('room_id', $room->id)
+                                                    <?php $activity = \App\Models\Fu\Activitys::where('room_id', $room->id)
                                                         ->where('slot', $slot->id)->where('day', $formatDate)
                                                         ->first();
 
@@ -87,13 +87,13 @@
                                         </thead>
                                         <tbody>
                                         @foreach($roomDK as $room)
-                                                <?php $activitys = \App\Models\Fu\Acitivitys::where('room_id', $room->id)
+                                                <?php $activitys = \App\Models\Fu\Activitys::where('room_id', $room->id)
                                                 ->where('day', "2019-11-04")->get();
                                                 ?>
                                             <tr>
                                                 <td class="font-weight-bold">{{$room->room_name}}</td>
                                                 @foreach($slots as $slot)
-                                                        <?php $activity = \App\Models\Fu\Acitivitys::where('room_id', $room->id)
+                                                        <?php $activity = \App\Models\Fu\Activitys::where('room_id', $room->id)
                                                         ->where('slot', $slot->id)->where('day', $formatDate)
                                                         ->first();
                                                         ?>

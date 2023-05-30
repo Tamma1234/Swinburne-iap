@@ -248,9 +248,14 @@ class GroupController extends Controller
 
         $groupImport = new GroupImport();
         $groupsInput =  Excel::toCollection($groupImport, $request->file('file'));
-        $groupImport->import($groupsInput);
+        $result = $groupImport->import($groupsInput);
 
-        return redirect()->route('import.class')->with('');
+         if (isset($result)) {
+             return back()->with('message', $result);
+         }
+
+         return redirect()->route('import.class')->with('msg-add', "Successfully imported group class");
+
 //        dd(1);
 //        $import =  Excel::toCollection(new GroupImport, $request->file('file'));
 //        dd($import);

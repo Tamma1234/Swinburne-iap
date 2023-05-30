@@ -24,6 +24,6 @@ class Groups extends Model
     }
 
     public function activitys() {
-        return $this->hasMany(Acitivitys::class, 'groupid', 'id');
+        return $this->hasMany(Activitys::class, 'groupid', 'id');
     }
 }

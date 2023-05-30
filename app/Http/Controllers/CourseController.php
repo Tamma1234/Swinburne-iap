@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fu\Acitivitys;
+use App\Models\Fu\Activitys;
 use App\Models\Fu\Attendance;
 use App\Models\Fu\Course;
 use App\Models\Fu\Department;
@@ -161,11 +161,11 @@ class CourseController extends Controller
         $groups = Groups::where('psubject_id', $subject_id)
             ->where('pterm_id', $course->term_id)
             ->get();
-        $activity = Acitivitys::where('course_id', $request->id)
+        $activity = Activitys::where('course_id', $request->id)
             ->where('term_id', $course->term_id)
             ->get();
 
-        $leaderActivity = Acitivitys::where('psubject_id', $subject_id)
+        $leaderActivity = Activitys::where('psubject_id', $subject_id)
             ->where('term_id', $course->term_id)
             ->select('leader_login')
             ->distinct()
@@ -189,7 +189,7 @@ class CourseController extends Controller
         $group = Groups::find($id);
         $subject = Subjects::find($group->psubject_id);
         $department = Department::find($subject->department_id);
-        $activityGroup = Acitivitys::where('groupid', $id)->get();
+        $activityGroup = Activitys::where('groupid', $id)->get();
         $slots = Slot::all();
         $courseResult = CourseResult::where('groupid', $id)->get();
         $attendances = Attendance::where('groupid', $id)->get();

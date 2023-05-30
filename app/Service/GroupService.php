@@ -45,9 +45,8 @@ class GroupService
             $checkGroupName = Groups::where('pterm_name', $term)
                 ->where('group_name', $group_name)->select('group_name')
                 ->first();
-
             if (empty($term_id)) {
-                $result[] = "Không tìm thấy" . $term . "Trong danh sách học kỳ";
+                $result[] = "Không tìm thấy học kỳ " . $term . " trong danh sách học kỳ";
                 continue;
             }
             if (!$this->checkDateImport($date)) {
@@ -61,11 +60,11 @@ class GroupService
             //Get RoomId && check có tồn tại không
             $room_id = $this->getKeyRoomId($room, $list_room);
             if (empty($room_id)) {
-                $result[] = "Không tìm thấy phòng" . $room . "trong danh sách phòng";
+                $result[] = "Không tìm thấy phòng " . $room . " trong danh sách phòng";
                 continue;
             }
             if (!$this->checkTeacherFreeOn($teacher_login, $date, $start_time, $end_time)) {
-                $result[] = "Giảng viên" . $teacher_login . "Đã bận vào ca này";
+                $result[] = "Giảng viên " . $teacher_login . " Đã bận vào ca này";
                 continue;
             }
 
@@ -95,6 +94,7 @@ class GroupService
                 $result[] = "Không tạo được khóa học môn " . $subject_code . " học kỳ " . $term;
                 break;
             }
+
             $listSyllabus = Course::select('id', 'syllabus_id')->pluck('syllabus_id', 'id')->toArray();
             $syllabus_id = $this->getSyllabusIdByCourseId($course_id, $listSyllabus);
             if (!empty($syllabus_id) && $syllabus_id > 0) {
@@ -102,11 +102,12 @@ class GroupService
                     $result[] = 'Không tìm thấy định nghĩa buổi học thứ ' . $course_session . ' của khóa học môn ' . $subject_code . ' học kỳ ' . $term;
                 }
             }
-            $group_id = $this->getGroupId($group_name, $course_id, $listCourseGroup);
 
+            $group_id = $this->getGroupId($group_name, $course_id, $listCourseGroup);
             if (empty($group_id)) {
                 $group_id = $this->create_new_group($group_name, $course_id, $listCourseGroup);
             }
+
             $groupArray = [];
             if ($group_id > 0) {
                 $group = new Groups();
@@ -121,34 +122,46 @@ class GroupService
             if (empty($groupArray)) {
                 $result[] = "Bị lỗi do không tìm thấy tên lớp $group_name được import trong danh sách lớp, khóa";
             }
-            $now = date('Y-m-d H:i:s');
-            $user = auth()->user();
-            $intDate = strtotime($date);
-            $formatDate = date('Y-m-d', $intDate);
-            $insertActivity = Activitys::create([
-                "day" => $formatDate,
-                "start_at" => $start_time,
-                "end_at" => $end_time,
-                'room_id' => $room_id,
-                'course_slot' => $course_session,
-                'lastmodifier_login' => $user->user_login,
-                'done' => 0,
-                'description' => '',
-                'lastmodified_time' => $now
-            ]);
-            $activity_id = $insertActivity->id;
-            ActivityGroups::create([
-                'activity_id' => $activity_id,
-                'term_id_cache' => 0,
-                'groupid' => $group_id,
-                'group_name' => $group_name,
-                'session_type_group' => 0
-            ]);
-            ActivityLeaders::create([
-                'activity_id' => $activity_id,
-                'leader_login' => $user->user_login
-            ]);
+
+            if ($this->check_if_course_session_duplicate($course_session, $group_id)) {
+                $result[] = 'Buổi học thứ ' . $course_session . ' của lớp <a href=\'../group/group_add.php?id=' . $group_id . '\'>' . $group_name . '</a> học môn <strong>' . $subject_code . '</strong> đã được xếp lịch.';
+                break;
+            }
+
+            if (!empty($result)) {
+                return $result;
+            } else {
+                $now = date('Y-m-d H:i:s');
+                $user = auth()->user();
+                $intDate = strtotime($date);
+                $formatDate = date('Y-m-d', $intDate);
+                $insertActivity = Activitys::create([
+                    "day" => $formatDate,
+                    "start_at" => $start_time,
+                    "end_at" => $end_time,
+                    'groupid' => $group_id,
+                    'room_id' => $room_id,
+                    'course_slot' => $course_session,
+                    'lastmodifier_login' => $user->user_login,
+                    'done' => 0,
+                    'description' => '',
+                    'lastmodified_time' => $now
+                ]);
+                $activity_id = $insertActivity->id;
+                ActivityGroups::create([
+                    'activity_id' => $activity_id,
+                    'term_id_cache' => 0,
+                    'groupid' => $group_id,
+                    'group_name' => $group_name,
+                    'session_type_group' => 0
+                ]);
+                ActivityLeaders::create([
+                    'activity_id' => $activity_id,
+                    'leader_login' => $user->user_login
+                ]);
+            }
         }
+
     }
 
     public function checkDateImport($date)
@@ -303,6 +316,7 @@ class GroupService
         if ($course_id > 0) {
             return $course_id;
         }
+
         return false;
     }
 
@@ -311,6 +325,7 @@ class GroupService
         $syllabus_id = null;
         $key = strtoupper($course_id);
         $arrayListSyllabus = array_change_key_case($listSyllabus, CASE_UPPER);
+
         if (array_key_exists($key, $arrayListSyllabus)) {
             $syllabus_id = $arrayListSyllabus[$key];
         }
@@ -325,7 +340,7 @@ class GroupService
         $totalCourse = SyllabusPlan::where('course_session', $course_session)->where('syllabus_id', $syllabus_id)->count();
 
         if (!empty($totalCourse) && is_numeric($totalCourse) && $totalCourse > 0) {
-            return $totalCourse;
+            return true;
         }
 
         return false;
@@ -334,10 +349,11 @@ class GroupService
     public function getGroupId($group_name, $course_id, $listCourseGroup)
     {
         $group_id = null;
-        $group_name = strtoupper($group_name . $course_id);
+        $key = strtoupper($group_name . $course_id);
         $arrayCourseGroup = array_change_key_case($listCourseGroup, CASE_UPPER);
-        if (array_key_exists($group_name, $arrayCourseGroup)) {
-            $group_id = $arrayCourseGroup[$group_name];
+
+        if (array_key_exists($key, $arrayCourseGroup)) {
+            $group_id = $arrayCourseGroup[$key];
         }
 
         return $group_id;
@@ -397,6 +413,15 @@ class GroupService
             return $result;
         }
 
+        return false;
+    }
+
+    public function check_if_course_session_duplicate($course_session, $group_id) {
+        $activitys = Activitys::where('groupid', "%LIKE%", $group_id)->where('course_slot', $course_session)->count();
+
+        if (isset($activitys) && $activitys > 0) {
+            return true;
+        }
         return false;
     }
 }
