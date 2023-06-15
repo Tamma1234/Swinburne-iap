@@ -68,11 +68,6 @@ class GroupService
                 continue;
             }
 
-//            if ($checkGroupName != null) {
-//                $result[] = "Group Name" . ' ' . $checkGroupName->group_name . ' ' . 'Đã tồn tại trong danh sách group';
-//                continue;
-//            }
-
             $subject_id = $this->getSubjectIdBySubjectCode($subject_code, $arrayListSubjectCode);
             if (empty($subject_id)) {
                 $result[] = "Không tìm thấy mã " . $subject_code . " trong danh sách lớp";
@@ -122,46 +117,44 @@ class GroupService
             if (empty($groupArray)) {
                 $result[] = "Bị lỗi do không tìm thấy tên lớp $group_name được import trong danh sách lớp, khóa";
             }
-
             if ($this->check_if_course_session_duplicate($course_session, $group_id)) {
-                $result[] = 'Buổi học thứ ' . $course_session . ' của lớp <a href=\'../group/group_add.php?id=' . $group_id . '\'>' . $group_name . '</a> học môn <strong>' . $subject_code . '</strong> đã được xếp lịch.';
+                $result[] = 'Buổi học thứ ' . $course_session . ' của lớp ' . $group_id . $group_name  . $subject_code . ' đã được xếp lịch.';
+               return $result;
                 break;
             }
-
-            if (!empty($result)) {
-                return $result;
-            } else {
-                $now = date('Y-m-d H:i:s');
-                $user = auth()->user();
-                $intDate = strtotime($date);
-                $formatDate = date('Y-m-d', $intDate);
-                $insertActivity = Activitys::create([
-                    "day" => $formatDate,
-                    "start_at" => $start_time,
-                    "end_at" => $end_time,
-                    'groupid' => $group_id,
-                    'room_id' => $room_id,
-                    'course_slot' => $course_session,
-                    'lastmodifier_login' => $user->user_login,
-                    'done' => 0,
-                    'description' => '',
-                    'lastmodified_time' => $now
-                ]);
-                $activity_id = $insertActivity->id;
-                ActivityGroups::create([
-                    'activity_id' => $activity_id,
-                    'term_id_cache' => 0,
-                    'groupid' => $group_id,
-                    'group_name' => $group_name,
-                    'session_type_group' => 0
-                ]);
-                ActivityLeaders::create([
-                    'activity_id' => $activity_id,
-                    'leader_login' => $user->user_login
-                ]);
-            }
+//            if (!empty($result)) {
+//                return $result;
+//            } else {
+//                $now = date('Y-m-d H:i:s');
+//                $user = auth()->user();
+//                $intDate = strtotime($date);
+//                $formatDate = date('Y-m-d', $intDate);
+//                $insertActivity = Activitys::create([
+//                    "day" => $formatDate,
+//                    "start_at" => $start_time,
+//                    "end_at" => $end_time,
+//                    'groupid' => $group_id,
+//                    'room_id' => $room_id,
+//                    'course_slot' => $course_session,
+//                    'lastmodifier_login' => $user->user_login,
+//                    'done' => 0,
+//                    'description' => '',
+//                    'lastmodified_time' => $now
+//                ]);
+//                $activity_id = $insertActivity->id;
+//                ActivityGroups::create([
+//                    'activity_id' => $activity_id,
+//                    'term_id_cache' => 0,
+//                    'groupid' => $group_id,
+//                    'group_name' => $group_name,
+//                    'session_type_group' => 0
+//                ]);
+//                ActivityLeaders::create([
+//                    'activity_id' => $activity_id,
+//                    'leader_login' => $user->user_login
+//                ]);
+//            }
         }
-
     }
 
     public function checkDateImport($date)
@@ -417,7 +410,7 @@ class GroupService
     }
 
     public function check_if_course_session_duplicate($course_session, $group_id) {
-        $activitys = Activitys::where('groupid', "%LIKE%", $group_id)->where('course_slot', $course_session)->count();
+        $activitys = Activitys::where('groupid', $group_id)->where('course_slot', $course_session)->count();
 
         if (isset($activitys) && $activitys > 0) {
             return true;

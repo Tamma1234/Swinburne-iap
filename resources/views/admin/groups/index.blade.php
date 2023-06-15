@@ -20,8 +20,10 @@
                                 <p>Total: <span class="text-danger" id="total">{{ count($groups) }}</span> record</p>
                             </div>
                             <div class="list-setting text-center">
-                                <p><a class="version" href="{{ route('import.student') }}">Import student to group(CSV)</a> |
-                                    <a class="version" href="{{ route('course.list-subject') }}">Export groups from
+                                <p><a class="version" href="{{ route('import.student') }}">Import student to
+                                        group(CSV)</a> |
+                                    <a class="version" href="{{ route('export.group', ['term_id' => $term->id]) }}">Export
+                                        groups from
                                         semmester</a> |
                                     <a class="version" href="{{ route('import.class') }}">Import class schedule</a>
                                 </p>
@@ -40,29 +42,30 @@
                     <form action="" method="post" style="margin: auto">
                         @csrf
                         <div class="row" style="padding-left: 20px; margin: auto">
-                                Text
-                                <select id="term_id" name="term_id" onchange="doSearch()">
-                                    <option value="">Select</option>
-                                    @foreach($terms as $item)
-                                        <option
-                                            {{ $term->id == $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>
-                                    @endforeach
-                                </select>
+                            Term
+                            <select id="term_id" name="term_id" onchange="doSearch()">
+                                <option value="">Select</option>
+                                @foreach($terms as $item)
+                                    <option
+                                        {{ $term->id == $item->id ? "selected" : "" }} value="{{ Request::url() }}?term_id={{ $term->id }}">{{ $item->term_name }}</option>
+                                @endforeach
+                            </select>
                             Subject
-                                <select id="department_id" name="department_id" onchange="doSearch()">
-                                    <option value="">select</option>
-                                    @foreach($departments as $department)
-                                        <option
-                                            value="{{ $department->id }}">{{ $department->department_name }}</option>
-                                    @endforeach
-                                </select>
+                            <select id="department_id" name="department_id" onchange="doSearch()">
+                                <option value="">select</option>
+                                @foreach($departments as $department)
+                                    <option
+                                        value="{{ Request::url() }}?department_id={{ $department->id }}">{{ $department->department_name }}</option>
+                                @endforeach
+                            </select>
                             Course
-                                <select id="course_id" name="course_id" onchange="doSearch()">
-                                    <option value="">select</option>
-                                    @foreach($courses as $course)
-                                        <option value="{{ $course->id }}">{{ $course->psubject_code }} - {{ $course->psubject_name }}</option>
-                                    @endforeach
-                                </select>
+                            <select id="course_id" name="course_id" onchange="doSearch()">
+                                <option value="">select</option>
+                                @foreach($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->psubject_code }}
+                                        - {{ $course->psubject_name }}</option>
+                                @endforeach
+                            </select>
                             Status
                             <select name="group_status">
                                 <option value="">select</option>
@@ -98,10 +101,16 @@
                         <?php $i = 1 ?>
                         @foreach($groups as $item)
                                 <?php
+                                $start_day_format = "";
+                                $end_day_format = "";
                                 $start_day = $item->start_date;
-                                $start_day_format = date('d-m-Y', strtotime($start_day));
+                                if (isset($start_day)) {
+                                    $start_day_format = date('d-m-Y', strtotime($start_day));
+                                }
                                 $end_day = $item->end_date;
-                                $end_day_format = date('d-m-Y', strtotime($end_day));
+                                if (isset($end_day)) {
+                                    $end_day_format = date('d-m-Y', strtotime($end_day));
+                                }
 
                                 $activityGroup = \App\Models\Fu\Activitys::selectRaw('count(*) as slot_count, slot')
                                     ->where('groupid', $item->id)
@@ -117,7 +126,8 @@
                             <tr class="text-center">
                                 <td>{{ $i++ }}</td>
                                 <td class="font-weight-bold">
-                                    <a class="version" href="{{ route('course.group', ['id' => $item->id]) }}">{{ $item->group_name }}</a>
+                                    <a class="version"
+                                       href="{{ route('course.group', ['id' => $item->id]) }}">{{ $item->group_name }}</a>
                                 </td>
                                 <td>{{ $item->psubject_code }}</td>
                                 <td>{{ $item->psubject_name }}</td>
@@ -156,12 +166,13 @@
 @endsection
 
 @section('script')
-<script>
-    import App from "../../../js/App";
-    export default {
-        components: {App}
-    }
-</script>
+    <script>
+        import App from "../../../js/App";
+
+        export default {
+            components: {App}
+        }
+    </script>
     <script>
         $(document).ready(function () {
             $('#kt_form_search').keyup(function () {
@@ -180,8 +191,23 @@
                 })
             });
 
+            $('#term_id').change(function () {
+                let url = $(this).val();
+                if (url) {
+                    window.location = url;
+                }
+                return false;
+            })
 
+            $('#department_id').change(function () {
+                let url = $(this).val();
+                if (url) {
+                    window.location = url;
+                }
+                return false;
+            })
         });
+
         function doSearch() {
             $.ajax({
                 url: '{{ route('group.search') }}',
@@ -196,6 +222,7 @@
         }
     </script>
     <script>
+
         $(document).ready(function () {
             var table = $('#example').DataTable({pageLength: 10});
             // Get the page info, so we know what the last is

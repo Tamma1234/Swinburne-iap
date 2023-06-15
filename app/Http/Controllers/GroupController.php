@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportGroupSemmester;
 use App\Http\Requests\GroupMemberRequest;
 use App\Imports\ClassImport;
 use App\Imports\GroupImport;
+use App\Imports\GroupStudentImport;
 use App\Imports\UsersImport;
 use App\Models\Fu\Block;
 use App\Models\Fu\Course;
@@ -66,15 +68,16 @@ class GroupController extends Controller
 
                 return view('admin.groups.search', compact('groups', 'term', 'terms',
                     'departments', 'courses', 'blocks', 'term_id', 'department_id', 'course_id'));
+
             } elseif ($term_id && $department_id && $course_id) {
                 $groups = Groups::join('fu_subject', 'fu_group.psubject_id', 'fu_subject.id')
                     ->join('fu_course', 'fu_subject.id', 'fu_course.subject_id')
                     ->where('pterm_id', $term_id)->where('fu_subject.department_id', $department_id)
                     ->where('fu_course.id', $course_id)
                     ->get();
-
                 return view('admin.groups.search', compact('groups', 'term', 'terms',
                     'departments', 'courses', 'blocks', 'term_id', 'department_id', 'course_id'));
+
             }
             $groups = Groups::where('pterm_id', $term_id)->get();
 
@@ -201,7 +204,7 @@ class GroupController extends Controller
         $group_id = $request->group_id;
         $group = Groups::find($group_id);
         $groupMember = GroupMember::where('groupid', $group_id)->pluck('member_login')->toArray();
-        $likeArray = array_intersect($student_name_array,$groupMember);
+        $likeArray = array_intersect($student_name_array, $groupMember);
         if (count($likeArray) < 0) {
             $data = [];
             $date = Carbon::now()->toDateTimeString();
@@ -237,29 +240,52 @@ class GroupController extends Controller
         }
     }
 
-    public function importClass() {
-        return view('admin.groups.import-class');
+    public function importStudent()
+    {
+        return view('admin.groups.import-student');
     }
 
-    function postImportClass(Request $request) {
+    public function postImportStudent(Request $request)
+    {
         $request->validate([
             'file' => 'required|mimes:xlsx'
         ]);
+        $groupImport = new GroupStudentImport();
+        $groupsInput = Excel::toCollection($groupImport, $request->file('file'));
+        $result = $groupImport->import($groupsInput);
+        if (isset($result)) {
+            return back()->with('message', $result);
+        }
+        return redirect()->route('import.student')->with('msg-add', "Successfully imported student class");
+    }
 
+    public function importClass()
+    {
+        return view('admin.groups.import-class');
+    }
+
+    function postImportClass(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx'
+        ]);
         $groupImport = new GroupImport();
-        $groupsInput =  Excel::toCollection($groupImport, $request->file('file'));
+        $groupsInput = Excel::toCollection($groupImport, $request->file('file'));
         $result = $groupImport->import($groupsInput);
 
-         if (isset($result)) {
-             return back()->with('message', $result);
-         }
+        if (isset($result)) {
+            return back()->with('message', $result);
+        }
 
-         return redirect()->route('import.class')->with('msg-add', "Successfully imported group class");
+        return redirect()->route('import.class')->with('msg-add', "Successfully imported group class");
+    }
 
-//        dd(1);
-//        $import =  Excel::toCollection(new GroupImport, $request->file('file'));
-//        dd($import);
-//        Excel::import(new GroupImport, $request->file('file'));
-//        dd($file);
+    public function exportGroupSemmester(Request $request)
+    {
+        $groups = Groups::where('pterm_id', $request->term_id)->get();
+        $exports = new ExportGroupSemmester([$groups]);
+
+        return Excel::download($exports, 'group.xlsx');
+
     }
 }

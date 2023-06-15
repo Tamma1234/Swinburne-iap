@@ -4,7 +4,7 @@
         <form action="" method="post" style="margin: auto;">
             @csrf
             <div class="row">
-                Text
+                Term
                 <select id="term_id" name="term_id" onchange="doSearch()">
                     <option value="">Select</option>
                     @foreach($terms as $item)

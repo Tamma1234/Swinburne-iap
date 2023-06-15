@@ -17,11 +17,11 @@ class Service
     /**
      * Get process order service.
      *
-     * @return ProcessOrderService
+     * @return StudyStausService
      */
-    public static function getProcessOrder()
+    public static function getStudyStatus()
     {
-        return app(ProcessOrderService::class);
+        return app(StudyStausService::class);
     }
 
     public static function confirmSendMail()

@@ -18,4 +18,9 @@ class StudentEvent extends Model
         $this->connection = session('campus_db');
         parent::__construct($attributes);
     }
+
+    public function events()
+    {
+        return $this->hasOne(EventSwin::class, 'id', 'event_id');
+    }
 }

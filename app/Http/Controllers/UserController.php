@@ -26,7 +26,8 @@ class UserController extends Controller
     {
         if (Gate::allows('user_level')) {
             $curriculums = Curriculum::all();
-            $users = User::all();
+            $users = User::where('user_level', 3)->get();
+
             return view('admin.users.index', compact('users', 'curriculums'));
         } else {
             abort(403);

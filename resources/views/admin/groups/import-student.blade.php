@@ -10,7 +10,7 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                     <h3 class="kt-portlet__head-title">
-                        Import
+                        Import Student
                     </h3>
                 </div>
             </div>
@@ -21,15 +21,15 @@
                             <div class="kt-section__desc">
                                 <p class="text-dark">Tạo một file CSV có cấu trúc như sau (ví dụ sau chỉ chứa hai dòng đầu tiên):</p>
                                 <p style="margin-left: 20px">
-                                    user_code,campus_code,term_name,group_name,subject_code
+                                    user_code,term_name,group_name,subject_code
                                 </p>
-                                <p style="margin-left: 20px">PT00008,FPolyHN,Summer 2012,PT0703-WEB,COM201</p>
+                                <p style="margin-left: 20px">PT00008,Summer 2012,PT0703-WEB,COM201</p>
                             </div>
 
                             <div class="kt-separator kt-separator--space-lg kt-separator--border-dashed"></div>
                         </div>
                         <div class="" id="kt_widget4_tab11_content">
-                            <form method="POST" action="{{ route('import.student') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('post.student') }}" enctype="multipart/form-data">
                                 @csrf
                                 <table class="table">
                                     <thead>
@@ -57,7 +57,6 @@
             </div>
         </div>
         @endsection
-
         @section('script')
             <script>
                 $(document).ready(function () {

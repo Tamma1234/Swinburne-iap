@@ -92,6 +92,8 @@ Route::middleware('auth')->group(function () {
         Route::get('import-class', 'GroupController@importClass')->name('import.class');
         Route::post('post-class', 'GroupController@postImportClass')->name('post.import.class');
         Route::get('import-student', 'GroupController@importStudent')->name('import.student');
+        Route::post('post-student', 'GroupController@postImportStudent')->name('post.student');
+        Route::get('export-group/{term_id}', 'GroupController@exportGroupSemmester')->name('export.group');
     });
 
     Route::group(['prefix' => 'event'], function () {
@@ -187,5 +189,11 @@ Route::middleware('auth')->group(function () {
         Route::get('permission-trashout', 'PermissionController@permissionTrashOut')->name('permissions.trash');
 //        // Delete Roles completely
         Route::get('delete-completely/{id}', 'PermissionController@deleteCompletely')->name('permissions.delete.completely');
+    });
+
+    //Route QR_Code
+    Route::group(['prefix' => 'qr-code'], function () {
+        Route::get('/', 'QRCodeController@index')->name('qr-code.index');
+        Route::get('/store', 'QRCodeController@storeQrCode')->name('post.qr-code');
     });
 });
