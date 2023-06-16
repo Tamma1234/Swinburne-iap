@@ -51,7 +51,9 @@ class QRCodeController extends Controller
             }
             return $output;
         } else {
-            return false;
+            $user = User::where('user_code', $user_code)->where('user_level', 3)->first();
+            $full_name = $user->user_surname . ' ' . $user->user_middlename . ' ' . $user->user_givenname;
+            return response()->json(["error_type" => "Sinh viên $full_name đã điểm danh rồi"]);
         }
     }
 }

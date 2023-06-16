@@ -141,7 +141,6 @@ Route::middleware('auth')->group(function () {
     //Queries
     Route::group(['prefix' => 'student'], function () {
         Route::get('list', 'StudentController@listStudentStatus')->name('student.index');
-
     });
 
     Route::group(['prefix' => 'term'], function () {

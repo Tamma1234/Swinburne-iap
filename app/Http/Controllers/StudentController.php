@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluate;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,7 @@ class StudentController extends Controller
     }
 
     public function listStudentStatus(Request $request) {
-        return view('admin.students.index');
+        $users = User::where('user_level', 3)->get();
+        return view('admin.students.index', compact('users'));
     }
 }

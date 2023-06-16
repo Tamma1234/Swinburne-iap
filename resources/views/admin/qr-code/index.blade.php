@@ -13,10 +13,11 @@
         <h1>QR Code Scanner</h1>
         <div class="row">
             <div class="col-md-4">
-                <div id="qr-reader" style="width:500px"></div>
+                <div id="qr-reader"></div>
+                <div class="alert alert-danger" id="error_type" style="display: none;"></div>
             </div>
-            <div class="col-md-8">
-                <div class="kt-section__content" style="margin-right: 20px">
+            <div class="col-md-7">
+                <div class="kt-section__content" >
                     <table class="table table-bordered">
                         <thead class="thead-light">
                         <tr>
@@ -36,38 +37,25 @@
                                 <td>{{ $item->full_name }}</td>
                                 <td>{{ $item->events ? $item->events->name_event : "" }}</td>
                                 <td>@if($item->is_active == 1)
-                                        <button type="button" class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">Attendance</button>
+                                        <button type="button"
+                                                class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">
+                                            Attendance
+                                        </button>
                                     @else
-                                        <button type="button" class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">Warning</button>
+                                        <button type="button"
+                                                class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">
+                                            Warning
+                                        </button>
                                     @endif
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
             <div>
-
             </div>
-            {{--        <div class="container">--}}
-            {{--            <div class="row">--}}
-            {{--                <div class="col-6">--}}
-            {{--                    <video id="scanner"  ></video>--}}
-            {{--                </div>--}}
-            {{--                <div class="col-6">--}}
-            {{--                    <table border="1">--}}
-            {{--                        <tr>--}}
-            {{--                            <th>aaaa</th>--}}
-            {{--                            <th>BBBB</th>--}}
-            {{--                            <th>VVVV</th>--}}
-            {{--                        </tr>--}}
-            {{--                    </table>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
-            {{--        </div>--}}
-
         </div>
         @endsection
 
@@ -99,8 +87,15 @@
                                 type: 'get',
                                 data: {result: result},
                             }).done(function (response) {
-                                $('#qr-reader-results').empty();
-                                $('#qr-reader-results').html(response);
+                                console.log(!$.isEmptyObject(response.error_type));
+                                if (!$.isEmptyObject(response.error_type)) {
+                                    $("#error_type").html('');
+                                    $("#error_type").css('display', 'block');
+                                    $("#error_type").append(response.error_type);
+                                } else {
+                                    $('#qr-reader-results').empty();
+                                    $('#qr-reader-results').html(response);
+                                }
                             })
                         }
                     }
