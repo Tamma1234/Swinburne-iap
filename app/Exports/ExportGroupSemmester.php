@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Config;
 
-class ExportGroupSemmester implements FromView, WithColumnWidths
+class ExportGroupSemmester implements FromView
 {
     use RegistersEventListeners;
 
@@ -23,10 +23,7 @@ class ExportGroupSemmester implements FromView, WithColumnWidths
         $this->groups = $groups;
     }
 
-    public function columnWidths(): array
-    {
-        // TODO: Implement columnWidths() method.
-    }
+
 
     public function view(): View
     {

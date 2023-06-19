@@ -5,16 +5,16 @@
     <div class="kt-portlet">
         <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">
-                    Read Qrcode
+                <h3 class="kt-portlet__head-title text-center">
+                    Event: <span class="text-primary">{{ $event->name_event }}</span>
+                    <input type="hidden" id="event_id" value="{{ $event->id }}">
                 </h3>
             </div>
         </div>
-        <h1>QR Code Scanner</h1>
         <div class="row">
             <div class="col-md-4">
-                <div id="qr-reader"></div>
-                <div class="alert alert-danger" id="error_type" style="display: none;"></div>
+                <div id="qr-reader" style="margin-left: 10px"></div>
+                <div class="alert alert-danger" id="error_type" style="display: none;margin-left: 10px"></div>
             </div>
             <div class="col-md-7">
                 <div class="kt-section__content" >
@@ -26,6 +26,7 @@
                             <th>Full Name</th>
                             <th>Name Event</th>
                             <th>Active</th>
+                            <th>Type Person</th>
                         </tr>
                         </thead>
                         <tbody id="qr-reader-results">
@@ -48,6 +49,11 @@
                                         </button>
                                     @endif
                                 </td>
+                                <td>
+                                    <button type="button"
+                                             class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">
+                                        {{ $item->type_person }}
+                                    </button></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -82,10 +88,11 @@
                             lastResult = decodedText;
                             // Handle on success condition with the decoded message.
                             let result = `${decodedText}`, decodedResult;
+                            var event_id = $('#event_id').val();
                             $.ajax({
                                 url: '{{ route('post.qr-code') }}',
                                 type: 'get',
-                                data: {result: result},
+                                data: {result: result, event_id:event_id},
                             }).done(function (response) {
                                 console.log(!$.isEmptyObject(response.error_type));
                                 if (!$.isEmptyObject(response.error_type)) {

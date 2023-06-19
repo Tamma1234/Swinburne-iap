@@ -3,7 +3,7 @@
 @section('content')
     @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Group', 'value' => "List group", 'value2' => ""])
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-        <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet kt-portlet--mobile" id="content-data">
             <div class="kt-portlet__head kt-portlet__head--lg">
                 <div class="kt-portlet__head-label col-md-2">
 										<span class="kt-portlet__head-icon">
@@ -47,7 +47,7 @@
                                 <option value="">Select</option>
                                 @foreach($terms as $item)
                                     <option
-                                        {{ $term->id == $item->id ? "selected" : "" }} value="{{ Request::url() }}?term_id={{ $term->id }}">{{ $item->term_name }}</option>
+                                        {{ $term->id == $item->id ? "selected" : "" }} value="{{ $item->id }}">{{ $item->term_name }}</option>
                                 @endforeach
                             </select>
                             Subject
@@ -55,7 +55,7 @@
                                 <option value="">select</option>
                                 @foreach($departments as $department)
                                     <option
-                                        value="{{ Request::url() }}?department_id={{ $department->id }}">{{ $department->department_name }}</option>
+                                        value="{{ $department->id }}">{{ $department->department_name }}</option>
                                 @endforeach
                             </select>
                             Course
@@ -160,7 +160,6 @@
                     <!--end: Datatable -->
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
@@ -191,21 +190,21 @@
                 })
             });
 
-            $('#term_id').change(function () {
-                let url = $(this).val();
-                if (url) {
-                    window.location = url;
-                }
-                return false;
-            })
-
-            $('#department_id').change(function () {
-                let url = $(this).val();
-                if (url) {
-                    window.location = url;
-                }
-                return false;
-            })
+            // $('#term_id').change(function () {
+            //     let url = $(this).val();
+            //     if (url) {
+            //         window.location = url;
+            //     }
+            //     return false;
+            // })
+            //
+            // $('#department_id').change(function () {
+            //     let url = $(this).val();
+            //     if (url) {
+            //         window.location = url;
+            //     }
+            //     return false;
+            // })
         });
 
         function doSearch() {
@@ -214,8 +213,8 @@
                 type: 'get',
                 data: $('form').serialize(),
             }).done(function (response) {
-                $('#data-body').empty();
-                $('#data-body').html(response);
+                $('#content-data').empty();
+                $('#content-data').html(response);
                 var totalGroup = $('#totalGroup').val();
                 $('#total').html(totalGroup)
             })

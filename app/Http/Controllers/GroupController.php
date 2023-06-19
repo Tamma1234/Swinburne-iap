@@ -58,7 +58,6 @@ class GroupController extends Controller
 
         if ($term_id == null) {
             $groups = Groups::all();
-
             return view('admin.groups.search', compact('groups', 'term', 'terms',
                 'departments', 'courses', 'blocks', 'term_id', 'department_id'));
         } else {
@@ -75,10 +74,12 @@ class GroupController extends Controller
                     ->where('pterm_id', $term_id)->where('fu_subject.department_id', $department_id)
                     ->where('fu_course.id', $course_id)
                     ->get();
+
                 return view('admin.groups.search', compact('groups', 'term', 'terms',
                     'departments', 'courses', 'blocks', 'term_id', 'department_id', 'course_id'));
 
             }
+
             $groups = Groups::where('pterm_id', $term_id)->get();
 
             return view('admin.groups.search', compact('groups', 'term', 'terms',

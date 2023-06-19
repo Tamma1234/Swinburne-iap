@@ -192,7 +192,7 @@ Route::middleware('auth')->group(function () {
 
     //Route QR_Code
     Route::group(['prefix' => 'qr-code'], function () {
-        Route::get('/', 'QRCodeController@index')->name('qr-code.index');
+        Route::get('/{id}', 'QRCodeController@index')->name('qr-code.index');
         Route::get('/store', 'QRCodeController@storeQrCode')->name('post.qr-code');
     });
 });

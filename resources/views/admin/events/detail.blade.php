@@ -70,6 +70,7 @@
                 </table>
                 <!--begin: Datatable -->
                 <div class="kt-portlet__head-label col-md-2" style="margin-bottom: 20px">
+                    <a href="{{ route("qr-code.index", ['id' => $event->id]) }}" class="btn btn-primary">Check in</a>
                     <h3 class="kt-portlet__head-title">
                         Student List
                     </h3>
@@ -77,18 +78,32 @@
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
                     <thead class="table-active">
                     <tr>
+                        <th class="text-white">STT</th>
                         <th class="text-white">User Code</th>
                         <th class="text-white">FullName</th>
-                        <th class="text-white">Semester</th>
+                        <th class="text-white">Active</th>
                         <th class="text-white">Action</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
+                    <?php $i = 1 ?>
                     @foreach($studentEvent as $item)
                         <tr>
+                            <td>{{ $i++ }}</td>
                             <td>{{ $item->user_code }}</td>
                             <td>{{ $item->full_name }}</td>
-                            <td></td>
+                            <td>@if($item->is_active == 1)
+                                    <button type="button"
+                                            class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">
+                                        Attendance
+                                    </button>
+                                @else
+                                    <button type="button"
+                                            class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">
+                                        Warning
+                                    </button>
+                                @endif
+                            </td>
                             <td>
                                 <button type="button" class="btn" id="delete_event" data-id="{{ $item->id }}" data-toggle="kt-tooltip" title="Delete"
                                    data-original-title="Close"><i class="flaticon-delete"></i></button>

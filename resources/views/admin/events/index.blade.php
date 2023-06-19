@@ -28,7 +28,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Description</th>
-                        <th style="width: 47px">List User</th>
+                        <th style="width: 47px">Total User</th>
                         <th style="width: 54px">Time Start</th>
                         <th>Time End</th>
                         <th>Actions</th>
@@ -39,9 +39,9 @@
                     @foreach($events as $item)
                         <tr>
                             <td>{{ $i++ }}</td>
-                            <td>{{ $item->name_event }}</td>
+                            <td><a href="{{ route('event.detail', ['id' => $item->id]) }}">{{ $item->name_event }}</a></td>
                             <td>{{ $item->description_event }}</td>
-                            <td></td>
+                            <td class="text-danger font-weight-bold">{{ count($item->students) }}</td>
                             <td>{{ $item->start_date }}</td>
                             <td>{{ $item->end_date }}</td>
                             <td class="text-nowrap">
