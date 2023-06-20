@@ -57,7 +57,7 @@ class QRCodeController extends Controller
                 $user = User::where('user_code', $user_code)->where('user_level', 3)->first();
                 $full_name = $user->user_surname . ' ' . $user->user_middlename . ' ' . $user->user_givenname;
 
-                return response()->json(["error_type" => "Sinh viên <span class='text-primary'> $full_name </span> đã điểm danh rồi"]);
+                return response()->json(["error_type" => "Sinh viên <span class='text-warning font-weight-bold'> $full_name </span> đã điểm danh rồi"]);
             }
         } else {
             $user = User::where('user_code', $user_code)->where('user_level', 3)->first();
@@ -93,6 +93,5 @@ class QRCodeController extends Controller
             }
             return $output;
         }
-
     }
 }

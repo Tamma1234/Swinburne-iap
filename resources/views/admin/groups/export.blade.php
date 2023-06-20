@@ -1,9 +1,24 @@
-<table class="table table-bordered">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            border: 1px solid grey;
+        }
+    </style>
+</head>
+<body>
+<table class="table-active">
     <thead>
     <tr>
         <th scope="col">STT</th>
         <th scope="col">Tên lớp</th>
-        <th scope="col">Mã môn </th>
+        <th scope="col">Mã môn</th>
         <th scope="col">Tên môn</th>
         <th scope="col">Block</th>
         <th scope="col">Số thành viên</th>
@@ -13,7 +28,7 @@
     </thead>
     <tbody>
     <?php
-    $i =1; ?>
+    $i = 1; ?>
     @foreach($groups as $group)
         <tr>
             <td>{{ $i++ }}</td>
@@ -28,3 +43,6 @@
     @endforeach
     </tbody>
 </table>
+
+</body>
+</html>

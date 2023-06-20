@@ -1,7 +1,8 @@
 @extends('admin.layouts.main')
 @section('title', 'Index')
 @section('content')
-    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Group', 'value' => "List group", 'value2' => ""])
+    @include('admin.templates.search-header', ['name' => 'Swinburne', 'key' => 'Group', 'value' => "List group", 'value2' => ""])
+
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile" id="content-data">
             <div class="kt-portlet__head kt-portlet__head--lg">
@@ -123,7 +124,7 @@
                                     ->distinct()
                                     ->get();
                                 ?>
-                            <tr class="text-center">
+                            <tr>
                                 <td>{{ $i++ }}</td>
                                 <td class="font-weight-bold">
                                     <a class="version"
@@ -167,7 +168,6 @@
 @section('script')
     <script>
         import App from "../../../js/App";
-
         export default {
             components: {App}
         }

@@ -2,7 +2,7 @@
 @section('title', 'Create')
 
 @section('content')
-    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Group', 'value' => "List Group", 'value2' => ""])
+    @include('admin.templates.search-header', ['name' => 'Swinburne', 'key' => 'Group', 'value' => "List Group", 'value2' => ""])
 
     <div class="kt-portlet">
         <div class="kt-portlet__head">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-4 align-self-center" style="margin-left: 100px">
+            <div class="col-md-4 col-4 align-self-center">
                 <div class="input-group date">
                     <span style="width: 100px;"><span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">Approved</span></span>
                     <span style="width: 100px;"><span class="kt-badge  kt-badge--brand kt-badge--inline kt-badge--pill">Pending</span></span>
@@ -488,6 +488,23 @@
         @endif;
 
         $(document).ready(function () {
+            //search thông tin sinh viên
+            $('#kt_form_search').keyup(function () {
+                var value = $('#kt_form_search').val();
+                $("#select-value").show();
+                $.ajax({
+                    url: '{{ route('value.search') }}',
+                    type: 'get',
+                    data: {value: value},
+                }).done(function (response) {
+                    $('#select-value').empty();
+                    $('#select-value').html(response);
+                    $("body").on("click", function () {
+                        $("#select-value").hide();
+                    })
+                })
+            });
+
             var table = $('#example').DataTable({pageLength: 10});
 
             // Get the page info, so we know what the last is
@@ -510,6 +527,7 @@
             //     // console.log(currentInt);
             // }, 10000); // 3 seconds
         });
+        // Search time
         $('#kt_datepicker_2').change(function () {
             var date = $('#kt_datepicker_2').val();
 

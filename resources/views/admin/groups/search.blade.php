@@ -113,7 +113,7 @@
                             ->distinct()
                             ->get();
                         ?>
-                    <tr class="text-center">
+                    <tr>
                         <td>{{ $i++ }}</td>
                         <td class="font-weight-bold"><a class="version"
                                                         href="{{ route('course.group', ['id' => $item->id]) }}">{{ $item->group_name }}</a>

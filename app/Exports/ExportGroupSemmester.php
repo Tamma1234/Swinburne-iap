@@ -23,8 +23,6 @@ class ExportGroupSemmester implements FromView
         $this->groups = $groups;
     }
 
-
-
     public function view(): View
     {
        foreach ($this->groups as $items) {

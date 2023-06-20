@@ -3,8 +3,6 @@ $user = auth()->user();
 $giveName = $user->user_givenname;
 $name = str_split($giveName);
 ?>
-
-
 <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
     <!-- begin:: Header Menu -->
 
@@ -53,9 +51,6 @@ $name = str_split($giveName);
                         {{ $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname  }}
                     </div>
                 </div>
-
-                <!--end: Head -->
-
                 <!--begin: Navigation -->
                 <div class="kt-notification">
                     <div class="kt-notification__custom kt-space-between">
@@ -63,13 +58,10 @@ $name = str_split($giveName);
                         <a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>
                     </div>
                 </div>
-
                 <!--end: Navigation -->
             </div>
         </div>
-
         <!--end: User Bar -->
     </div>
-
     <!-- end:: Header Topbar -->
 </div>
