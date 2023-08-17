@@ -1,113 +1,11 @@
-{{--<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">--}}
-{{--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>--}}
-{{--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
-{{--<!------ Include the above in your HEAD tag ---------->--}}
-
-{{--<!DOCTYPE html>--}}
-{{--<html>--}}
-
-{{--<head>--}}
-{{--    <title>Login Page</title>--}}
-{{--    <!--Made with love by Mutiullah Samim -->--}}
-
-{{--    <!--Bootsrap 4 CDN-->--}}
-{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"--}}
-{{--        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">--}}
-
-{{--    <!--Fontawesome CDN-->--}}
-{{--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"--}}
-{{--        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">--}}
-
-{{--    <!--Custom styles-->--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/login.css') }}">--}}
-{{--</head>--}}
-
-{{--<body>--}}
-{{--    <div class="container">--}}
-{{--        <div class="d-flex justify-content-center h-100">--}}
-{{--            <div class="card">--}}
-{{--                <div class="card-header">--}}
-{{--                    <h3>Sign In</h3>--}}
-{{--                </div>--}}
-{{--                <div class="card-body">--}}
-{{--                    <form action="{{route('login.post')}}" method="POST" enctype="multipart/form-data">--}}
-{{--                        @csrf--}}
-{{--                        <div class="input-group form-group">--}}
-{{--                            <div class="input-group-prepend">--}}
-{{--                                <span class="input-group-text"><i class="fas fa-user"></i></span>--}}
-{{--                            </div>--}}
-{{--                            <input type="text" class="form-control" placeholder="email" name="user_email">--}}
-
-{{--                        </div>--}}
-{{--                        @error('user_email')--}}
-{{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                        @enderror--}}
-
-{{--                        <div class="input-group form-group">--}}
-{{--                            <div class="input-group-prepend">--}}
-{{--                                <span class="input-group-text"><i class="fas fa-key"></i></span>--}}
-{{--                            </div>--}}
-{{--                            <input type="password" class="form-control" placeholder="password" name="user_pass">--}}
-{{--                        </div>--}}
-{{--                        @error('user_pass')--}}
-{{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                        @enderror--}}
-
-{{--                        <div class="row align-items-center remember">--}}
-{{--                            <input type="checkbox" name="remember_token">Remember Me--}}
-{{--                        </div>--}}
-{{--                        <div class="form-group">--}}
-{{--                            <input type="submit" value="Login" class="btn float-right login_btn">--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--                    <a href="{{route('login.redirect')}}"  class="btn text-center float-right login_btn" style="width: 100%">Login With Google </a>--}}
-{{--                <div class="card-footer">--}}
-{{--                    <div class="d-flex justify-content-center links">--}}
-{{--                        Don't have an account?<a href="#">Sign Up</a>--}}
-{{--                    </div>--}}
-{{--                    <div class="d-flex justify-content-center">--}}
-{{--                        <a href="#">Forgot your password?</a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</body>--}}
-
-{{--</html>--}}
-
-
-    <!DOCTYPE html>
-
-<!--
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 4 & Angular 8
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-Renew Support: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
+<!DOCTYPE html>
 <html lang="en">
-
-<!-- begin::Head -->
 <head>
     <base href="../../../">
     <meta charset="utf-8"/>
     <title>Swinburne | VN</title>
     <meta name="description" content="Login page example">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!--begin::Fonts -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
-
-    <!--end::Fonts -->
-
     <!--begin::Page Custom Styles(used by this page) -->
     @include('admin.templates.css')
 </head>
@@ -117,7 +15,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- begin::Body -->
 <body
     class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
-
 <!-- begin:: Page -->
 <div class="kt-grid kt-grid--ver kt-grid--root">
     <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v1" id="kt_login">

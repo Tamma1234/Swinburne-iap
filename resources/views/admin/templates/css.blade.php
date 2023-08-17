@@ -1,8 +1,3 @@
-
-<!--begin::Page Vendors Styles(used by this page) -->
-
-<!--end::Page Vendors Styles -->
-
 <!--begin::Global Theme Styles(used by all pages) -->
 
 <!--begin:: Vendor Plugins -->

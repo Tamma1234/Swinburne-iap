@@ -1634,6 +1634,7 @@ if ( $.ajaxPrefilter ) {
 	// Proxy ajax
 	ajax = $.ajax;
 	$.ajax = function( settings ) {
+        console.log(settings);
 		var mode = ( "mode" in settings ? settings : $.ajaxSettings ).mode,
 			port = ( "port" in settings ? settings : $.ajaxSettings ).port;
 		if ( mode === "abort" ) {

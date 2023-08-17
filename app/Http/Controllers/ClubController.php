@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Clubs;
+use Illuminate\Http\Request;
+
+class ClubController extends Controller
+{
+    public function index() {
+        $clubs = Clubs::all();
+        return view('admin.clubs.index', compact('clubs'));
+    }
+
+    public function detail(Request $request) {
+        $id = $request->id;
+        $club_detail = Clubs::where('id', $id)->first();
+        return view('admin.clubs.detail', compact('club_detail', 'id'));
+    }
+}

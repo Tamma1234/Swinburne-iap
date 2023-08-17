@@ -124,6 +124,9 @@ Route::middleware('auth')->group(function () {
     //Curriculum
     Route::group(['prefix' => 'curriculum'], function () {
         Route::get('index', 'CurriculumController@index')->name('curriculum.index');
+        Route::get('student-list', 'CurriculumController@studentList')->name('personal.index');
+        Route::post('export-list', 'CurriculumController@exportStudenlist')->name('personal.export');
+        Route::get('student-search', 'CurriculumController@studentSearch')->name('personal.search');
         Route::get('create', 'CurriculumController@create')->name('curriculum.create');
         Route::post('store', 'CurriculumController@store')->name('curriculum.store');
         Route::get('edit/{id}', 'CurriculumController@edit')->name('curriculum.edit');
@@ -141,6 +144,7 @@ Route::middleware('auth')->group(function () {
     //Queries
     Route::group(['prefix' => 'student'], function () {
         Route::get('list', 'StudentController@listStudentStatus')->name('student.index');
+        Route::get('/search', 'StudentController@getStudentStatus')->name('status.search');
     });
 
     Route::group(['prefix' => 'term'], function () {
@@ -167,11 +171,11 @@ Route::middleware('auth')->group(function () {
         Route::post('store', 'RoleController@store')->name('roles.store');
         Route::get('edit/{id}', 'RoleController@edit')->name('roles.edit');
         Route::post('update/{id}','RoleController@update')->name('roles.update');
-//        // Cancel Roles
+        // Cancel Roles
         Route::get('remove/{id}', 'RoleController@delete')->name('roles.remove');
-//        // List Roles delete
+        // List Roles delete
         Route::get('role-trashout', 'RoleController@roleTrashOut')->name('roles.trash');
-//        // Delete Roles completely
+        // Delete Roles completely
         Route::get('delete-completely/{id}', 'RoleController@deleteCompletely')->name('roles.delete.completely');
     });
 
@@ -182,17 +186,23 @@ Route::middleware('auth')->group(function () {
         Route::post('store', 'PermissionController@store')->name('permissions.store');
         Route::get('edit/{id}', 'PermissionController@edit')->name('permissions.edit');
         Route::post('update/{id}', 'PermissionController@update')->name('permissions.update');
-//        // Cancel Roles
+        // Cancel Roles
         Route::get('remove/{id}', 'PermissionController@delete')->name('permissions.remove');
-//        // List Roles delete
+        // List Roles delete
         Route::get('permission-trashout', 'PermissionController@permissionTrashOut')->name('permissions.trash');
-//        // Delete Roles completely
+       // Delete Roles completely
         Route::get('delete-completely/{id}', 'PermissionController@deleteCompletely')->name('permissions.delete.completely');
     });
 
     //Route QR_Code
     Route::group(['prefix' => 'qr-code'], function () {
-        Route::get('/{id}', 'QRCodeController@index')->name('qr-code.index');
+        Route::get('index/{id}', 'QRCodeController@index')->name('qr-code.index');
         Route::get('/store', 'QRCodeController@storeQrCode')->name('post.qr-code');
+    });
+
+    //Route Club
+    Route::group(['prefix' => 'club'], function () {
+        Route::get('/index', 'ClubController@index')->name('club.index');
+        Route::get('/detail/{id}', 'ClubController@detail')->name('club.detail');
     });
 });

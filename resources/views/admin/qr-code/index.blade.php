@@ -25,18 +25,20 @@
                             <th>User Code</th>
                             <th>Full Name</th>
                             <th>Name Event</th>
+                            <th>Gold</th>
                             <th>Active</th>
                             <th>Type Person</th>
                         </tr>
                         </thead>
                         <tbody id="qr-reader-results">
-                        <?php $i = 1 ?>
+                        <?php $i = 1; ?>
                         @foreach($student_event as $item)
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $item->user_code }}</td>
                                 <td>{{ $item->full_name }}</td>
                                 <td>{{ $item->events ? $item->events->name_event : "" }}</td>
+                                <td>{{ $item->gold }}</td>
                                 <td>@if($item->is_active == 1)
                                         <button type="button"
                                                 class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">
@@ -68,48 +70,50 @@
         @section('script')
             <script src="{{ asset("assets/admin/js/html5-qrcode.min.js") }}"></script>
             <script>
-                function docReady(fn) {
-                    // see if DOM is already available
-                    if (document.readyState === "complete"
-                        || document.readyState === "interactive") {
-                        // call on next available tick
-                        setTimeout(fn, 1);
-                    } else {
-                        document.addEventListener("DOMContentLoaded", fn);
-                    }
-                }
-
-                docReady(function () {
-                    var lastResult, countResults = 0;
-
-                    function onScanSuccess(decodedText, decodedResult) {
-                        if (decodedText !== lastResult) {
-                            ++countResults;
-                            lastResult = decodedText;
-                            // Handle on success condition with the decoded message.
-                            let result = `${decodedText}`, decodedResult;
-                            var event_id = $('#event_id').val();
-                            $.ajax({
-                                url: '{{ route('post.qr-code') }}',
-                                type: 'get',
-                                data: {result: result, event_id:event_id},
-                            }).done(function (response) {
-                                console.log(!$.isEmptyObject(response.error_type));
-                                if (!$.isEmptyObject(response.error_type)) {
-                                    $("#error_type").html('');
-                                    $("#error_type").css('display', 'block');
-                                    $("#error_type").append(response.error_type);
-                                } else {
-                                    $('#qr-reader-results').empty();
-                                    $('#qr-reader-results').html(response);
-                                }
-                            })
+                $(document).ready(function(){
+                    function docReady(fn) {
+                        // see if DOM is already available
+                        if (document.readyState === "complete"
+                            || document.readyState === "interactive") {
+                            // call on next available tick
+                            setTimeout(fn, 1);
+                        } else {
+                            document.addEventListener("DOMContentLoaded", fn);
                         }
                     }
 
-                    var html5QrcodeScanner = new Html5QrcodeScanner(
-                        "qr-reader", {fps: 10, qrbox: 250});
-                    html5QrcodeScanner.render(onScanSuccess);
+                    docReady(function () {
+                        var lastResult, countResults = 0;
+
+                        function onScanSuccess(decodedText, decodedResult) {
+                            if (decodedText !== lastResult) {
+                                ++countResults;
+                                lastResult = decodedText;
+                                // Handle on success condition with the decoded message.
+                                let result = `${decodedText}`, decodedResult;
+                                var event_id = $('#event_id').val();
+                                $.ajax({
+                                    url: '{{ route('post.qr-code') }}',
+                                    type: 'get',
+                                    data: {result: result, event_id:event_id},
+                                }).done(function (response) {
+                                    console.log(!$.isEmptyObject(response.error_type));
+                                    if (!$.isEmptyObject(response.error_type)) {
+                                        $("#error_type").html('');
+                                        $("#error_type").css('display', 'block');
+                                        $("#error_type").append(response.error_type);
+                                    } else {
+                                        $('#qr-reader-results').empty();
+                                        $('#qr-reader-results').html(response);
+                                    }
+                                })
+                            }
+                        }
+
+                        var html5QrcodeScanner = new Html5QrcodeScanner(
+                            "qr-reader", {fps: 10, qrbox: 250});
+                        html5QrcodeScanner.render(onScanSuccess);
+                    });
                 });
             </script>
 @endsection

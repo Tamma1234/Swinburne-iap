@@ -33,13 +33,17 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'gold' => 'required'
+        ]);
         $event = new EventSwin();
         $event->create([
+            'department' => $request->department,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'name_event' => $request->name_event,
             'description_event' => $request->description_event,
-            'phong_ban' => $request->phong_ban
+            'gold' => $request->gold
         ]);
 
         return redirect()->route('event.index')->with('msg-add', 'Create Event Successful');

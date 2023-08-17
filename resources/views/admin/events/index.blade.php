@@ -31,6 +31,7 @@
                         <th style="width: 47px">Total User</th>
                         <th style="width: 54px">Time Start</th>
                         <th>Time End</th>
+                        <th style="width: 54px">Gold</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -44,6 +45,7 @@
                             <td class="text-danger font-weight-bold">{{ count($item->students) }}</td>
                             <td>{{ $item->start_date }}</td>
                             <td>{{ $item->end_date }}</td>
+                            <td>{{ $item->gold }} <img width="20px" src="{{ asset('assets/admin/images/dong-coin.jpg') }}" alt=""></td>
                             <td class="text-nowrap">
                                 <a href="{{ route('event.detail', ['id' => $item->id]) }}"
                                    data-original-title="Detail" data-toggle="kt-tooltip" title="Detail"><i

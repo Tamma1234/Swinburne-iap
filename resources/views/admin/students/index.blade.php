@@ -6,7 +6,7 @@
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label col-md-2">
+                <div class="kt-portlet__head-label col-md-4">
 										<span class="kt-portlet__head-icon">
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
@@ -14,7 +14,7 @@
                         List Student & Student status
                     </h3>
                 </div>
-                <div class="col-md-10 col-2 align-self-center">
+                <div class="col-md-8 col-2 align-self-center">
                     <a href="{{ route('event.add') }}" class="btn pull-right hidden-sm-down btn btn-primary"
                        data-toggle="kt-tooltip" title="add"><i
                             class="flaticon-add-circular-button"></i></a>
@@ -25,12 +25,21 @@
                     <thead>
                     <tr>
                         <th>YEAR INTAKE</th>
-                        <th>INTAKE</th>
-                        <th>DEFER</th>
-                        <th>DO</th>
-                        <th>CHANGE CAMPUS</th>
-                        <th>GRADUATED</th>
-                        <th>PENDING</th>
+                        @foreach($study_status as $item)
+                            @if($item->study_status == 1)
+                                <th class="text-success">INTAKE</th>
+                            @elseif($item->study_status == 2)
+                                <th class="text-success">INTAKE COURSE</th>
+                            @elseif($item->study_status == 3)
+                                <th class="text-danger">DEFER</th>
+                            @elseif($item->study_status == 4)
+                                <th class="text-danger">DO</th>
+                            @elseif($item->study_status == 5)
+                                <th class="text-danger">CHANGE CAMPUS</th>
+                            @elseif($item->study_status == 17)
+                                <th class="text-danger">PENDING</th>
+                            @endif
+                        @endforeach
                         <th>PENDING RATE</th>
                         <th>DF RATE</th>
                         <th>DO RATE</th>
@@ -38,104 +47,78 @@
                         <th>TOTAL</th>
                     </tr>
                     </thead>
-                    <tbody id="tbody">
-                    @foreach($users as $item)
+                    <tbody>
+                    @foreach($intakes as $intake)
+                            <?php
+                            $total_intake = \App\Models\User::where('user_level', 3)->where('intake', $intake->intake)->get()->count();
+                            $count_pd = \App\Models\User::where('user_level', 3)->where('study_status', 17)->where('intake', $intake->intake)->get()->count();
+                            $count_do = \App\Models\User::where('user_level', 3)->where('study_status', 4)->where('intake', $intake->intake)->get()->count();
+                            $count_df = \App\Models\User::where('user_level', 3)->where('study_status', 3)->where('intake', $intake->intake)->get()->count();
+                            $count_tn = \App\Models\User::where('user_level', 3)->where('study_status', 8)->where('intake', $intake->intake)->get()->count();
+                            ?>
                         <tr>
-                            @switch($item->study_status)
-                                @case(0)
-                                    <td class="text-success">GRADUATED</td>
-                                    <?php $total = \App\Models\User::where('study_status', 0)->count(); ?>
-                                    <td>{{ $total }}</td>
-                                    @break
-                                @case(4)
-                                    <td class="text-danger">DO</td>
-                                        <?php $total = \App\Models\User::where('study_status', 4)->count(); ?>
-                                    <td>{{ $total }}</td>
-                                    @break
-                                @case(17)
-                                    <td class="text-danger">PENDING</td>
-                                        <?php $total = \App\Models\User::where('study_status', 17)->count(); ?>
-                                    <td>{{ $total }}</td>
-                                    @break
-                                @case(1)
-                                    <td class="text-success">INTAKE</td>
-                                        <?php $total = \App\Models\User::where('study_status', 1)->count(); ?>
-                                    <td>{{ $total }}</td>
-                                    @break
-                                @case(3)
-                                    <td class="text-danger">DEFER</td>
-                                        <?php $total = \App\Models\User::where('study_status', 3)->count(); ?>
-                                    <td>{{ $total }}</td>
-                                    @break
-                                @case(5)
-                                    <td class="text-danger">CHANGE CAMPUS</td>
-                                        <?php $total = \App\Models\User::where('study_status', 5)->count(); ?>
-                                    <td>{{ $total }}</td>
-                                @break
-                            @endswitch
+                            <td>{{ $intake->intake }}</td>
+                            @foreach($study_status as $status)
+                                    <?php
+                                    $count_status = \App\Models\User::where('user_level', 3)->where('study_status', $status->study_status)->where('intake', $intake->intake)->get()->count();
+                                    ?>
+                                <td>{{ $count_status }}</td>
+                            @endforeach
+                            <td>{{ $count_pd }}</td>
+                            <td>{{ $count_df }}</td>
+                            <td>{{ $count_do }}</td>
+                            <td>{{ $count_tn }}</td>
+                            <td>{{ $total_intake }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
                 <!--begin: Datatable -->
-                <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Fillter student status
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleSelects">Choose Student Stutas:</label>
+                        <select class="form-control form-control-sm col-2" id="choose_status">
+                            <option value="">Select</option>
+                            <option value="1">INTAKE</option>
+                            <option value="2">INTAKE COURSE</option>
+                            <option value="3">DEFER</option>
+                            <option value="4">DO ( Dropout )</option>
+                            <option value="5">CHANGE CAMPUS</option>
+                            <option value="17">PENDING</option>
+                            <option value="8">GRADUATED</option>
+                        </select>
+                    </div>
+                    <!--end::Form-->
+                </div>
+                <table class="table table-striped- table-bordered table-hover table-checkable">
                     <thead class="table-active">
                     <tr>
-                        <th class="text-white" >Term Name</th>
-                        <th class="text-white">Số phí phải thu</th>
-                        <th class="text-white">Số phí đã thu</th>
-                        <th class="text-white" style="width: 47px">Số phí chưa thu</th>
-                        <th class="text-white" style="width: 54px">GC</th>
-                        <th class="text-white">CN</th>
-                        <th class="text-white">Sinh viên hoàn thành</th>
-                        <th class="text-white">Sinh viên chưa hoàn thành</th>
-                        <th class="text-white">Phí thu theo kỳ</th>
-                        <th class="text-white">Lượt xếp lớp chuyên ngành</th>
-                        <th class="text-white">Tiền phải trả</th>
-                        <th class="text-white">Danh sách học</th>
-                        <th class="text-white">Danh sách lớp</th>
-                        <th class="text-white">Action</th>
+                        <th class="text-white">#</th>
+                        <th class="text-white">STUDENT LOGIN</th>
+                        <th class="text-white">FULL NAME</th>
+                        <th class="text-white">STUDENT CODE</th>
+                        <th class="text-white" style="width: 47px">CREATED DATE</th>
+                        <th class="text-white">COURSE PLAN</th>
+                        <th class="text-white" style="width: 54px">COURSE INTAKE</th>
+                        <th class="text-white">MAJOR INTAKE</th>
+                        <th class="text-white">INTAKE GC</th>
+                        <th class="text-white">INTAKE</th>
+                        <th class="text-white">INTAKE COURSE</th>
+                        <th class="text-white">CHANGE STATUS DATE</th>
+                        <th class="text-white">SCHOLARSHIP</th>
+                        <th class="text-white">GENDER</th>
+                        <th class="text-white" style="width: 90px">DOB</th>
+                        <th class="text-white">STATUS</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
-{{--                    @foreach($terms as $term)--}}
-{{--                            <?php $totalClass = \App\Models\T7\CourseResult::where('term_id', $term->id)--}}
-{{--                            ->whereNotIn('psubject_code', ['ENL101','ENL102','ENL201','ENL202','ENL301','ENL302','VOV101','VOV201','VOV301','EGM101','GC101','GC102','GC201','GC202','GC301','GC302'])--}}
-{{--                            ->count();--}}
-{{--                            $phi_phai_tra = $totalClass*125;--}}
-{{--                            $phi_phai_thu = \App\Models\FeeT::where('term', $term->id)->select('amount')->sum('amount');--}}
-{{--                            $phi_da_thu = \App\Models\FeeT::where('term', $term->id)--}}
-{{--                                ->where('tien_da_nop','<>', 0)--}}
-{{--                                ->sum('tien_da_nop');--}}
-{{--                            $tien_chua_thu = \App\Models\FeeT::where('term', $term->id)--}}
-{{--                                ->where('tien_da_nop','=', 0)--}}
-{{--                                ->sum('tien_da_nop');--}}
-{{--                            $feesGC = \App\Models\FeeT::where('term', $term->id)->where('type_fee', 3)->sum('amount');--}}
-{{--                            $feesCN = \App\Models\FeeT::where('term', $term->id)->where('type_fee', 1)->sum('amount');--}}
-{{--                            $totalStudent = \App\Models\FeeT2::where('term', $term->id)->where('status', 1)->count();--}}
-{{--                            $notStudent = \App\Models\FeeT2::where('term', $term->id)->where('status', 0)->count();--}}
-{{--                            $classCN = \App\Models\FeeT2::where('term', $term->id)->where('type_fee', 1)->count();--}}
-{{--                            ?>--}}
-{{--                        <tr>--}}
-{{--                            <td>{{ $term->term_name }}</td>--}}
-{{--                            <td>{{ number_format($phi_phai_thu) }}</td>--}}
-{{--                            <td>{{ number_format($phi_da_thu)	 }}</td>--}}
-{{--                            <td>{{ number_format($tien_chua_thu) }}</td>--}}
-{{--                            <td>{{ number_format($feesGC) }}</td>--}}
-{{--                            <td>{{ number_format($feesCN) }}</td>--}}
-{{--                            <td>{{ $totalStudent }}</td>--}}
-{{--                            <td>{{ $notStudent }}</td>--}}
-{{--                            <td>{{ $totalStudent }}</td>--}}
-{{--                            <td>{{ $classCN }}</td>--}}
-{{--                            <td>{{ $phi_phai_tra ." $" }} </td>--}}
-{{--                            <td><a href="{{ route('list.student', ['id' => $term->id ]) }}">View</a></td>--}}
-{{--                            <td><a href="{{ route('fees.list', ['id' => $term->id ]) }}">View</a></td>--}}
-{{--                            <td>--}}
-{{--                                <a href="">import DNG</a>--}}
-{{--                                <a href="">import CK</a>--}}
-{{--                            </td>--}}
-{{--                        </tr>--}}
-{{--                    @endforeach--}}
 
                     </tbody>
                 </table>
@@ -168,6 +151,18 @@
             //     }
             //     // console.log(currentInt);
             // }, 10000); // 3 seconds
+        });
+
+        $('#choose_status').change(function () {
+            var value = $('#choose_status').val();
+            $.ajax({
+                url: '{{ route('status.search') }}',
+                type: 'get',
+                data: {value: value},
+            }).done(function (response) {
+                $('#tbody').empty();
+                $('#tbody').html(response);
+            })
         });
     </script>
 @endsection

@@ -5,29 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventSwin extends Model
+class Clubs extends Model
 {
     use HasFactory;
 
-    protected $table = "event_swin";
+    protected $table = "sw_club";
 
     protected $fillable = [
-        'department',
-        'start_date',
-        'end_date',
-        'name_event',
-        'description_event',
-        'type_person',
-        'gold'
+        'name',
+        'code',
+        'description',
+        'manager',
+        'link_fb',
+        'date_thanh_lap'
     ];
-
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');
         parent::__construct($attributes);
-    }
-
-    public function students(){
-        return $this->hasMany(StudentEvent::class, 'event_id', 'id');
     }
 }

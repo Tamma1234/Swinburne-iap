@@ -11,21 +11,21 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                     <h3 class="kt-portlet__head-title">
-                        Infomation
+                        Detail Club
                     </h3>
                 </div>
                 <div class="col-md-10 col-2 align-self-center">
 {{--                    <a href="{{ route('event.add') }}" class="btn pull-right hidden-sm-down btn btn-primary"--}}
 {{--                       data-toggle="kt-tooltip" title="add-student" ><i--}}
 {{--                            class="flaticon-add-circular-button"></i></a>--}}
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Student</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Member</button>
                 </div>
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Add Member</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -35,7 +35,7 @@
                                     @csrf
                                     <input type="hidden" value="{{ $id }}" id="event_id">
                                     <div class="form-group">
-                                        <label for="message-text" class="col-form-label">List Student:</label>
+                                        <label for="message-text" class="col-form-label">List Member:</label>
                                         <textarea class="form-control" name="user_name" id="message-text"></textarea>
                                     </div>
                                     <div class="text-danger" id="error_type"></div>
@@ -57,29 +57,14 @@
                     <tbody id="tbody">
                     <tr>
                         <td>Name</td>
-                        <td>{{ $event->name_event }}</td>
+                        <td>{{ $club_detail->name }}</td>
                     </tr>
                     <tr>
                         <td>Des</td>
-                        <td>{{ $event->description_event }}</td>
-                    </tr>
-                    <tr>
-                        <td>Department</td>
-                        <td>{{ $event->department }}</td>
-                    </tr>
-                    <tr>
-                        <td>Gold</td>
-                        <td>{{ $event->gold }}</td>
+                        <td>{{ $club_detail->description }}</td>
                     </tr>
                     </tbody>
                 </table>
-                <!--begin: Datatable -->
-                <div class="kt-portlet__head-label col-md-2" style="margin-bottom: 20px">
-                    <a href="{{ route("qr-code.index", ['id' => $event->id]) }}" class="btn btn-primary">Check in</a>
-                    <h3 class="kt-portlet__head-title">
-                        Student List
-                    </h3>
-                </div>
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
                     <thead class="table-active">
                     <tr>
@@ -92,31 +77,31 @@
                     </tr>
                     </thead>
                     <tbody id="tbody">
-                    <?php $i = 1 ?>
-                    @foreach($studentEvent as $item)
-                        <tr>
-                            <td>{{ $i++ }}</td>
-                            <td>{{ $item->user_code }}</td>
-                            <td>{{ $item->full_name }}</td>
-                            <td>{{ $item->gold }} <img width="20px" src="{{ asset('assets/admin/images/dong-coin.jpg') }}" alt=""></td>
-                            <td>@if($item->is_active == 1)
-                                    <button type="button"
-                                            class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">
-                                        Attendance
-                                    </button>
-                                @else
-                                    <button type="button"
-                                            class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">
-                                        Warning
-                                    </button>
-                                @endif
-                            </td>
-                            <td>
-                                <button type="button" class="btn" id="delete_event" data-id="{{ $item->id }}" data-toggle="kt-tooltip" title="Delete"
-                                   data-original-title="Close"><i class="flaticon-delete"></i></button>
-                            </td>
-                        </tr>
-                    @endforeach
+{{--                    <?php $i = 1 ?>--}}
+{{--                    @foreach($studentEvent as $item)--}}
+{{--                        <tr>--}}
+{{--                            <td>{{ $i++ }}</td>--}}
+{{--                            <td>{{ $item->user_code }}</td>--}}
+{{--                            <td>{{ $item->full_name }}</td>--}}
+{{--                            <td>{{ $item->gold }} <img width="24px" src="{{ asset('assets/admin/images/dong-coin.jpg') }}" alt=""></td>--}}
+{{--                            <td>@if($item->is_active == 1)--}}
+{{--                                    <button type="button"--}}
+{{--                                            class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">--}}
+{{--                                        Attendance--}}
+{{--                                    </button>--}}
+{{--                                @else--}}
+{{--                                    <button type="button"--}}
+{{--                                            class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">--}}
+{{--                                        Warning--}}
+{{--                                    </button>--}}
+{{--                                @endif--}}
+{{--                            </td>--}}
+{{--                            <td>--}}
+{{--                                <button type="button" class="btn" id="delete_event" data-id="{{ $item->id }}" data-toggle="kt-tooltip" title="Delete"--}}
+{{--                                   data-original-title="Close"><i class="flaticon-delete"></i></button>--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
+{{--                    @endforeach--}}
                     </tbody>
                 </table>
                 <!--end: Datatable -->

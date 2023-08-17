@@ -86,6 +86,9 @@
                             <td>{{$user->user_givenname}}</td>
                             <td>{{$user->user_email}}</td>
                             <td style="padding: 50px">{!! DNS2D::getBarcodeHTML("$user->user_code", 'QRCODE') !!}</td>
+{{--                            <td style="padding: 50px">--}}
+{{--                                <a href="#">{!! DNS2D::getBarcodeSVG("$user->user_code", 'DATAMATRIX') !!} Download</a>--}}
+{{--                                </td>--}}
                             <td class="text-nowrap">
                                 <a href="{{route('users.edit', ['id' => $user->id])}}" data-toggle="kt-tooltip" title="Edit"
                                    data-original-title="Edit"><i class="flaticon-edit"></i>

@@ -23,7 +23,7 @@
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>Department:</label>
-                                    <select class="custom-select" id="phong_ban" name="phong_ban">
+                                    <select class="custom-select" id="phong_ban" name="department">
                                         <option value="">All</option>
                                         <option value="academic">Academic</option>
                                         <option value="studenthq">StuentHQ</option>
@@ -54,6 +54,16 @@
                                     <textarea class="form-control" name="description_event"></textarea>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>Golds:</label>
+                                    <input type="number" class="form-control" name="gold">
+                                    @error('gold')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
                         </div>
                         <div class="kt-portlet__foot">
                             <div class="kt-form__actions">

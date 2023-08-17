@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Validator, Redirect, Response, File;
 use Laravel\Socialite\Facades\Socialite;
@@ -29,6 +30,7 @@ class SocialController extends Controller
     {
         $user = Socialite::driver('google')->stateless()->user();
         $user = User::where('user_email', $user->email)->first();
+
 //        dd($user);
         if ($user) {
             Auth::login($user);

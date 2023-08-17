@@ -40,7 +40,15 @@ class StudentController extends Controller
     }
 
     public function listStudentStatus(Request $request) {
-        $users = User::where('user_level', 3)->get();
-        return view('admin.students.index', compact('users'));
+        $study_status = User::where('user_level', 3)->orderBy('study_status', 'ASC')->select('study_status')->distinct()->get();
+        $intakes = User::where('user_level', 3)->orderBy('intake', 'ASC')->select('intake')->distinct()->get();
+
+        return view('admin.students.index', compact('study_status', 'intakes'));
+    }
+
+    public function getStudentStatus(Request $request) {
+        $value = $request->value;
+        $users = User::where('study_status', $value)->where('user_level', 3)->get();
+        return view('admin.students.search', compact('users'));
     }
 }

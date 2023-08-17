@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Dra\Curriculum;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -69,6 +70,10 @@ class User extends Authenticatable
 
     public function roles() {
         return $this->belongsToMany(Roles::class, 'dra_t1_user_role', 'user_id', 'role_id');
+    }
+
+    public function curriculum() {
+        return $this->hasOne(Curriculum::class, 'id', 'curriculum_id');
     }
 
     public function checkRolePermisson ($checkOffice) {
