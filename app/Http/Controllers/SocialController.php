@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
@@ -9,7 +10,7 @@ use Validator, Redirect, Response, File;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
 class SocialController extends Controller
 {
     public function redirect(Request $request)
@@ -28,10 +29,8 @@ class SocialController extends Controller
 
     public function callback(Request $request)
     {
-        $user = Socialite::driver('google')->stateless()->user();
-        $user = User::where('user_email', $user->email)->first();
-
-//        dd($user);
+        $user_social = Socialite::driver('google')->stateless()->user();
+        $user = User::where('user_email', $user_social->email)->first();
         if ($user) {
             Auth::login($user);
             $request->session()->put('user_email', $user->user_email);

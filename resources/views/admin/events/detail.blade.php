@@ -14,41 +14,43 @@
                         Infomation
                     </h3>
                 </div>
-                <div class="col-md-10 col-2 align-self-center">
-{{--                    <a href="{{ route('event.add') }}" class="btn pull-right hidden-sm-down btn btn-primary"--}}
-{{--                       data-toggle="kt-tooltip" title="add-student" ><i--}}
-{{--                            class="flaticon-add-circular-button"></i></a>--}}
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Student</button>
-                </div>
+                {{--                <div class="col-md-10 col-2 align-self-center">--}}
+                {{--                    --}}{{--                    <a href="{{ route('event.add') }}" class="btn pull-right hidden-sm-down btn btn-primary"--}}
+                {{--                    --}}{{--                       data-toggle="kt-tooltip" title="add-student" ><i--}}
+                {{--                    --}}{{--                            class="flaticon-add-circular-button"></i></a>--}}
+                {{--                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add--}}
+                {{--                        Student--}}
+                {{--                    </button>--}}
+                {{--                </div>--}}
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" method="post">
-                                    @csrf
-                                    <input type="hidden" value="{{ $id }}" id="event_id">
-                                    <div class="form-group">
-                                        <label for="message-text" class="col-form-label">List Student:</label>
-                                        <textarea class="form-control" name="user_name" id="message-text"></textarea>
-                                    </div>
-                                    <div class="text-danger" id="error_type"></div>
+                {{--                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"--}}
+                {{--                     aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+                {{--                    <div class="modal-dialog modal-dialog-centered" role="document">--}}
+                {{--                        <div class="modal-content">--}}
+                {{--                            <div class="modal-header">--}}
+                {{--                                <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>--}}
+                {{--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                {{--                                    <span aria-hidden="true">&times;</span>--}}
+                {{--                                </button>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="modal-body">--}}
+                {{--                                <form action="" method="post">--}}
+                {{--                                    @csrf--}}
+                {{--                                    <input type="hidden" value="{{ $id }}" id="event_id">--}}
+                {{--                                    <div class="form-group">--}}
+                {{--                                        <label for="message-text" class="col-form-label">List Student:</label>--}}
 
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="submit-send">Send message</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{--                                    </div>--}}
+                {{--                                    <div class="text-danger" id="error_type"></div>--}}
+                {{--                                </form>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="modal-footer">--}}
+                {{--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+                {{--                                <button type="button" class="btn btn-primary" id="submit-send">Submit</button>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
             </div>
             <div class="kt-portlet__body" id="form-table-search">
                 <table class="table table-striped- table-bordered table-hover table-checkable">
@@ -74,7 +76,21 @@
                     </tbody>
                 </table>
                 <!--begin: Datatable -->
+                <div class="kt-portlet__body">
+                    <div class="form-group form-group-last row">
+                        <label class="col-form-label col-lg-3 col-sm-12">Templates examples</label>
+                        <div class="col-lg-6 col-md-9 col-sm-12">
+                            <input id="kt_tagify_5" name='tags3' placeholder="Add users" value="Chris Muller, Lina Nilson">
+                            <div class="kt-margin-t-10">
+                                Dropdown item and tag templates.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-separator kt-separator--dashed kt-separator--lg">
+                    </div>
+                </div>
                 <div class="kt-portlet__head-label col-md-2" style="margin-bottom: 20px">
+
                     <a href="{{ route("qr-code.index", ['id' => $event->id]) }}" class="btn btn-primary">Check in</a>
                     <h3 class="kt-portlet__head-title">
                         Student List
@@ -98,7 +114,9 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $item->user_code }}</td>
                             <td>{{ $item->full_name }}</td>
-                            <td>{{ $item->gold }} <img width="20px" src="{{ asset('assets/admin/images/dong-coin.jpg') }}" alt=""></td>
+                            <td>{{ $item->gold }} <img width="20px"
+                                                       src="{{ asset('assets/admin/images/dong-coin.jpg') }}" alt="">
+                            </td>
                             <td>@if($item->is_active == 1)
                                     <button type="button"
                                             class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">
@@ -112,8 +130,9 @@
                                 @endif
                             </td>
                             <td>
-                                <button type="button" class="btn" id="delete_event" data-id="{{ $item->id }}" data-toggle="kt-tooltip" title="Delete"
-                                   data-original-title="Close"><i class="flaticon-delete"></i></button>
+                                <button type="button" class="btn" id="delete_event" data-id="{{ $item->id }}"
+                                        data-toggle="kt-tooltip" title="Delete"
+                                        data-original-title="Close"><i class="flaticon-delete"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -126,7 +145,15 @@
 @endsection
 
 @section('script')
+    <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>
+    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.polyfills.min.js')}}"
+            type="text/javascript"></script>
+    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.min.js')}}"
+            type="text/javascript"></script>
     <script>
+        $(".chosen-select").chosen({
+            no_results_text: "Oops, nothing found!"
+        })
         $("#submit-send").on('click', function () {
             var user_name = $("#message-text").val();
             var event_id = $("#event_id").val();
@@ -134,7 +161,7 @@
             $.ajax({
                 url: "{{ route('student.add') }}",
                 method: 'POST',
-                data: {user_name: user_name, _token: _token, event_id:event_id},
+                data: {user_name: user_name, _token: _token, event_id: event_id},
                 success: function (data) {
                     if ($.isEmptyObject(data.error_type)) {
                         location.reload();
@@ -145,13 +172,13 @@
                 }
             });
         })
-
+        $("#multiple").val(["Multiple2", "Multiple3"]);
         $("#example").on("click", "#delete_event", function () {
             var id = $(this).data('id');
             $.ajax({
                 url: "{{ route('student-delete') }}/" + id,
                 type: 'GET',
-            }).done(function(response) {
+            }).done(function (response) {
                 // Gọi hàm renderCart trả về cart item con
                 location.reload();
                 toastr.success(response.msg_delete);

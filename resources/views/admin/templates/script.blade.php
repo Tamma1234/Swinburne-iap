@@ -98,6 +98,7 @@
         type="text/javascript"></script>
 <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.min.js')}}"
         type="text/javascript"></script>
+
 <script src="{{asset('assets/admin/plugins/general/summernote/dist/summernote.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/plugins/general/markdown/lib/markdown.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/plugins/general/bootstrap-markdown/js/bootstrap-markdown.js')}}"
@@ -234,6 +235,8 @@
 
 <script src="{{asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 <!-- // Alert success -->
+<script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>
+
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
 <!-- CSS -->

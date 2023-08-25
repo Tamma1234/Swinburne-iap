@@ -203,6 +203,8 @@ Route::middleware('auth')->group(function () {
     //Route Club
     Route::group(['prefix' => 'club'], function () {
         Route::get('/index', 'ClubController@index')->name('club.index');
+        Route::get('/list-club', 'ClubController@listStudent')->name('club.list');
+        Route::post('/store', 'ClubController@store')->name('club.update');
         Route::get('/detail/{id}', 'ClubController@detail')->name('club.detail');
     });
 });

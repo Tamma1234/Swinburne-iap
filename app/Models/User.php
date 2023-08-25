@@ -34,13 +34,13 @@ class User extends Authenticatable
         'user_status',
         'ngaycap',
         'campus_id',
-        'office_id',
-        'password'
+        'office_id'
     ];
 
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');
+        //dd($this->connection);
         parent::__construct($attributes);
     }
 

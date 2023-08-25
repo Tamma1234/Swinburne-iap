@@ -31,6 +31,7 @@
 <link href="{{asset('assets/admin/plugins/general/plugins/flaticon2/flaticon.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/admin/css/group-tabs.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/admin/plugins/general/@fortawesome/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
 
 <style>
     .custom-checkbox {

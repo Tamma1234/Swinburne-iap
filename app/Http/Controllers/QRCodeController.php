@@ -23,6 +23,9 @@ class QRCodeController extends Controller
         $date = Carbon::now()->toDateTimeString();
         $user_code = $request->result;
         $event_id = $request->event_id;
+        $event = EventSwin::where('id', $event_id)->first();
+        $gold_event = $event->gold;
+
         $student_event = StudentEvent::where('event_id', $event_id)
             ->where('user_code', $user_code)
             ->first();
@@ -71,7 +74,7 @@ class QRCodeController extends Controller
                     'event_id' => $event_id,
                     'date_add' => $date,
                     'is_active' => 1,
-                    'gold' => 10,
+                    'gold' => $gold_event,
                     'type_person' => "Guest"
                 ]);
                 $studentEvents = StudentEvent::where('event_id', $request->event_id)->where('is_active', 1)->get();
