@@ -97,7 +97,6 @@
                                     type: 'get',
                                     data: {result: result, event_id:event_id},
                                 }).done(function (response) {
-                                    console.log(!$.isEmptyObject(response.error_type));
                                     if (!$.isEmptyObject(response.error_type)) {
                                         $("#error_type").html('');
                                         $("#error_type").css('display', 'block');

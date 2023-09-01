@@ -34,7 +34,7 @@ class QRCodeController extends Controller
             if ($student_event->is_active == 0) {
                 $student_event->update([
                     "is_active" => 1,
-                    "gold" => 10
+                    "gold" => $gold_event
                 ]);
                 $studentEvents = StudentEvent::where('event_id', $event_id)->where('is_active', 1)->get();
                 $i = 1;

@@ -233,6 +233,7 @@
 <script src="{{asset('assets/admin/js/pages/dashboard.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/pages/crud/datatables/basic/basic.js')}}" type="text/javascript"></script>
 
+
 <script src="{{asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 <!-- // Alert success -->
 <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>

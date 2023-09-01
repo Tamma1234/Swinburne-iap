@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportEvent;
+use App\Exports\ExportGroupSemmester;
 use App\Models\EventSwin;
 use App\Models\StudentEvent;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventController extends Controller
 {
@@ -17,6 +20,11 @@ class EventController extends Controller
     {
         $events = EventSwin::all();
         return view('admin.events.index', compact('events'));
+    }
+
+    public function listStudent() {
+        $studentList = User::where('user_level', 3)->select('user_code')->pluck('user_code')->toArray();
+        return response()->json($studentList);
     }
 
     /**
@@ -67,7 +75,8 @@ class EventController extends Controller
         $id = $request->id;
         $event = EventSwin::find($id);
         $studentEvent = StudentEvent::where('event_id', $id)->get();
-        return view('admin.events.detail', compact('event', 'studentEvent', 'id'));
+        $totalRelaties = StudentEvent::where('event_id', $id)->select('relatives')->sum('relatives');
+        return view('admin.events.detail', compact('event', 'studentEvent', 'id', 'totalRelaties'));
     }
 
     public function deleteStudent(Request $request)
@@ -79,7 +88,8 @@ class EventController extends Controller
         return response()->json(['msg_delete' => 'Delete Student Even Successful']);
     }
 
-    public function studentAdd(Request $request) {
+    public function studentAdd(Request $request)
+    {
         $data = $request->all();
         $userArray = explode(',', $data['user_name']);
         $date = Carbon::now()->toDateTimeString();
@@ -96,7 +106,7 @@ class EventController extends Controller
                 if ($user) {
                     $stdentEvent[] = [
                         'user_code' => $item,
-                        'full_name' => $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname,
+                        'full_name' => $user->user_surname . ' ' . $user->user_middlename . ' ' . $user->user_givenname,
                         'event_id' => $data['event_id'],
                         'date_add' => $date
                     ];
@@ -107,5 +117,49 @@ class EventController extends Controller
         }
         StudentEvent::insert($stdentEvent);
         return response()->json(['success' => "Create Student In Event Successful"]);
+    }
+
+    public function exportEvents(Request $request)
+    {
+        $id = $request->id;
+        $studentEvents = StudentEvent::where('event_id', $id)->select('user_code', 'full_name', 'event_id', 'relatives', 'gold')->get();
+        $exports = new ExportEvent([$studentEvents]);
+
+        return Excel::download($exports, 'events.xlsx');
+    }
+
+    public function eventUpdate(Request $request)
+    {
+        $user_code = $request->user_login;
+        $users = json_decode($user_code);
+        $event_id = $request->event_id;
+        $gold = $request->gold;
+        $date_now = Carbon::now()->toDateTimeString();
+        $table = [];
+        foreach ($users as $item) {
+            $eventArray = StudentEvent::where('event_id', $event_id)->select('user_code')->pluck('user_code')->toArray();
+            $userStudent = User::where('user_code', $item->value)->first();
+            $full_name = $userStudent->user_surname .' '. $userStudent->user_middlename .' '. $userStudent->user_givenname;
+
+            if (in_array($item->value, $eventArray)) {
+                return response()->json(['error_type' => "This $item->value has existed"]);
+            }
+            else {
+                $table[] = [
+                    'user_code' => $item->value,
+                    'full_name' => $full_name,
+                    'event_id' => $event_id,
+                    'date_add' => $date_now,
+                    'is_active' => 0,
+                    'gold' => $gold,
+                    'type_person' => 'member',
+                    'relatives' => 0
+                ];
+            }
+        }
+        dd($table);
+        StudentEvent::insert($table);
+
+        return redirect()->route('event.detail', ['id' => $event_id])->with('msg-add', 'Create Student Event Successful');
     }
 }

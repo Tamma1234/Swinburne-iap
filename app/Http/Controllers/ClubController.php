@@ -14,11 +14,6 @@ class ClubController extends Controller
         return view('admin.clubs.index', compact('clubs'));
     }
 
-    public function listStudent() {
-        $studentList = User::where('user_level', 3)->select('user_code')->pluck('user_code')->toArray();
-        return response()->json($studentList);
-    }
-
     public function detail(Request $request) {
         $id = $request->id;
         $club_detail = Clubs::where('id', $id)->first();
@@ -29,6 +24,10 @@ class ClubController extends Controller
 
     public function store(Request $request) {
         $user_login = $request->user_login;
+        dd($user_login->value);
+        foreach ($user_login as $item) {
+            dd($item);
+        }
         dd($user_login);
     }
 }
