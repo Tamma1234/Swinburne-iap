@@ -98,7 +98,7 @@
                             <th class="text-white">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="tbody">
+                        <tbody id="tbody-2">
                         <?php $i = 1 ?>
                         @foreach($studentEvent as $item)
                             <?php $name_event = \App\Models\EventSwin::where('id', $item->event_id)->first()->name_event;
@@ -169,17 +169,8 @@
             });
         })
         $("#multiple").val(["Multiple2", "Multiple3"]);
-        $("#example").on("click", "#delete_event", function () {
-            var id = $(this).data('id');
-            $.ajax({
-                url: "{{ route('student-delete') }}/" + id,
-                type: 'GET',
-            }).done(function (response) {
-                // Gọi hàm renderCart trả về cart item con
-                location.reload();
-                toastr.success(response.msg_delete);
-            });
-        })
+
+
     </script>
     <script>
         $(document).ready(function () {
@@ -204,6 +195,17 @@
             //     // console.log(currentInt);
             // }, 10000); // 3 seconds
 
+            $("#example").on("click", "#delete_event", function () {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('student-delete') }}/" + id,
+                    type: 'GET',
+                }).done(function (response) {
+                    // Gọi hàm renderCart trả về cart item con
+                    location.reload();
+                    toastr.success(response.msg_delete);
+                });
+            })
 
             $("#submit_event").on("click", function () {
                 $.ajax({
@@ -216,8 +218,8 @@
                         $("#error_type").css('display', 'block');
                         $("#error_type").append(response.error_type);
                     } else {
-                        $('#tbody').empty();
-                        $('#tbody').html(response);
+                        $('#tbody-2').empty();
+                        $('#tbody-2').html(response);
                     }
                 });
             })

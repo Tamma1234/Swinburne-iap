@@ -99,7 +99,6 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'event'], function () {
         Route::get('index', 'EventController@index')->name('event.index');
         Route::get('/list-student', 'EventController@listStudent')->name('student.list');
-
         Route::get('detail/{id}', 'EventController@detail')->name('event.detail');
         Route::get('add', 'EventController@create')->name('event.add');
         Route::post('store', 'EventController@store')->name('event.store');
@@ -107,6 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('student-delete/{id?}', 'EventController@deleteStudent')->name('student-delete');
         Route::post('student-add', 'EventController@studentAdd')->name('student.add');
         Route::post('event-update', 'EventController@eventUpdate')->name('event.update');
+        Route::get('event-history', 'EventController@eventHistory')->name('event.history');
         Route::get('export-event/{id}', 'EventController@exportEvents')->name('export.event');
     });
 
@@ -207,8 +207,10 @@ Route::middleware('auth')->group(function () {
     //Route Club
     Route::group(['prefix' => 'club'], function () {
         Route::get('/index', 'ClubController@index')->name('club.index');
-        Route::get('/delete-member/{id}', 'ClubController@deleteMembder')->name('club.delete');
-        Route::post('/store', 'ClubController@store')->name('club.update');
+        Route::get('/delete-member/{id?}', 'ClubController@deleteMembder')->name('club.delete');
+        Route::get('/add/{id}', 'ClubController@addManagement')->name('add.management');
+        Route::post('/store', 'ClubController@store')->name('update.management');
+//        Route::post('/store', 'ClubController@store')->name('club.update');
         Route::get('/detail/{id}', 'ClubController@detail')->name('club.detail');
     });
 });

@@ -22,7 +22,8 @@ class EventController extends Controller
         return view('admin.events.index', compact('events'));
     }
 
-    public function listStudent() {
+    public function listStudent()
+    {
         $studentList = User::where('user_level', 3)->select('user_code')->pluck('user_code')->toArray();
         return response()->json($studentList);
     }
@@ -136,15 +137,15 @@ class EventController extends Controller
         $gold = $request->gold;
         $date_now = Carbon::now()->toDateTimeString();
         $table = [];
+        $output = "";
         foreach ($users as $item) {
             $eventArray = StudentEvent::where('event_id', $event_id)->select('user_code')->pluck('user_code')->toArray();
             $userStudent = User::where('user_code', $item->value)->first();
-            $full_name = $userStudent->user_surname .' '. $userStudent->user_middlename .' '. $userStudent->user_givenname;
+            $full_name = $userStudent->user_surname . ' ' . $userStudent->user_middlename . ' ' . $userStudent->user_givenname;
 
             if (in_array($item->value, $eventArray)) {
                 return response()->json(['error_type' => "This $item->value has existed"]);
-            }
-            else {
+            } else {
                 $table[] = [
                     'user_code' => $item->value,
                     'full_name' => $full_name,
@@ -157,9 +158,37 @@ class EventController extends Controller
                 ];
             }
         }
-        dd($table);
         StudentEvent::insert($table);
+        $userEvent = StudentEvent::where('event_id', $event_id)->orderBy('id', 'DESC')->get();
+        $i = 1;
+        foreach ($userEvent as $item) {
+            $event_name = $item->events ? $item->events->name_event : "";
+            $output .= '<tr>';
+            $output .= '<td>' . $i++ . '</td>';
+            $output .= '<td >' . $item->user_code . '</td>';
+            $output .= '<td>' . $item->full_name . '</td>';
+            $output .= '<td>' . $event_name . '</td>';
+            $output .= '<td>' . $item->gold . '</td>';
+            if ($item->is_active == 1) {
+                $output .= '<td>';
+                $output .= '<button type="button" class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">Attendance</button>';
+                $output .= '</td>';
+            } else {
+                $output .= '<td>';
+                $output .= '<button type="button" class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">Warning</button>';
+                $output .= '</td>';
+            }
+            $output .= '<td>';
+            $output .= '<button type="button" class="btn" id="delete_event" data-id="' . $item->id . '" data-toggle="kt-tooltip" title="Delete"
+                                            data-original-title="Close"><i class="flaticon-delete"></i></button>';
+            $output .= '</tr>';
+        }
+        return $output;
+    }
 
-        return redirect()->route('event.detail', ['id' => $event_id])->with('msg-add', 'Create Student Event Successful');
+    public function eventHistory() {
+        $eventHistory = StudentEvent::selectRaw('user_code, SUM(gold) as gold')->groupByRaw('user_code')->distinct()->get();
+
+        return view('admin.events.history', compact('eventHistory'));
     }
 }
