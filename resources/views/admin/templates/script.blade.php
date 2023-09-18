@@ -252,10 +252,6 @@
 {{--<script src="{{asset('assets/admin/js/pages/components/calendar/basic.js')}}" type="text/javascript"></script>--}}
 <!--end::Global Theme Bundle -->
 
-<!--begin::Page Vendors(used by this page) -->
-<script src="//maps.google.com/maps/api/js?key=AIzaSyBTGnKT7dt597vo9QgeQ7BFhvSRP4eiMSM" type="text/javascript"></script>
-@yield('script')
-
 <!--end::Page Vendors -->
 <!--begin::Page Scripts(used by this page) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
@@ -274,6 +270,31 @@
             },
         });
         r.valid() && (location.href = '/redirect?campus_id=' + campus_id);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({pageLength: 10, ordering: false});
+        // Get the page info, so we know what the last is
+        var pageInfo = table.page.info();
+        // Set the ending interval to the last page
+        endInt = pageInfo.end;
+        // Current page
+        currentInt = 0;
+        // interval = setInterval(function () {
+        //     // "Next" ...
+        //     table.page(currentInt).draw('page');
+        //
+        //     // Increment the current page int
+        //     currentInt++;
+        //
+        //     // If were on the last page, reset the currentInt to the first page #
+        //     if (currentInt === pageInfo.pages) {
+        //         currentInt = 0;
+        //     }
+        //     // console.log(currentInt);
+        // }, 10000); // 3 seconds
     });
 </script>
 <script>
@@ -339,3 +360,8 @@
         // Gán kết quả vào div#result
     }
 </script>
+
+<!--begin::Page Vendors(used by this page) -->
+<script src="//maps.google.com/maps/api/js?key=AIzaSyBTGnKT7dt597vo9QgeQ7BFhvSRP4eiMSM" type="text/javascript"></script>
+@yield('script')
+

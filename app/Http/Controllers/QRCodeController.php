@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventSwin;
+use App\Models\Golds;
 use App\Models\StudentEvent;
 use App\Models\User;
 use Carbon\Carbon;
@@ -45,6 +46,9 @@ class QRCodeController extends Controller
                     $output .= '<td>' . $item->user_code . '</td>';
                     $output .= '<td>' . $item->full_name . '</td>';
                     $output .= '<td>' . $event_name . '</td>';
+                    $output .= '<td>';
+                    $output .= '<input type="number" style="width: 50px" onchange="changeRelatives('.$item->id.')" id="relatives'. $item->id .'" value="'. $item->relatives .'">';
+                    $output .= '</td>';
                     $output .= '<td>' . $item->gold . '</td>';
                     if ($item->is_active == 1) {
                         $output .= '<td>';
@@ -75,8 +79,18 @@ class QRCodeController extends Controller
                     'date_add' => $date,
                     'is_active' => 1,
                     'gold' => $gold_event,
-                    'type_person' => "Guest"
+                    'type_person' => "Guest",
+                    'relatives' => 0
                 ]);
+
+                Golds::create([
+                    'gold_receiver' => $user_code,
+                    'gold' => $gold_event,
+                    'description' => "Join the event",
+                    'gold_giver' => "",
+                    'event_id' => $event_id
+                ]);
+
                 $studentEvents = StudentEvent::where('event_id', $request->event_id)->where('is_active', 1)->get();
                 $index = 1;
                 foreach ($studentEvents as $item) {
@@ -86,6 +100,9 @@ class QRCodeController extends Controller
                     $output .= '<td>' . $item->user_code . '</td>';
                     $output .= '<td>' . $item->full_name . '</td>';
                     $output .= '<td>' . $event_name . '</td>';
+                    $output .= '<td>';
+                    $output .= '<input type="number" style="width: 50px" onchange="changeRelatives('.$item->id.')" id="relatives'. $item->id .'" value="'. $item->relatives .'">';
+                    $output .= '</td>';
                     $output .= '<td>' . $item->gold . '</td>';
                     if ($item->is_active == 1) {
                         $output .= '<td>';

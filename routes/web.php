@@ -110,6 +110,16 @@ Route::middleware('auth')->group(function () {
         Route::get('export-event/{id}', 'EventController@exportEvents')->name('export.event');
     });
 
+    Route::group(['prefix' => 'gold'], function () {
+        Route::get('index', 'GoldController@index')->name('gold.index');
+        Route::get('add', 'GoldController@goldPresent')->name('gold.add');
+        Route::post('update', 'GoldController@goldUpdate')->name('gold.update');
+        Route::get('gold-detail/{user_code}', 'GoldController@goldDetail')->name('gold.detail');
+//        Route::get('add', 'EventController@create')->name('event.add');
+//        Route::post('store', 'EventController@store')->name('event.store');
+//        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
+    });
+
     Route::group(['prefix' => 'Fee'], function () {
         Route::get('index', 'FeeController@index')->name('fee.index');
         Route::get('list/{id}', 'FeeController@listFeeStudent')->name('fees.list');
@@ -202,6 +212,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'qr-code'], function () {
         Route::get('index/{id}', 'QRCodeController@index')->name('qr-code.index');
         Route::get('/store', 'QRCodeController@storeQrCode')->name('post.qr-code');
+        Route::post('/post-friend', 'QRCodeController@postFriend')->name('post.friend');
     });
 
     //Route Club

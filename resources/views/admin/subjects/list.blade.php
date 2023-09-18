@@ -165,28 +165,4 @@
                     });
                 });
     </script>
-    <script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({pageLength: 10});
-            // Get the page info, so we know what the last is
-            var pageInfo = table.page.info();
-            // Set the ending interval to the last page
-            endInt = pageInfo.end;
-            // Current page
-            currentInt = 0;
-            // interval = setInterval(function () {
-            //     // "Next" ...
-            //     table.page(currentInt).draw('page');
-            //
-            //     // Increment the current page int
-            //     currentInt++;
-            //
-            //     // If were on the last page, reset the currentInt to the first page #
-            //     if (currentInt === pageInfo.pages) {
-            //         currentInt = 0;
-            //     }
-            //     // console.log(currentInt);
-            // }, 10000); // 3 seconds
-        });
-    </script>
 @endsection

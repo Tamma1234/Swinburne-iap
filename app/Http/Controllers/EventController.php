@@ -18,7 +18,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = EventSwin::all();
+        $events = EventSwin::orderBy('id', 'asc')->get();
         return view('admin.events.index', compact('events'));
     }
 
@@ -187,8 +187,10 @@ class EventController extends Controller
     }
 
     public function eventHistory() {
-        $eventHistory = StudentEvent::selectRaw('user_code, SUM(gold) as gold')->groupByRaw('user_code')->distinct()->get();
-
+        $eventHistory = StudentEvent::selectRaw('SUM(gold) as gold, full_name, user_code')
+            ->orderBy('gold', 'desc')
+            ->groupBy('user_code', 'full_name')
+            ->get();
         return view('admin.events.history', compact('eventHistory'));
     }
 }

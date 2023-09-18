@@ -1,209 +1,69 @@
 @extends('admin.layouts.main')
-@section('title', 'Index')
+@section('title', 'Create')
+
 @section('content')
-    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Event', 'value' => "Detail", 'value2' => ""])
+    @include('admin.templates.content-header', ['name' => 'Swinburne', 'key' => 'Clubs', 'value' => "Create Management", 'value2' => ""])
 
     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-        <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label col-md-2">
-										<span class="kt-portlet__head-icon">
-											<i class="kt-font-brand flaticon2-line-chart"></i>
-										</span>
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
-                        Infomation
+                        Gold Present
                     </h3>
                 </div>
             </div>
-            <div class="kt-portlet__body" id="form-table-search">
-                <table class="table table-striped- table-bordered table-hover table-checkable">
-                    <thead>
-                    </thead>
-                    <tbody id="tbody">
-                    <tr>
-                        <td>Name</td>
-                        <td>{{ $event->name_event }}</td>
-                    </tr>
-                    <tr>
-                        <td>Des</td>
-                        <td>{{ $event->description_event }}</td>
-                    </tr>
-                    <tr>
-                        <td>Department</td>
-                        <td>{{ $event->department }}</td>
-                    </tr>
-                    <tr>
-                        <td>Gold</td>
-                        <td>{{ $event->gold }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!--begin: Datatable -->
-                <form method="post" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="event_id" id="event_id" value="{{ $event->id }}">
-                    <input type="hidden" name="gold" value="{{ $event->gold }}">
-                    <div class="kt-portlet__body">
-                        <div class="form-group form-group-last row">
-                            <label class="col-form-label col-lg-3 col-sm-12">Add Student</label>
-                            <div class="col-lg-12 col-md-9 col-sm-12">
-                                <input id="kt_tagify_1" name='user_login' placeholder='Thêm member bằng mã user code'
-                                       value='' autofocus data-blacklist='.NET,PHP'>
-                                <div class="kt-margin-t-10">
-                                    <a href="javascript:;" id="kt_tagify_1_remove" class="btn btn-label-brand btn-bold">Remove
-                                        tags</a>
-                                    <button type="button" id="submit_event" class="btn btn-brand">Submit</button>
+
+            <!--begin::Form-->
+            <form class="kt-form kt-form--label-right" action="{{ route('gold.update') }}" method="post">
+                @csrf
+                <div class="kt-portlet__body">
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <div class="form-group form-group-last row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Gold Receiver</label>
+                                <div class="col-lg-12 col-md-9 col-sm-12">
+                                    <input id="kt_tagify_1" name='user_login' placeholder='Thêm member bằng mã user code'
+                                           value='' autofocus data-blacklist='.NET,PHP'>
+                                    <div class="kt-margin-t-10">
+                                        <a href="javascript:;" id="kt_tagify_1_remove" class="btn btn-label-brand btn-bold">Remove
+                                            tags</a>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="alert alert-danger" id="error_type" style="display: none;margin-left: 10px"></div>
+                            <div class="kt-separator kt-separator--dashed kt-separator--lg">
+                            </div>
                         </div>
-                        <div class="alert alert-danger" id="error_type" style="display: none;margin-left: 10px"></div>
-                        <div class="kt-separator kt-separator--dashed kt-separator--lg">
+                        <div class="col-lg-6">
+                            <label>Gold:</label>
+                            <input type="number" class="form-control" name="gold">
                         </div>
-                    </div>
-                </form>
-                <div class="kt-portlet__head-label col-md-2" style="margin-bottom: 20px">
-
-                    <a href="{{ route("qr-code.index", ['id' => $event->id]) }}" class="btn btn-primary">Check in</a>
-
-                </div>
-                <div class="kt-portlet__body" style="overflow-x: scroll">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h3 class="kt-portlet__head-title">
-                                Student List
-                            </h3>
-                        </div>
-                        <div class="col-md-2">
-                            Total Student: <span class="btn btn-danger">{{ count($studentEvent) }}</span>
-                        </div>
-                        <div class="col-md-2">
-                            Total Relatives: <span class="btn btn-danger">{{ $totalRelaties }}</span>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <h3 class="kt-portlet__head-title">
-                                <a href="{{ route('export.event', ['id' => $event->id]) }}" data-toggle="kt-tooltip"
-                                   title="Xuất Excel"><i class="flaticon-download-1"></i></a>
-                            </h3>
+                        <div class="col-lg-6">
+                            <label>Description:</label>
+                            <textarea name="description" id="" cols="20" rows="3" class="form-control"></textarea>
                         </div>
                     </div>
-                    <table class="table table-striped- table-bordered table-hover table-checkable" id="example">
-                        <thead class="table-active">
-                        <tr>
-                            <th class="text-white">STT</th>
-                            <th class="text-white">User Code</th>
-                            <th class="text-white">FullName</th>
-                            <th class="text-white">Name Event</th>
-                            <th class="text-white">Gold</th>
-                            <th class="text-white">Active</th>
-                            <th class="text-white">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody-2">
-                        <?php $i = 1 ?>
-                        @foreach($studentEvent as $item)
-                            <?php $name_event = \App\Models\EventSwin::where('id', $item->event_id)->first()->name_event;
-                            ?>
-                            <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $item->user_code }}</td>
-                                <td>{{ $item->full_name }}</td>
-                                <td>{{ $name_event }}</td>
-                                <td>{{ $item->gold }} <img width="20px"
-                                                           src="{{ asset('assets/admin/images/dong-coin.jpg') }}"
-                                                           alt="">
-                                </td>
-                                <td>@if($item->is_active == 1)
-                                        <button type="button"
-                                                class="btn btn-success btn-elevate btn-pill btn-elevate-air btn-sm">
-                                            Attendance
-                                        </button>
-                                    @else
-                                        <button type="button"
-                                                class="btn btn-warning btn-elevate btn-pill btn-elevate-air btn-sm">
-                                            Warning
-                                        </button>
-                                    @endif
-                                </td>
-                                <td>
-                                    <button type="button" class="btn" id="delete_event" data-id="{{ $item->id }}"
-                                            data-toggle="kt-tooltip" title="Delete"
-                                            data-original-title="Close"><i class="flaticon-delete"></i></button>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
                 </div>
-                <!--end: Datatable -->
-            </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions">
+                        <div class="row">
+                            <div class="col-lg-9 ml-lg-auto">
+                                <button type="submit" class="btn btn-brand">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!--end::Form-->
         </div>
+
     </div>
 @endsection
-
 @section('script')
-    <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.polyfills.min.js')}}"
-            type="text/javascript"></script>
-    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.min.js')}}"
-            type="text/javascript"></script>
     <script>
-        $(".chosen-select").chosen({
-            no_results_text: "Oops, nothing found!"
-        })
-        $("#submit-send").on('click', function () {
-            var user_name = $("#message-text").val();
-            var event_id = $("#event_id").val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url: "{{ route('student.add') }}",
-                method: 'POST',
-                data: {user_name: user_name, _token: _token, event_id: event_id},
-                success: function (data) {
-                    if ($.isEmptyObject(data.error_type)) {
-                        location.reload();
-                        toastr.success(data.success);
-                    } else {
-                        $('#error_type').html(data.error_type);
-                    }
-                }
-            });
-        })
-        $("#multiple").val(["Multiple2", "Multiple3"]);
-
-
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#example").on("click", "#delete_event", function () {
-                var id = $(this).data('id');
-                $.ajax({
-                    url: "{{ route('student-delete') }}/" + id,
-                    type: 'GET',
-                }).done(function (response) {
-                    // Gọi hàm renderCart trả về cart item con
-                    location.reload();
-                    toastr.success(response.msg_delete);
-                });
-            })
-
-            $("#submit_event").on("click", function () {
-                $.ajax({
-                    url: "{{ route('event.update') }}",
-                    type: 'POST',
-                    data: $("form").serialize(),
-                }).done(function (response) {
-                    if (!$.isEmptyObject(response.error_type)) {
-                        $("#error_type").html('');
-                        $("#error_type").css('display', 'block');
-                        $("#error_type").append(response.error_type);
-                    } else {
-                        $('#tbody-2').empty();
-                        $('#tbody-2').html(response);
-                    }
-                });
-            })
-        });
-
         var KTTagify = function () {
 
             // Private functions
@@ -449,6 +309,5 @@
         jQuery(document).ready(function () {
             KTTagify.init();
         });
-
     </script>
-@endsection
+    @endsection

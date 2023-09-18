@@ -25,6 +25,7 @@
                             <th>User Code</th>
                             <th>Full Name</th>
                             <th>Name Event</th>
+                            <th>Relatives & Friends</th>
                             <th>Gold</th>
                             <th>Active</th>
                             <th>Type Person</th>
@@ -38,6 +39,8 @@
                                 <td>{{ $item->user_code }}</td>
                                 <td>{{ $item->full_name }}</td>
                                 <td>{{ $item->events ? $item->events->name_event : "" }}</td>
+                                <th><input type="number" style="width: 50px" onchange="changeRelatives({{$item->id}})"
+                                           id="relatives{{$item->id}}" value="{{ $item->relatives }}"></th>
                                 <td>{{ $item->gold }}</td>
                                 <td>@if($item->is_active == 1)
                                         <button type="button"
@@ -70,6 +73,20 @@
         @section('script')
             <script src="{{ asset("assets/admin/js/html5-qrcode.min.js") }}"></script>
             <script>
+
+                function changeRelatives(id) {
+                    var relatives = $('#relatives' + id).val();
+                    var _token = $("input[name='_token']").val();
+                    $.ajax({
+                        url: "{{ route('post.friend') }}",
+                        method: 'POST',
+                        data: {_token: _token, relatives: relatives, id: id},
+                        success: function (data) {
+                            // location.reload();
+                        }
+                    });
+                }
+
                 $(document).ready(function(){
                     function docReady(fn) {
                         // see if DOM is already available
