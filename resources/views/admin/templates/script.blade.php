@@ -234,6 +234,8 @@
 <script src="{{asset('assets/admin/js/pages/crud/datatables/basic/basic.js')}}" type="text/javascript"></script>
 
 
+
+
 <script src="{{asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 <!-- // Alert success -->
 <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>
@@ -271,6 +273,21 @@
         });
         r.valid() && (location.href = '/redirect?campus_id=' + campus_id);
     });
+</script>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
 
 <script>

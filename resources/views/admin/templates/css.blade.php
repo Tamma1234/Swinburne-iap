@@ -81,6 +81,7 @@
 
 <!--end:: Vendor Plugins -->
 <link href="{{asset('assets/admin/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/admin/css/style.css')}}" rel="stylesheet" type="text/css" />
 
 <!--begin:: Vendor Plugins for custom pages -->
 <link href="{{asset('assets/admin/plugins/custom/plugins/jquery-ui/jquery-ui.min.css')}}" rel="stylesheet" type="text/css" />

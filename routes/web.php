@@ -215,6 +215,22 @@ Route::middleware('auth')->group(function () {
         Route::post('/post-friend', 'QRCodeController@postFriend')->name('post.friend');
     });
 
+    //Route Items
+    Route::group(['prefix' => 'items'], function () {
+        Route::get('list', 'ItemController@itemList')->name('items.list');
+        Route::get('create', 'ItemController@create')->name('items.add');
+        Route::post('store', 'ItemController@store')->name('items.store');
+        Route::get('edit/{id}', 'ItemController@edit')->name('items.edit');
+        Route::get('update/{id}', 'ItemController@update')->name('items.update');
+        Route::get('delete/{id}', 'ItemController@delete')->name('items.delete');
+        Route::get('list-category', 'ItemController@category')->name('items.category');
+        Route::get('create-category', 'ItemController@createCategory')->name('category.add');
+        Route::post('store-category', 'ItemController@storeCategory')->name('category.store');
+        Route::get('edit-category/{id}', 'ItemController@editCategory')->name('category.edit');
+        Route::post('update-category/{id}', 'ItemController@updateCategory')->name('category.update');
+        Route::get('delete-category/{id}', 'ItemController@deleteCategory')->name('category.delete');
+    });
+
     //Route Club
     Route::group(['prefix' => 'club'], function () {
         Route::get('/index', 'ClubController@index')->name('club.index');

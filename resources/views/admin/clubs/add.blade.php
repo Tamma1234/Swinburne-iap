@@ -32,10 +32,10 @@
                         <div class="col-lg-6">
                             <label>Add Student:</label>
                             <select class="form-control kt-selectpicker" data-live-search="true" name="user_code">
-                                @foreach($users as $item)
-                                    <option data-tokens="ketchup mustard" value="{{ $item->user_code }}">{{ $item->user_code .' - '. $item->user_surname . ' '.
+                                    @foreach($users as $item)
+                                        <option data-tokens="ketchup mustard" value="{{ $item->user_code }}">{{ $item->user_code .' - '. $item->user_surname . ' '.
                                             $item->user_middlename .' '. $item->user_givenname }}</option>
-                                @endforeach
+                                    @endforeach
                             </select>
                         </div>
                     </div>
