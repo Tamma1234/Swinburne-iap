@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <!--begin::Form-->
-                    <form class="kt-form kt-form--label-right" action="{{route('items.store')}}"
+                    <form class="kt-form kt-form--label-right" action="{{route('items.update', ['id' => $item->id])}}"
                           enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="kt-portlet__body">
@@ -25,38 +25,43 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label>Name Item:</label>
-                                        <input type="text" class="form-control" name="name_item" value="{{ $item->name_item }}">
+                                        <input type="text" class="form-control" name="name_item"
+                                               value="{{ $item->name_item }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Description:</label>
-                                        <textarea class="form-control" name="description">{{ $item->description }}</textarea>
+                                        <textarea class="form-control"
+                                                  name="description">{{ $item->description }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleSelectd">Choose Categories</label>
                                         <select class="form-control" id="exampleSelectd" name="cate_id">
                                             @foreach($cates as $cate)
-                                                <option {{ $cate->id == $item->cate_id ? 'selected' : '' }} value="{{ $cate->id }}">{{ $cate->name }}</option>
+                                                <option
+                                                    {{ $cate->id == $item->cate_id ? 'selected' : '' }} value="{{ $cate->id }}">{{ $cate->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Gold:</label>
-                                        <input type="number" min="0" class="form-control" name="gold"value="{{ $item->gold }}">
+                                        <input type="number" min="0" class="form-control" name="gold"
+                                               value="{{ $item->gold }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity:</label>
-                                        <input type="number" min="0" class="form-control" name="quantity" value="{{ $item->quantity }}">
+                                        <input type="number" min="0" class="form-control" name="quantity"
+                                               value="{{ $item->quantity }}">
                                     </div>
                                     <div class="form-group">
                                         <label>Choose Size:</label>
                                         <div class="col-9 mt-2">
                                             <div class="kt-radio-inline">
                                                 <label class="kt-radio kt-radio--bold kt-radio--brand col-md-4">
-                                                    <input type="radio" name="free_size" id="free_size"> Freesize
+                                                    <input type="radio" name="status" id="free_size" value="0" {{ $item->status == 0 ? "checked" : "" }}> Freesize
                                                     <span></span>
                                                 </label>
                                                 <label class="kt-radio kt-radio--bold kt-radio--brand">
-                                                    <input type="radio" name="free_size" id="many_size">
+                                                    <input type="radio" name="status" id="many_size" value="1" {{ $item->status == 1 ? "checked" : "" }}>
                                                     Many Sizes
                                                     <span></span>
                                                 </label>
@@ -68,26 +73,11 @@
                                             <div class="kt-checkbox-inline">
                                                 @foreach($sizes as $size)
                                                     <label class="kt-checkbox">
-                                                        <input type="checkbox"  name="size[]" value="{{ $size->id }}"> {{ $size->name }}
+                                                        <input type="checkbox" name="size[]" {{ $item->size->contains('id', $size->id) ? 'checked' : '' }}
+                                                               value="{{ $size->id }}"> {{ $size->name }}
                                                         <span></span>
                                                     </label>
                                                 @endforeach
-                                                {{--                                                <label class="kt-checkbox">--}}
-                                                {{--                                                    <input type="checkbox"> M--}}
-                                                {{--                                                    <span></span>--}}
-                                                {{--                                                </label>--}}
-                                                {{--                                                <label class="kt-checkbox">--}}
-                                                {{--                                                    <input type="checkbox"> L--}}
-                                                {{--                                                    <span></span>--}}
-                                                {{--                                                </label>--}}
-                                                {{--                                                <label class="kt-checkbox">--}}
-                                                {{--                                                    <input type="checkbox"> XL--}}
-                                                {{--                                                    <span></span>--}}
-                                                {{--                                                </label>--}}
-                                                {{--                                                <label class="kt-checkbox">--}}
-                                                {{--                                                    <input type="checkbox"> XXL--}}
-                                                {{--                                                    <span></span>--}}
-                                                {{--                                                </label>--}}
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +91,7 @@
                                                 <div class="input-group">
                                                     <div class="custom-file">
                                                         <input type="file" id="file" onchange="preview_image(event)"
-                                                               class="custom-file-input" name="image_url">
+                                                               class="custom-file-input" name="images">
                                                         <label class="custom-file-label" for="exampleInputFile">Chọn
                                                             ảnh</label>
                                                     </div>
@@ -110,7 +100,9 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="custom-file" id="preview">
-                                                        <img src="{{ asset("item_images/$item->images") }}" onerror="this.src='{{ asset('assets/admin/images/items/no-image.jpg') }}'" width="400px" height="400px" id="output_image"/>
+                                                        <img src="{{ asset("$item->images") }}"
+                                                             onerror="this.src='{{ asset('assets/admin/images/items/no-image.jpg') }}'"
+                                                             width="400px" height="400px" id="output_image"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -132,7 +124,12 @@
                                         </div>
                                         <div class="form-group" style="height: 200px">
                                             <div class="galary" id="preview-view">
-                                                <img src="" alt="">
+                                                @foreach($item->showGallery as $gallery)
+                                                    <div>
+                                                        <span>X</span>
+                                                        <img src="{{ asset("item_gallery/$gallery->file_name") }}" width="100px" height="100px" alt="">
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                         <!-- /.card-body -->
@@ -145,7 +142,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{route('event.index')}}" type="reset"
+                                        <a href="{{route('items.list')}}" type="reset"
                                            class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
@@ -169,7 +166,7 @@
             } = input;
             Array.from(files).forEach(file => {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     const div = document.createElement('div');
                     const img = document.createElement('img');
                     const text = document.createElement('span');
@@ -181,7 +178,7 @@
                     div.appendChild(img);
                     preview.appendChild(div);
                     // console.log(array.length);
-                    $('span').click(function() {
+                    $('span').click(function () {
                         jQuery(this).closest('div').remove();
                     });
                 }
@@ -191,7 +188,7 @@
 
         function preview_image(event) {
             var reader = new FileReader();
-            reader.onload = function() {
+            reader.onload = function () {
                 var output = document.getElementById('output_image');
                 output.src = reader.result;
             }
@@ -199,12 +196,16 @@
         }
 
         $(document).ready(function () {
-            $(".kt-checkbox-inline").hide();
-            $('#free_size').on("click", function () {
+
+            if ($("#free_size").is(":checked")) {
+                $(".kt-checkbox-inline").hide();
+            } else {
+                $(".kt-checkbox-inline").show();
+            }
+            $("#free_size").on("click", function () {
                 $(".kt-checkbox-inline").hide();
             });
-
-            $('#many_size').on("click", function () {
+            $("#many_size").on("click", function () {
                 $(".kt-checkbox-inline").show();
             });
         })

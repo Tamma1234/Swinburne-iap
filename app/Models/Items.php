@@ -11,7 +11,15 @@ class Items extends Model
 
     protected $table = "items";
 
-    protected $guarded;
+    protected $fillable = [
+        'name_item',
+        'gold',
+        'description',
+        'quantity',
+        'status',
+        'images',
+        'cate_id'
+    ];
 
     public function __construct(array $attributes = [])
     {

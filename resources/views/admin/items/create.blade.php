@@ -52,11 +52,11 @@
                                         <div class="col-9 mt-2">
                                             <div class="kt-radio-inline">
                                                 <label class="kt-radio kt-radio--bold kt-radio--brand col-md-4">
-                                                    <input type="radio" name="free_size" id="free_size"> Freesize
+                                                    <input type="radio" name="status" id="free_size" value="0"> Freesize
                                                     <span></span>
                                                 </label>
                                                 <label class="kt-radio kt-radio--bold kt-radio--brand">
-                                                    <input type="radio" name="free_size" id="many_size">
+                                                    <input type="radio" name="status" id="many_size" value="1">
                                                     Many Sizes
                                                     <span></span>
                                                 </label>
@@ -145,7 +145,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{route('event.index')}}" type="reset"
+                                        <a href="{{route('items.list')}}" type="reset"
                                            class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
@@ -161,7 +161,6 @@
 @section('script')
     <script>
         function previewGallery(input) {
-
             const preview = document.getElementById('preview-view');
 
             const {
@@ -209,5 +208,4 @@
             });
         })
     </script>
-
 @endsection

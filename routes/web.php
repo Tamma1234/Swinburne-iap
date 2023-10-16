@@ -221,7 +221,7 @@ Route::middleware('auth')->group(function () {
         Route::get('create', 'ItemController@create')->name('items.add');
         Route::post('store', 'ItemController@store')->name('items.store');
         Route::get('edit/{id}', 'ItemController@edit')->name('items.edit');
-        Route::get('update/{id}', 'ItemController@update')->name('items.update');
+        Route::post('update/{id}', 'ItemController@update')->name('items.update');
         Route::get('delete/{id}', 'ItemController@delete')->name('items.delete');
         Route::get('list-category', 'ItemController@category')->name('items.category');
         Route::get('create-category', 'ItemController@createCategory')->name('category.add');

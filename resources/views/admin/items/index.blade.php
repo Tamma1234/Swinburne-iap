@@ -39,7 +39,7 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $item->name_item }}</td>
                             <td>{{ $item->gold }}</td>
-                            <td><img src="{{ asset("item_images/$item->images") }}" width="150px" height="150px" alt=""></td>
+                            <td><img src="https://drive.google.com/uc?export=view&id={{ $item->images }}" style="width: 150px; height: 150px"></td>
                             <td class="text-nowrap">
                                 <a href="{{ route('items.edit', ['id' => $item->id]) }}"
                                    data-original-title="Edit" data-toggle="kt-tooltip" title="Edit"><i class="flaticon-edit"></i>
