@@ -39,15 +39,15 @@ class ItemController extends Controller
         $sizes = $request->size;
 
         if ($request->hasFile('image_url')) {
+            $originalFileName = $request->image_url->getClientOriginalName();
+            $path = Storage::disk("google")->putFileAs("", $request->file('image_url'), $originalFileName);
+            $fileName = \Storage::disk("google")->getMetadata($path)['path'];
 
-          $fileName = $request->file('image_url')->store("", "google");
-          dd($fileName);
         }
-        dd(21321312);
         $item = Items::create([
             'name_item' => $request->name_item,
             'description' => $request->description,
-            'images' => $originalFileName,
+            'images' => $fileName,
             'gold' => $request->gold,
             'cate_id' => $request->cate_id,
             'status' => $request->status,
@@ -63,11 +63,11 @@ class ItemController extends Controller
             $files = $data['gallery'];
             foreach ($files as $file) {
                 $originalFileName = $file->getClientOriginalName();
-                Storage::disk("google")->putFileAs("12wqHv5uY9uvDMyhQQKqUmis591e-Uws3",$file, $originalFileName);
-
+             $path = Storage::disk("google")->putFileAs("12wqHv5uY9uvDMyhQQKqUmis591e-Uws3", $file, $originalFileName);
+                $fileNameGallery = \Storage::disk("google")->getMetadata($path)['path'];
                 ItemGallery::create([
                     'item_id' => $item_id,
-                    'file_name' => $originalFileName
+                    'file_name' => $fileNameGallery
                 ]);
             }
         }
@@ -91,7 +91,9 @@ class ItemController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
+        dd($request->all());
         $id = $request->id;
         $item = Items::find($id);
         $size = $request->size;
@@ -99,7 +101,7 @@ class ItemController extends Controller
         $data = $request->all();
         $image_path = public_path("item_images/$item->images");
         File::delete($image_path);
-        if(count($itemSize) > 0) {
+        if (count($itemSize) > 0) {
             $item->size()->detach($itemSize);
         }
         if ($request->hasFile('images')) {
@@ -128,7 +130,8 @@ class ItemController extends Controller
         return redirect()->route('items.list')->with('msg-add', 'Update Items Successfully');
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $id = $request->id;
         $item = Items::find($id);
         $file = public_path("item_images/{$item->images}");

@@ -100,7 +100,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="custom-file" id="preview">
-                                                        <img src="{{ asset("$item->images") }}"
+                                                        <img src="https://drive.google.com/uc?export=view&id={{ $item->images }}"
                                                              onerror="this.src='{{ asset('assets/admin/images/items/no-image.jpg') }}'"
                                                              width="400px" height="400px" id="output_image"/>
                                                     </div>
