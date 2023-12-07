@@ -10,7 +10,9 @@ use App\Models\Sizes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use PhpOffice\PhpSpreadsheet\Calculation\Category;
+use Google_Client;
+use Google_Service_Drive;
+use Google_Service_Drive_DriveFile;
 
 class ItemController extends Controller
 {
@@ -35,19 +37,41 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
         $sizes = $request->size;
-
+        $fileId = "";
         if ($request->hasFile('image_url')) {
-            $originalFileName = $request->image_url->getClientOriginalName();
-            $path = Storage::disk("google")->putFileAs("", $request->file('image_url'), $originalFileName);
-            $fileName = \Storage::disk("google")->getMetadata($path)['path'];
+            $file = $request->file('image_url');
 
+            $driveFolderId = config('services.google.drive_folder_id_event');
+
+            $client = new Google_Client();
+
+            $client->setAuthConfig(config('services.google.credentials_path'));
+            $client->addScope(Google_Service_Drive::DRIVE);
+
+            $drive = new Google_Service_Drive($client);
+
+            $fileMetadata = new Google_Service_Drive_DriveFile([
+                'name' => $file->getClientOriginalName(),
+                'parents' => [$driveFolderId],
+            ]);
+            $content = file_get_contents($file->getRealPath());
+            $driveFile = $drive->files->create($fileMetadata, [
+                'data' => $content,
+                'mimeType' => $file->getClientMimeType(),
+                'uploadType' => 'multipart',
+            ]);
+            // Lấy ID của file mới tạo trên Google Drive
+            $fileId = $driveFile->id;
+//            return response()->json(['id' => $fileId]);
+//            $originalFileName = $request->image_url->getClientOriginalName();
+//            $path = Storage::disk("google")->putFileAs("", $request->file('image_url'), $originalFileName);
+//            $fileName = \Storage::disk("google")->getMetadata($path)['path'];
         }
         $item = Items::create([
             'name_item' => $request->name_item,
             'description' => $request->description,
-            'images' => $fileName,
+            'images' => $fileId,
             'gold' => $request->gold,
             'cate_id' => $request->cate_id,
             'status' => $request->status,
@@ -59,18 +83,18 @@ class ItemController extends Controller
             $item = Items::find($item_id);
             $item->size()->attach($sizes);
         }
-        if ($request->hasFile('gallery')) {
-            $files = $data['gallery'];
-            foreach ($files as $file) {
-                $originalFileName = $file->getClientOriginalName();
-             $path = Storage::disk("google")->putFileAs("12wqHv5uY9uvDMyhQQKqUmis591e-Uws3", $file, $originalFileName);
-                $fileNameGallery = \Storage::disk("google")->getMetadata($path)['path'];
-                ItemGallery::create([
-                    'item_id' => $item_id,
-                    'file_name' => $fileNameGallery
-                ]);
-            }
-        }
+//        if ($request->hasFile('gallery')) {
+//            $files = $data['gallery'];
+//            foreach ($files as $file) {
+//                $originalFileName = $file->getClientOriginalName();
+//                $path = Storage::disk("google")->putFileAs("12wqHv5uY9uvDMyhQQKqUmis591e-Uws3", $file, $originalFileName);
+//                $fileNameGallery = \Storage::disk("google")->getMetadata($path)['path'];
+//                ItemGallery::create([
+//                    'item_id' => $item_id,
+//                    'file_name' => $fileNameGallery
+//                ]);
+//            }
+//        }
 
         return redirect()->route('items.list')->with('msg-add', 'Create Items Successfully');
     }
@@ -93,39 +117,65 @@ class ItemController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
         $id = $request->id;
         $item = Items::find($id);
         $size = $request->size;
         $itemSize = $item->size;
         $data = $request->all();
-        $image_path = public_path("item_images/$item->images");
-        File::delete($image_path);
+        $image_id = $item->images;
         if (count($itemSize) > 0) {
             $item->size()->detach($itemSize);
         }
+
         if ($request->hasFile('images')) {
-            $originalFileName = $request->images->getClientOriginalName();
-            $data['images'] = $request->file('images')->move('item_images', $originalFileName);
+            $file = $request->file('images');
+            $driveFolderId = config('services.google.drive_folder_id_event');
+//            dd($driveFolderId);
+            $client = new Google_Client();
+
+            $client->setAuthConfig(config('services.google.credentials_path'));
+            $client->addScope(Google_Service_Drive::DRIVE);
+
+            $drive = new Google_Service_Drive($client);
+                // The file is in the folder, proceed with deletion
+              //  $drive->files->delete($image_id);
+
+            $fileMetadata = new Google_Service_Drive_DriveFile([
+                'name' => $file->getClientOriginalName(),
+                'parents' => [$driveFolderId],
+            ]);
+            //dd($fileMetadata);
+            $content = file_get_contents($file->getRealPath());
+            $driveFile = $drive->files->create($fileMetadata, [
+                'data' => $content,
+                'mimeType' => $file->getClientMimeType(),
+                'uploadType' => 'multipart',
+            ]);
+          //  dd($driveFile->id);
+            $data['images'] = $driveFile->id;
+            // Lấy ID
+            // của file mới tạo trên Google Drive
         }
+        //dd($data);
+
         $item->fill($data);
         $item->save();
         $item->size()->attach($size);
 
-        if ($request->hasFile('gallery')) {
-            $files = $data['gallery'];
-            $gallery = $item->showGallery;
-            ItemGallery::destroy($gallery);
-            foreach ($files as $file) {
-                $originalFileName = $file->getClientOriginalName();
-                $fileNameGallery = uniqid() . '_' . str_replace(' ', '_', $originalFileName);
-                $fileGllery = $file->move('item_gallery', $fileNameGallery);
-                ItemGallery::create([
-                    'item_id' => $id,
-                    'file_name' => $fileNameGallery
-                ]);
-            }
-        }
+//        if ($request->hasFile('gallery')) {
+//            $files = $data['gallery'];
+//            $gallery = $item->showGallery;
+//            ItemGallery::destroy($gallery);
+//            foreach ($files as $file) {
+//                $originalFileName = $file->getClientOriginalName();
+//                $fileNameGallery = uniqid() . '_' . str_replace(' ', '_', $originalFileName);
+//                $fileGllery = $file->move('item_gallery', $fileNameGallery);
+//                ItemGallery::create([
+//                    'item_id' => $id,
+//                    'file_name' => $fileNameGallery
+//                ]);
+//            }
+//        }
 
         return redirect()->route('items.list')->with('msg-add', 'Update Items Successfully');
     }
@@ -134,8 +184,8 @@ class ItemController extends Controller
     {
         $id = $request->id;
         $item = Items::find($id);
-        $file = public_path("item_images/{$item->images}");
-        File::delete($file);
+        $file_name = $item->images;
+        Storage::disk("google")->delete($file_name);
         $item->delete();
 
         return redirect()->route('items.list')->with('msg-add', 'Delete Items Successfully');

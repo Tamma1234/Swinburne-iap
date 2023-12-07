@@ -24,9 +24,9 @@
                         <div class="col-lg-6">
                             <label>Choose Management:</label>
                             <select name="permission" id="" class="form-control">
-                                <option value="3">Chairperson</option>
+                                <option value="1">Chairperson</option>
                                 <option value="2">Vice President</option>
-                                <option value="0">Personal</option>
+                                <option value="3">Personal</option>
                             </select>
                         </div>
                         <div class="col-lg-6">

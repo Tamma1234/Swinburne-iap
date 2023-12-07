@@ -5,24 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Clubs extends Model
+class Bills extends Model
 {
     use HasFactory;
 
-    protected $table = "sw_club";
+    protected $table = "bills";
 
-    protected $fillable = [
-        'name',
-        'code',
-        'description',
-        'manager',
-        'link_fb',
-        'date_thanh_lap',
-        'image_url'
-    ];
+    protected $guarded;
+
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');
         parent::__construct($attributes);
+    }
+
+    public function items()
+    {
+        return $this->hasOne(Items::class, 'id', 'item_id');
     }
 }

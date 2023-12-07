@@ -14,6 +14,11 @@
                         Quản lí Club
                     </h3>
                 </div>
+                <div class="col-md-10 col-2 align-self-center">
+                    <a href="{{ route('club.create') }}" class="btn pull-right hidden-sm-down btn btn-primary"
+                       data-toggle="kt-tooltip" title="Add Club"><i
+                            class="flaticon-add-circular-button"></i></a>
+                </div>
             </div>
             <div class="kt-portlet__body" id="form-table-search">
                 <!--begin: Datatable -->
@@ -35,11 +40,22 @@
                         <tr>
                             <td>{{ $i++  }}</td>
                             <td>{{ $item->name  }}</td>
-                            <td>{{ $item->description }}</td>
+                            <td><img src="https://drive.google.com/uc?export=view&id={{ $item->image_url }}" style="width: 150px; height: 150px"></td>
                             <td>{{ $item->manager }}</td>
                             <td><a href="{{ $item->link_fb }}">{{ $item->link_fb }}</a> </td>
                             <td>{{ $item->date_thanh_lap }}</td>
-                            <td><a href="{{ route('club.detail', ['id' => $item->id]) }}">Detail</a></td>
+                            <td>
+                                <a href="{{ route('club.detail', ['id' => $item->id]) }}"
+                                   data-original-title="Detail" data-toggle="kt-tooltip" title="Detail"><i
+                                        class="flaticon-list-2"></i>
+                                </a>
+                                <a href="{{route('club.edit', ['id' => $item->id])}}" data-toggle="kt-tooltip" title="Edit"
+                                   data-original-title="Edit"><i class="flaticon-edit"></i>
+                                </a>
+                                <a id="delete_event" data-id="{{ $item->id }}" style="cursor: pointer"
+                                   data-toggle="kt-tooltip" title="Delete"
+                                   data-original-title="Close"><i class="flaticon-delete" style="color: red"></i></a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -43,7 +43,10 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'gold' => 'required'
+            'gold' => 'required',
+            'name_event' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
         ]);
         $event = new EventSwin();
         $event->create([

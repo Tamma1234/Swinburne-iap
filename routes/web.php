@@ -234,10 +234,30 @@ Route::middleware('auth')->group(function () {
     //Route Club
     Route::group(['prefix' => 'club'], function () {
         Route::get('/index', 'ClubController@index')->name('club.index');
-        Route::get('/delete-member/{id?}', 'ClubController@deleteMembder')->name('club.delete');
+        Route::get('/delete/{id?}', 'ClubController@deleteMembder')->name('club.delete');
+        Route::get('/create', 'ClubController@createClub')->name('club.create');
+        Route::post('/post-create', 'ClubController@storeClub')->name('club.store');
         Route::get('/add/{id}', 'ClubController@addManagement')->name('add.management');
         Route::post('/store', 'ClubController@store')->name('update.management');
 //        Route::post('/store', 'ClubController@store')->name('club.update');
         Route::get('/detail/{id}', 'ClubController@detail')->name('club.detail');
+        Route::get('/edit/{id}', 'ClubController@edit')->name('club.edit');
+        Route::post('/update/{id}', 'ClubController@update')->name('club.update');
+        Route::get('/delete-member/{id?}', 'ClubController@deleteMembder')->name('delete.member');
+        Route::post('/store', 'ClubController@store')->name('update.management');
+    });
+
+    //Route Bills
+    Route::group(['prefix' => 'bills'], function () {
+        Route::get('/index', 'BillController@index')->name('bills.index');
+        Route::get('/update', 'BillController@updateStatus')->name('update.status');
+        Route::get('/delete/{id}', 'BillController@delete')->name('bill.delete');
+    });
+
+    Route::group(['prefix' => 'guidline'], function () {
+        Route::get('/index', 'SwinGuidlineController@index')->name('guidline.index');
+        Route::get('/add', 'SwinGuidlineController@create')->name('guidline.add');
+        Route::post('/store', 'SwinGuidlineController@store')->name('guidline.store');
+//        Route::get('/delete/{id}', 'BillController@delete')->name('bill.delete');
     });
 });

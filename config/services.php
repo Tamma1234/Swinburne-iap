@@ -17,7 +17,13 @@ return [
     'google' => [
         'client_id'     => '794234075741-ci0v87ae2fft7a2v1h6jltmerhpno26o.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect'      => 'http://127.0.0.1:8000/callback/google'
+        'redirect'      => 'http://127.0.0.1:8000/callback/google',
+
+        'drive_folder_id_event' => env('GOOGLE_DRIVE_FOLDER_ID_EVENT'),
+        'drive_folder_id_query' => env('GOOGLE_DRIVE_FOLDER_ID_QUERY'),
+        'drive_folder_id_club' => env('GOOGLE_DRIVE_FOLDER_ID_CLUB'),
+        'drive_folder_id_guidline' => env('GOOGLE_DRIVE_FOLDER_ID_GUIDLINE'),
+        'credentials_path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
 
     'mailgun' => [

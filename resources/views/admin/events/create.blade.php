@@ -34,18 +34,27 @@
                                 <div class="col-lg-6">
                                     <label>Start:</label>
                                     <input type="date" class="form-control" name="start_date" value="">
+                                    @error('start_date')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>End:</label>
                                     <input type="date" class="form-control" name="end_date" value="">
+                                    @error('end_date')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-6">
                                     <label>Name:</label>
                                     <textarea class="form-control" name="name_event"></textarea>
+                                    @error('name_event')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">

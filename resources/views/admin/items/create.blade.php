@@ -160,6 +160,7 @@
 @endsection
 @section('script')
     <script>
+
         function previewGallery(input) {
             const preview = document.getElementById('preview-view');
 
@@ -201,6 +202,10 @@
             $(".kt-checkbox-inline").hide();
             $('#free_size').on("click", function () {
                 $(".kt-checkbox-inline").hide();
+                let checkboxes = document.getElementsByName('size[]');
+                for (let i = 0; i < checkboxes.length; i++){
+                    checkboxes[i].checked = false;
+                }
             });
 
             $('#many_size').on("click", function () {

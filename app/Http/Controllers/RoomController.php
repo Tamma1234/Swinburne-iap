@@ -208,12 +208,14 @@ class RoomController extends Controller
                     $groupName = Groups::find($group_id)->group_name;
                     Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
                         $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
+
                     return response()->json(['success' => "Booking successful"]);
                 } else {
                     $psubject_name = "";
                     $groupName = "";
                     Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
                         $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
+
                     return response()->json(['success' => "Booking successful"]);
                 }
 

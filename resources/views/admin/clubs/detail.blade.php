@@ -44,7 +44,7 @@
                         <th class="text-white">STT</th>
                         <th class="text-white">User Code</th>
                         <th class="text-white">FullName</th>
-                        <th class="text-white">Gold</th>
+                        <th class="text-white">Description</th>
                         <th class="text-white">Active</th>
                         <th class="text-white">Action</th>
                     </tr>

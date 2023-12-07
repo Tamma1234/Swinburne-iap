@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Clubs extends Model
+class SwinGuiline extends Model
 {
     use HasFactory;
 
-    protected $table = "sw_club";
+    protected $table = "swin_guidline";
 
     protected $fillable = [
         'name',
-        'code',
+        'group_guidline',
+        'content',
+        'date_create',
         'description',
-        'manager',
-        'link_fb',
-        'date_thanh_lap',
-        'image_url'
+        'images'
     ];
+
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');
