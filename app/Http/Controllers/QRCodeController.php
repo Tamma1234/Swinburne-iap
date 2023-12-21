@@ -87,11 +87,11 @@ class QRCodeController extends Controller
                     'gold_receiver' => $user_code,
                     'gold' => $gold_event,
                     'description' => "Join the event",
-                    'gold_giver' => "",
+                    'gold_giver' => "swinburne",
                     'event_id' => $event_id
                 ]);
 
-                $studentEvents = StudentEvent::where('event_id', $request->event_id)->where('is_active', 1)->get();
+                $studentEvents = StudentEvent::where('event_id', $request->event_id)->where('is_active', 1)->orderBy('id', 'DESC')->get();
                 $index = 1;
                 foreach ($studentEvents as $item) {
                     $output .= '<tr>';

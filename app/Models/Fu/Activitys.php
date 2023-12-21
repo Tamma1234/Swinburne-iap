@@ -51,7 +51,6 @@ class Activitys extends Model
         'muc_tieu',
         'custom_edit',
         'session_check',
-        'is_active'
     ];
 
     public function __construct(array $attributes = [])

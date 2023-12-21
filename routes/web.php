@@ -115,6 +115,7 @@ Route::middleware('auth')->group(function () {
         Route::get('add', 'GoldController@goldPresent')->name('gold.add');
         Route::post('update', 'GoldController@goldUpdate')->name('gold.update');
         Route::get('gold-detail/{user_code}', 'GoldController@goldDetail')->name('gold.detail');
+        Route::get('gold-export', 'GoldController@goldExport')->name('export.gold');
 //        Route::get('add', 'EventController@create')->name('event.add');
 //        Route::post('store', 'EventController@store')->name('event.store');
 //        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
@@ -133,6 +134,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'queries'], function () {
         Route::get('index', 'QueryController@Queries')->name('queries.index');
         Route::post('search', 'QueryController@Search')->name('queries.search');
+        Route::get('detail/{id}', 'QueryController@detail')->name('queries.detail');
     });
 
     //Curriculum

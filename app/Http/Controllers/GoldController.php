@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GoldExport;
 use App\Models\Golds;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Excel;
 
 class GoldController extends Controller
 {
     public function index() {
-        $golds = Golds::selectRaw('SUM(gold) as total, gold_receiver, gold_giver')->orderBy('total', 'desc')
-        ->groupBy('gold_receiver', 'gold_giver')->get();
+        $golds = Golds::selectRaw('SUM(gold) as total, gold_receiver')->orderBy('total', 'desc')
+        ->groupBy('gold_receiver')->get();
 
         return view('admin.golds.index', compact('golds'));
     }
@@ -41,5 +44,12 @@ class GoldController extends Controller
         $user = \App\Models\User::where('user_code', $request->user_code)->first();
         $full_name = $user->user_surname .' '. $user->user_middlename .' '. $user->user_givenname;
         return view('admin.golds.detail', compact('golds', 'user', 'full_name'));
+    }
+
+    public function goldExport() {
+        $timestamp = Carbon::now()->format('Ymd_His'); // Lấy ngày giờ hiện tại
+        $filename = 'User-' . $timestamp . '.xlsx';
+
+        return Excel::download(new GoldExport(), $filename);
     }
 }

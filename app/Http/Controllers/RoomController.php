@@ -188,7 +188,6 @@ class RoomController extends Controller
                             'psyllabus_id' => 1,
                             'area_id' => $area_id,
                             'session_check' => 0,
-                            'is_active' => 1,
                             'room_name' => $request->room_name,
                             'description' => $request->description,
                             'start_at' => $start_time,
@@ -206,15 +205,15 @@ class RoomController extends Controller
                 if ($psubject_id != null && $group_id != null) {
                     $psubject_name = Subjects::find($psubject_id)->subject_name;
                     $groupName = Groups::find($group_id)->group_name;
-                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
-                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
+//                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
+//                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
 
                     return response()->json(['success' => "Booking successful"]);
                 } else {
                     $psubject_name = "";
                     $groupName = "";
-                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
-                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
+//                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
+//                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
 
                     return response()->json(['success' => "Booking successful"]);
                 }
@@ -249,14 +248,14 @@ class RoomController extends Controller
                 if ($psubject_id != null && $group_id != null) {
                     $psubject_name = Subjects::find($psubject_id)->subject_name;
                     $groupName = Groups::find($group_id)->group_name;
-                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
-                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
+//                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
+//                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
                     return response()->json(['success' => "Booking successful"]);
                 } else {
                     $psubject_name = "";
                     $groupName = "";
-                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
-                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
+//                    Service::getSendMail()->sendPaymentMail($start_time, $end_time, $room_name,
+//                        $groupName, $description, $userLogin, $id, $area_name, $psubject_name, $date);
                     return response()->json(['success' => "Booking successful"]);
                 }
             }

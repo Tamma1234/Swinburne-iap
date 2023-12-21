@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-md-8">
-                    <form>
+                    <form method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row align-items-center">
                             <div class="form-group row" style="margin: auto; margin-top: 20px">
@@ -85,7 +85,7 @@
                             </td>
                             <td>{{ $item->note_xu_ly }}</td>
                             <td class="text-nowrap">
-                                <a href="#" data-toggle="kt-tooltip"
+                                <a href="{{ route('queries.detail', ['id' => $item->id]) }}" data-toggle="kt-tooltip"
                                    title="detail" data-original-title="Edit"><i class="flaticon-list-2"></i>
                                 </a>
                             </td>
@@ -110,6 +110,8 @@
                     let content = "";
                     let index = 1;
                     $.each(data, function (k, v) {
+                        var id = v['id'];
+                        var url = "{{ route('queries.detail', ['id' => ':id']) }}".replace(':id', id);
                         content += '<tr>';
                         content += '<td>' + index++ + '</td>';
                         content += '<td> ' + v['user_code'] + ' </td>';
@@ -119,10 +121,10 @@
                         content += '<td>' + v['querries_status'] + '</td>';
                         content += '<td>' + v['note_xu_ly'] + ' </td>';
                         content += '<td class="text-nowrap">';
-                        content += '<a href="#" data-toggle="kt-tooltip" title="detail" data-original-title="Edit"><i class="flaticon-list-2"></i></a>';
+                        content += '<a href="'+ url +'" data-toggle="kt-tooltip" title="detail" data-original-title="Edit"><i class="flaticon-list-2"></i></a>';
                         content += '</td>';
                         content += '</tr>';
-                    })
+                    });
                     $('#tbody').html(content);
                 }
             })

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Queries;
 use Illuminate\Http\Request;
+use App\Models\QuerisCommunicate;
 
 class QueryController extends Controller
 {
@@ -28,5 +29,12 @@ class QueryController extends Controller
             $queries = Queries::where('queries_type', $queries_type)->get();
             return response()->json($queries);
         }
+    }
+
+    public function detail(Request $request) {
+        $id = $request->id;
+        $detail = Queries::find($id);
+        $query = QuerisCommunicate::where('queries_id', $id)->get();
+        return view('admin.queries.detail', compact('detail', 'query', 'id'));
     }
 }

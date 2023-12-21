@@ -99,6 +99,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="row">
+
                                                                 <div class="col">
                                                                     <label class="col-form-label col-lg-6 col-sm-12">Start
                                                                         Time</label>
@@ -299,6 +300,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
+                                                
                                                 <div class="col">
                                                     <label class="col-form-label col-lg-6 col-sm-12">Start Time</label>
                                                     <div class="col-md-12 col-sm-12">

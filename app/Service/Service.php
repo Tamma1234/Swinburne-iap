@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Google\Auth\Cache\Item;
+
 class Service
 {
     /**
@@ -24,8 +26,19 @@ class Service
         return app(StudyStausService::class);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|mixed
+     */
     public static function confirmSendMail()
     {
         return app(CheckGroupName::class);
+    }
+
+    public static function clubSystemLog() {
+        return app(ClubService::class);
+    }
+
+    public static function ItemSystemLog() {
+        return app(ItemService::class);
     }
 }

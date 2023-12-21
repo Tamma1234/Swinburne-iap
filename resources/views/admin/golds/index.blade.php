@@ -14,7 +14,16 @@
                         Gold List
                     </h3>
                 </div>
-                <div class="col-md-8 col-2 align-self-center">
+                <div class="form-group col-md-2">
+                    <label for="inputState"></label>
+                    <div class="">
+                        <a href="{{ route('export.gold') }}" class="btn btn-default btn-icon-sm dropdown-toggle">
+                            <i class="la la-download"></i>
+                            Export Golds
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-2 align-self-center">
                     <a href="{{ route('gold.add') }}" class="btn pull-right hidden-sm-down btn btn-primary"
                        data-toggle="kt-tooltip" title="present gold"><i
                             class="flaticon-add-circular-button"></i></a>

@@ -6,6 +6,7 @@ use App\Models\Clubs;
 use App\Models\User;
 use App\Models\UserClub;
 use App\Models\SwinClubMember;
+use App\Service\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Google_Client;
@@ -40,6 +41,9 @@ class ClubController extends Controller
         $des = $request->description;
         $link_fb = $request->facebook;
         $date = $request->create_date;
+
+        Service::clubSystemLog()->addClubLog($name);
+
         if ($request->hasFile('image_url')) {
             $file = $request->file('image_url');
 
@@ -84,7 +88,7 @@ class ClubController extends Controller
         $club_id = $request->club_id;
         $permission = $request->permission;
         $user_code = $request->user_code;
-
+        Service::clubSystemLog()->addMemberClub($club_id, $user_code);
         SwinClubMember::create([
             'user_code' => $user_code,
             'club_id' => $club_id,
@@ -103,6 +107,8 @@ class ClubController extends Controller
     public function update(Request $request) {
         $club = Clubs::find($request->id);
         $club_images = $club->image_url;
+        $fileId = "";
+
         if ($request->hasFile('image_url')) {
             $file = $request->file('image_url');
 
@@ -131,6 +137,7 @@ class ClubController extends Controller
 //            $path = Storage::disk("google")->putFileAs("", $request->file('image_url'), $originalFileName);
 //            $fileName = \Storage::disk("google")->getMetadata($path)['path'];
         }
+        Service::clubSystemLog()->editClubLog($club, $request->club_name);
         $club->update([
             'name' => $request->club_name,
             'description' => $request->description,
@@ -144,6 +151,7 @@ class ClubController extends Controller
     public function deleteMembder(Request $request) {
         $id = $request->id;
         $sw_club_member = SwinClubMember::find($id);
+        Service::clubSystemLog()->deleteMemberClub($sw_club_member);
         $sw_club_member->delete();
 
         return response()->json(['msg_delete' => 'Delete User Club Successful']);

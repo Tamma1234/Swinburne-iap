@@ -7,6 +7,7 @@ use App\Models\ItemCategories;
 use App\Models\ItemGallery;
 use App\Models\Items;
 use App\Models\Sizes;
+use App\Service\Service;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -68,6 +69,8 @@ class ItemController extends Controller
 //            $path = Storage::disk("google")->putFileAs("", $request->file('image_url'), $originalFileName);
 //            $fileName = \Storage::disk("google")->getMetadata($path)['path'];
         }
+        Service::ItemSystemLog()->addItemLog($request->name_item);
+
         $item = Items::create([
             'name_item' => $request->name_item,
             'description' => $request->description,

@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SwinClubMember extends Model
+class SystemLog extends Model
 {
     use HasFactory;
-    protected $table = "sw_club_member";
 
-    protected $guarded;
+    protected $table = "system_log";
+
     public function __construct(array $attributes = [])
     {
         $this->connection = session('campus_db');
         parent::__construct($attributes);
-    }
-
-    public function club() {
-        return $this->hasOne(Clubs::class, 'id', 'club_id');
     }
 }
