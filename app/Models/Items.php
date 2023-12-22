@@ -40,4 +40,8 @@ class Items extends Model
     {
         return $this->belongsTo(ItemCategories::class, 'cate_id');
     }
+
+    public function promotion() {
+        return $this->belongsToMany(Promotions::class, 'item_promotion', 'item_id', 'promotion_id');
+    }
 }

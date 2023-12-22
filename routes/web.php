@@ -186,7 +186,7 @@ Route::middleware('auth')->group(function () {
         Route::get('create', 'RoleController@create')->name('roles.create');
         Route::post('store', 'RoleController@store')->name('roles.store');
         Route::get('edit/{id}', 'RoleController@edit')->name('roles.edit');
-        Route::post('update/{id}','RoleController@update')->name('roles.update');
+        Route::post('update/{id}', 'RoleController@update')->name('roles.update');
         // Cancel Roles
         Route::get('remove/{id}', 'RoleController@delete')->name('roles.remove');
         // List Roles delete
@@ -206,7 +206,7 @@ Route::middleware('auth')->group(function () {
         Route::get('remove/{id}', 'PermissionController@delete')->name('permissions.remove');
         // List Roles delete
         Route::get('permission-trashout', 'PermissionController@permissionTrashOut')->name('permissions.trash');
-       // Delete Roles completely
+        // Delete Roles completely
         Route::get('delete-completely/{id}', 'PermissionController@deleteCompletely')->name('permissions.delete.completely');
     });
 
@@ -233,6 +233,15 @@ Route::middleware('auth')->group(function () {
         Route::get('delete-category/{id}', 'ItemController@deleteCategory')->name('category.delete');
     });
 
+    //Route promotion
+    Route::group(['prefix' => 'promotion'], function () {
+        Route::get('/index', 'PromotionController@index')->name('promotion.index');
+        Route::get('/add', 'PromotionController@add')->name('promotion.add');
+        Route::post('/store', 'PromotionController@store')->name('promotion.store');
+        Route::get('edit/{id}', 'PromotionController@edit')->name('promotion.edit');
+        Route::post('update/{id}', 'PromotionController@update')->name('promotion.update');
+        Route::get('delete/{id}', 'PromotionController@delete')->name('promotion.delete');
+    });
     //Route Club
     Route::group(['prefix' => 'club'], function () {
         Route::get('/index', 'ClubController@index')->name('club.index');

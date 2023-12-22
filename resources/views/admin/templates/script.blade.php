@@ -55,7 +55,8 @@
 <script src="{{asset('assets/admin/plugins/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js')}}"
         type="text/javascript"></script>
 <script src="{{asset('assets/admin/plugins/general/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"
-        type="text/javascript"></script>
+        type="text/javascript">
+</script>
 <script src="{{asset('assets/admin/plugins/general/js/global/integration/plugins/bootstrap-timepicker.init.js')}}"
         type="text/javascript"></script>
 <script src="{{asset('assets/admin/plugins/general/bootstrap-daterangepicker/daterangepicker.js')}}"
@@ -232,6 +233,7 @@
 <script src="{{asset('assets/admin/js/scripts.bundle.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/pages/dashboard.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/pages/crud/datatables/basic/basic.js')}}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
 
 
 
