@@ -29,7 +29,8 @@ class RoleController extends Controller
      */
     public function create() {
         $permissions = Permissions::all();
-        return view('admin.roles.create', compact('permissions'));
+        $permissionChildrens = Permissions::where('parent_id', 0)->get();
+        return view('admin.roles.create', compact('permissions', 'permissionChildrens'));
     }
 
     /**
@@ -62,8 +63,9 @@ class RoleController extends Controller
     public function edit(Request $request) {
         $role = Roles::find($request->id);
         $permissions = Permissions::all();
+        $permissionChildrens = Permissions::where('parent_id', 0)->get();
 
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        return view('admin.roles.edit', compact('role', 'permissions', 'permissionChildrens'));
     }
 
     /**

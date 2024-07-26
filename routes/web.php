@@ -26,30 +26,33 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', 'DashboardController@getCareer')->name('chooseOffices');
 
     // Route phần users
-    Route::group(['prefix' => 'users'], function () {
-        Route::get('/', 'UserController@index')->name('users.index');
-        Route::get('/search', 'UserController@search')->name('users.search');
-        Route::post('/post-search', 'UserController@postSearch')->name('users.post.search');
-        Route::get('create', 'UserController@create')->name('users.create');
-        Route::post('store', 'UserController@store')->name('users.store');
-        Route::get('edit/{id}', 'UserController@edit')->name('users.edit');
-        Route::post('update/{id}', 'UserController@update')->name('users.update');
-        // Cancel account
-        Route::get('profile/{id}', 'UserController@profile')->name('users.profile');
+    Route::group(['prefix' => 'applications'], function () {
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/', 'UserController@index')->name('users.index');
+            Route::get('/search', 'UserController@search')->name('users.search');
+            Route::post('/post-search', 'UserController@postSearch')->name('users.post.search');
+            Route::get('create', 'UserController@create')->name('users.create')->middleware('can:add_user');
+            Route::post('store', 'UserController@store')->name('users.store')->middleware('can:add_user');
+            Route::get('edit/{id}', 'UserController@edit')->name('users.edit')->middleware('can:edit_user');
+            Route::post('update/{id}', 'UserController@update')->name('users.update');
+            // Cancel account
+            Route::get('profile/{id}', 'UserController@profile')->name('users.profile');
 
-        Route::get('remove/{id}', 'UserController@delete')->name('users.remove');
-        // List user delete
-        Route::get('user-trashout', 'UserController@userTrashOut')->name('users.trash');
-        // Delete user completely
-        Route::get('delete-completely/{id}', 'UserController@deleteCompletely')->name('users.delete.completely');
+            Route::get('remove/{id}', 'UserController@delete')->name('users.remove')->middleware('can:delete_user');
+            // List user delete
+            Route::get('user-trashout', 'UserController@userTrashOut')->name('users.trash');
+            // Delete user completely
+            Route::get('delete-completely/{id}', 'UserController@deleteCompletely')->name('users.delete.completely');
+            Route::get('create-qr','UserController@createQR')->name('user.createQR');
+        });
     });
 
     Route::group(['prefix' => 'room'], function () {
         Route::get('index', 'RoomController@index')->name('rooms.index');
-        Route::get('list-room', 'RoomController@listRooms')->name('list.rooms');
-        Route::get('create-room', 'RoomController@createRooms')->name('create.rooms');
+        Route::get('list-room', 'RoomController@listRooms')->name('list.rooms')->middleware('can:view_room');
+        Route::get('create-room', 'RoomController@createRooms')->name('create.rooms')->middleware('can:add_room');
         Route::post('store', 'RoomController@store')->name('room.store');
-        Route::get('delete-room/{id}', 'RoomController@deleteRoom')->name('delete.room');
+        Route::get('delete-room/{id}', 'RoomController@deleteRoom')->name('delete.room')->middleware('can:delete_room');
         Route::get('search', 'RoomController@searchDate')->name('rooms.search');
         Route::post('add-room/{id?}', 'RoomController@addRooms')->name('rooms.add');
         Route::get('active-room/{id}', 'RoomController@activeRooms')->name('rooms.active');
@@ -59,12 +62,12 @@ Route::middleware('auth')->group(function () {
     });
     //Course
     Route::group(['prefix' => 'course'], function () {
-        Route::get('index', 'CourseController@index')->name('course.index');
-        Route::get('list-course', 'CourseController@listCourse')->name('list.course');
-        Route::get('create-course', 'CourseController@createRooms')->name('course.create');
+        Route::get('index', 'CourseController@index')->name('course.index')->middleware('can:view_course');
+        Route::get('list-course', 'CourseController@listCourse')->name('list.course')->middleware('can:view_course');
+        Route::get('create-course', 'CourseController@createRooms')->name('course.create')->middleware('can:add_course');
         Route::post('store', 'CourseController@store')->name('course.store');
         Route::get('search', 'CourseController@doSearch')->name('course.search');
-        Route::get('edit/{id}', 'CourseController@edit')->name('course.edit');
+        Route::get('edit/{id}', 'CourseController@edit')->name('course.edit')->middleware('can:edit_course');
         Route::get('list-group/{id}', 'CourseController@listGroup')->name('course.group');
         Route::get('list-subject', 'CourseController@listSubject')->name('course.list-subject');
         Route::get('subject-search', 'CourseController@subjectSearch')->name('subjects.search');
@@ -78,14 +81,36 @@ Route::middleware('auth')->group(function () {
 //        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
     });
 
+    // Survey
+    Route::group(['prefix' => 'survey'], function () {
+        Route::get('index', 'SurveyController@index')->name('survey.list');
+        Route::get('create', 'SurveyController@create')->name('survey.create');
+        Route::post('store', 'SurveyController@store')->name('survey.store');
+//        Route::get('search', 'SubjectController@searchTerm')->name('search.term');
+//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
+
+    //Subjects
+    Route::group(['prefix' => 'notifications'], function () {
+        Route::get('/', 'NotificationController@index')->name('notifications.index');
+        Route::get('send-mail', 'NotificationController@sendGrade')->name('notifications.send.grade');
+        Route::post('store-send-mail', 'NotificationController@storeSendMail')->name('store.send.mail');
+        Route::get('send-group', 'NotificationController@sendGroup')->name('notifications.send.group');
+        Route::post('/upload/image', 'NotificationController@uploadImage')->name('upload.image');
+
+        Route::get('show-image/{id}', 'NotificationController@show')->name('notifications.show');
+        Route::get('list-send', 'NotificationController@listSend')->name('notifications.list-send');
+//        Route::post('store-room/{id}', 'RoomController@storeCancel')->name('rooms.store.cancel');
+    });
+
     //Groups
     Route::group(['prefix' => 'group'], function () {
-        Route::get('index', 'GroupController@index')->name('group.index');
+        Route::get('index', 'GroupController@index')->name('group.index')->middleware('can:view_group');
         Route::get('group-search', 'GroupController@search')->name('group.search');
         Route::get('/search', 'GroupController@valueSearch')->name('value.search');
         Route::get('schedule', 'GroupController@schedule')->name('group.schedule');
         Route::get('search-schedule', 'GroupController@searchSchedule')->name('search.schedule');
-        Route::get('create', 'GroupController@create')->name('group.create');
+        Route::get('create', 'GroupController@create')->name('group.create')->middleware('can:add_group');
         Route::get('add-student', 'GroupController@addStudent')->name('add.student');
         Route::post('store', 'GroupController@store')->name('group.store');
         Route::post('list', 'GroupController@listGroup')->name('group.list');
@@ -97,12 +122,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'event'], function () {
-        Route::get('index', 'EventController@index')->name('event.index');
+        Route::get('index', 'EventController@index')->name('event.index')->middleware('can:view_items');
+        Route::get('send-mail', 'EventController@sendMail')->name('event.send');
         Route::get('/list-student', 'EventController@listStudent')->name('student.list');
         Route::get('detail/{id}', 'EventController@detail')->name('event.detail');
-        Route::get('add', 'EventController@create')->name('event.add');
+        Route::get('add', 'EventController@create')->name('event.add')->middleware('can:add_events');
         Route::post('store', 'EventController@store')->name('event.store');
-        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
+        Route::get('delete/{id}', 'EventController@delete')->name('event.delete')->middleware('delete:delete_events');
         Route::get('student-delete/{id?}', 'EventController@deleteStudent')->name('student-delete');
         Route::post('student-add', 'EventController@studentAdd')->name('student.add');
         Route::post('event-update', 'EventController@eventUpdate')->name('event.update');
@@ -111,8 +137,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'gold'], function () {
-        Route::get('index', 'GoldController@index')->name('gold.index');
-        Route::get('add', 'GoldController@goldPresent')->name('gold.add');
+        Route::get('index', 'GoldController@index')->name('gold.index')->middleware('can:view_gold');
+        Route::get('add', 'GoldController@goldPresent')->name('gold.add')->middleware('can:add_event');
         Route::post('update', 'GoldController@goldUpdate')->name('gold.update');
         Route::get('gold-detail/{user_code}', 'GoldController@goldDetail')->name('gold.detail');
         Route::get('gold-export', 'GoldController@goldExport')->name('export.gold');
@@ -122,13 +148,14 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'Fee'], function () {
-        Route::get('index', 'FeeController@index')->name('fee.index');
-        Route::get('list/{id}', 'FeeController@listFeeStudent')->name('fees.list');
+        Route::get('index', 'FeeController@index')->name('fee.index')->middleware('can:view_fee');
+        Route::get('list/{id}', 'FeeController@listFeeStudent')->name('fees.list')->middleware('can:view_fee');
         Route::get('list-student/{id}', 'FeeController@listStudent')->name('list.student');
-//        Route::get('add', 'EventController@create')->name('event.add');
+        Route::get('email-fee', 'EventController@emailFee')->name('event.email');
 //        Route::post('store', 'EventController@store')->name('event.store');
 //        Route::get('delete/{id}', 'EventController@delete')->name('event.delete');
     });
+
 
     //Queries
     Route::group(['prefix' => 'queries'], function () {
@@ -164,14 +191,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'term'], function () {
-        Route::get('index', 'TermController@index')->name('term.index');
+        Route::get('index', 'TermController@index')->name('term.index')->middleware('can:view_terms');
 //        Route::post('list-course', 'CourseController@listCourse')->name('list.course');
-        Route::get('create-term', 'TermController@createTerm')->name('term.create');
-        Route::get('edit-term/{id}', 'TermController@edit')->name('term.edit');
+        Route::get('create-term', 'TermController@createTerm')->name('term.create')->middleware('can:add_terms');
+        Route::get('edit-term/{id}', 'TermController@edit')->name('term.edit')->middleware('can:edit_terms');
         Route::post('update-term/{id}', 'TermController@update')->name('term.update');
         Route::post('store', 'TermController@store')->name('term.store');
+
 //        // Cancel Roles
-        Route::get('delete/{id}', 'TermController@delete')->name('term.delete');
+        Route::get('delete/{id}', 'TermController@delete')->name('term.delete')->middleware('can:delete_terms');
 //        // List Roles delete
         Route::get('term-trashout', 'TermController@termTrashOut')->name('term.trash');
 //        // Delete Roles completely
@@ -219,12 +247,12 @@ Route::middleware('auth')->group(function () {
 
     //Route Items
     Route::group(['prefix' => 'items'], function () {
-        Route::get('list', 'ItemController@itemList')->name('items.list');
-        Route::get('create', 'ItemController@create')->name('items.add');
+        Route::get('list', 'ItemController@itemList')->name('items.list')->middleware('can:view_items');
+        Route::get('create', 'ItemController@create')->name('items.add')->middleware('can:add_items');
         Route::post('store', 'ItemController@store')->name('items.store');
-        Route::get('edit/{id}', 'ItemController@edit')->name('items.edit');
+        Route::get('edit/{id}', 'ItemController@edit')->name('items.edit')->middleware('can:edit_items');
         Route::post('update/{id}', 'ItemController@update')->name('items.update');
-        Route::get('delete/{id}', 'ItemController@delete')->name('items.delete');
+        Route::get('delete/{id}', 'ItemController@delete')->name('items.delete')->middleware('can:delete_items');
         Route::get('list-category', 'ItemController@category')->name('items.category');
         Route::get('create-category', 'ItemController@createCategory')->name('category.add');
         Route::post('store-category', 'ItemController@storeCategory')->name('category.store');
@@ -236,6 +264,7 @@ Route::middleware('auth')->group(function () {
     //Route promotion
     Route::group(['prefix' => 'promotion'], function () {
         Route::get('/index', 'PromotionController@index')->name('promotion.index');
+        Route::get('/item-promotion', 'PromotionController@itemList')->name('item-promotion.index');
         Route::get('/add', 'PromotionController@add')->name('promotion.add');
         Route::post('/store', 'PromotionController@store')->name('promotion.store');
         Route::get('edit/{id}', 'PromotionController@edit')->name('promotion.edit');
@@ -245,14 +274,14 @@ Route::middleware('auth')->group(function () {
     //Route Club
     Route::group(['prefix' => 'club'], function () {
         Route::get('/index', 'ClubController@index')->name('club.index');
-        Route::get('/delete/{id?}', 'ClubController@deleteMembder')->name('club.delete');
+        Route::get('/delete/{id?}', 'ClubController@deleteMembder')->name('club.delete')->middleware('can:delete_clubs');
         Route::get('/create', 'ClubController@createClub')->name('club.create');
         Route::post('/post-create', 'ClubController@storeClub')->name('club.store');
         Route::get('/add/{id}', 'ClubController@addManagement')->name('add.management');
         Route::post('/store', 'ClubController@store')->name('update.management');
 //        Route::post('/store', 'ClubController@store')->name('club.update');
         Route::get('/detail/{id}', 'ClubController@detail')->name('club.detail');
-        Route::get('/edit/{id}', 'ClubController@edit')->name('club.edit');
+        Route::get('/edit/{id}', 'ClubController@edit')->name('club.edit')->middleware('can:edit_clubs');
         Route::post('/update/{id}', 'ClubController@update')->name('club.update');
         Route::get('/delete-member/{id?}', 'ClubController@deleteMembder')->name('delete.member');
         Route::post('/store', 'ClubController@store')->name('update.management');

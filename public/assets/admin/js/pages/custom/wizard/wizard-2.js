@@ -116,11 +116,7 @@ var KTWizard2 = function () {
 				ccyear: {
 					required: true
 				},
-				cccvv: {
-					required: true,
-					minlength: 2,
-					maxlength: 3
-				},
+
             },
 
             // Display error

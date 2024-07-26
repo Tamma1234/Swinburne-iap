@@ -112,4 +112,4 @@
 
 <!--end::Layout Skins -->
 <link rel="shortcut icon" href="{{asset('assets/admin/media/logos/favicon.ico')}}" />
-
+@yield('css')

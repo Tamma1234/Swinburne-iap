@@ -10,11 +10,10 @@ class Roles extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'dra_t1_role';
+    protected $table = 'fu_roles';
 
     protected $fillable = [
-        'role_name',
-        'is_active'
+        'name',
     ];
 
     public function __construct(array $attributes = [])
@@ -25,7 +24,7 @@ class Roles extends Model
 
     public function permissions() {
         return $this->belongsToMany(
-            Permissions::class, 'dra_t1_role_permission', 'role_id', 'permission_id'
+            Permissions::class, 'role_permission', 'role_id', 'permission_id'
         );
     }
 }

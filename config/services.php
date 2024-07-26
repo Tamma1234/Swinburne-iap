@@ -23,6 +23,7 @@ return [
         'drive_folder_id_query' => env('GOOGLE_DRIVE_FOLDER_ID_QUERY'),
         'drive_folder_id_club' => env('GOOGLE_DRIVE_FOLDER_ID_CLUB'),
         'drive_folder_id_guidline' => env('GOOGLE_DRIVE_FOLDER_ID_GUIDLINE'),
+        'drive_folder_id_qrcode' => env('GOOGLE_DRIVE_FOLDER_ID_QRCODE'),
         'credentials_path' => env('GOOGLE_APPLICATION_CREDENTIALS'),
     ],
 

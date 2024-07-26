@@ -13,8 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
-
+    'default' => env('QUEUE_CONNECTION', 'ph'),
     /*
     |--------------------------------------------------------------------------
     | Queue Connections
@@ -38,6 +37,36 @@ return [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
+        'ph' => [
+            'driver' => 'database', // Loại driver, chẳng hạn như 'redis', 'database', ...
+            'connection' => 'ph',
+            // Thêm các cấu hình khác tùy thuộc vào loại driver và kết nối của bạn
+            'table' => 'jobs',
+            'queue' => 'ph',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
+        'pd' => [
+            'driver' => 'database', // Loại driver, chẳng hạn như 'redis', 'database', ...
+            'connection' => 'pd',
+            // Thêm các cấu hình khác tùy thuộc vào loại driver và kết nối của bạn
+            'table' => 'jobs',
+            'queue' => 'pd',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
+        'ps' => [
+            'driver' => 'database', // Loại driver, chẳng hạn như 'redis', 'database', ...
+            'connection' => 'ps',
+            // Thêm các cấu hình khác tùy thuộc vào loại driver và kết nối của bạn
+            'table' => 'jobs',
+            'queue' => 'ps',
             'retry_after' => 90,
             'after_commit' => false,
         ],

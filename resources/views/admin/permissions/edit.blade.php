@@ -28,7 +28,7 @@
                                     <label>Permission Name:</label>
                                     <input type="text" name="permission_name" class="form-control"
                                            id="exampleInputEmail1"
-                                           placeholder="Enter Permission Name" value="{{$permission->permission_name}}">
+                                           placeholder="Enter Permission Name" value="{{$permission->name}}">
                                 </div>
                             </div>
                         </div>

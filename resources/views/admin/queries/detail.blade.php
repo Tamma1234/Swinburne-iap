@@ -144,7 +144,6 @@
                 <!--end::Portlet-->
             </div>
         </div>
-
     </div>
 @endsection
 

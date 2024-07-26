@@ -35,9 +35,11 @@
                 @yield('content')
             </div>
             @include('admin.templates.footer')
+
         </div>
     </div>
 </div>
+@include('sweetalert::alert')
 @include('admin.templates.script')
 
 </body>

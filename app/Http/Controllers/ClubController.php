@@ -43,7 +43,7 @@ class ClubController extends Controller
         $date = $request->create_date;
 
         Service::clubSystemLog()->addClubLog($name);
-
+        $fileId = "";
         if ($request->hasFile('image_url')) {
             $file = $request->file('image_url');
 

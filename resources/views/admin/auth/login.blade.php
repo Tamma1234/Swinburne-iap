@@ -104,6 +104,10 @@
                                         class="fab fa-google"></i>
                                     Sign In With
                                 </button>
+                                <button class="btn btn-facebook btn-user btn-block" id="btn_login_facebook" >
+                                    <i class="fab fa-facebook-f fa-fw"></i>
+                                    Login with Facebook
+                                </button>
                             </div>
                             <!--begin::Action-->
                             <!--end::Action-->

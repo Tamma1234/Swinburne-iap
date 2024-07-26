@@ -51,7 +51,7 @@
         <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1"
              data-ktmenu-dropdown-timeout="500">
             <ul class="kt-menu__nav ">
-                <li class="kt-menu__item  kt-menu__item--active" aria-haspopup="true">
+                <li class="kt-menu__item kt-menu__item--active" aria-haspopup="true">
                     <a href="{{route('rooms.index')}}" class="kt-menu__link "><span
                             class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -71,8 +71,7 @@
                     <h4 class="kt-menu__section-text">Custom</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
-                @can('user_level')
-                    <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
+                    <li class="kt-menu__item {{ Route::is('applications.*') ? 'kt-menu__item--open kt-menu__item--here' : '' }} kt-menu__item--submenu" aria-haspopup="true"
                         data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
                                                               class="kt-menu__link kt-menu__toggle"><span
                                 class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +93,7 @@
                                         class="kt-menu__link"><span
                                             class="kt-menu__link-text">Applications</span></span>
                                 </li>
-                                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
+                                <li class="kt-menu__item {{ Route::is('users.*') ? 'kt-menu__item--open kt-menu__item--here' : '' }} kt-menu__item--submenu" aria-haspopup="true"
                                     data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
                                                                           class="kt-menu__link kt-menu__toggle"><i
                                             class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span
@@ -102,19 +101,19 @@
                                             class="kt-menu__ver-arrow la la-angle-right"></i></a>
                                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                                         <ul class="kt-menu__subnav">
-                                            <li class="kt-menu__item " aria-haspopup="true">
+                                            <li class="kt-menu__item {{ Route::is('users.index') ? 'kt-menu__item--active' : '' }}" aria-haspopup="true">
                                                 <a href="{{route('users.index')}}" class="kt-menu__link ">
                                                     <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                         class="kt-menu__link-text">List User</span></a>
                                             </li>
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                            <li class="kt-menu__item {{ Route::is('users.trash') ? 'kt-menu__item--active' : '' }}" aria-haspopup="true"><a
                                                     href="{{route('users.trash')}}" class="kt-menu__link "><i
                                                         class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                         class="kt-menu__link-text">Account Is Canceled</span></a></li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
+                                <li class="kt-menu__item {{ Route::is('roles.*') ? 'kt-menu__item--open kt-menu__item--here' : '' }} kt-menu__item--submenu" aria-haspopup="true"
                                     data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
                                                                           class="kt-menu__link kt-menu__toggle"><i
                                             class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span
@@ -122,16 +121,16 @@
                                             class="kt-menu__ver-arrow la la-angle-right"></i></a>
                                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                                         <ul class="kt-menu__subnav">
-                                            <li class="kt-menu__item " aria-haspopup="true">
+                                            <li class="kt-menu__item {{ Route::is('roles.index') ? 'kt-menu__item--active' : '' }}" aria-haspopup="true">
                                                 <a href="{{route('roles.index')}}" class="kt-menu__link ">
                                                     <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                         class="kt-menu__link-text">List Role</span></a>
                                             </li>
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                            <li class="kt-menu__item {{ Route::is('roles.create') ? 'kt-menu__item--active' : '' }}" aria-haspopup="true"><a
                                                     href="{{route('roles.create')}}" class="kt-menu__link ">
                                                     <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                         class="kt-menu__link-text">Create Role</span></a></li>
-                                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                            <li class="kt-menu__item {{ Route::is('roles.trash') ? 'kt-menu__item--active' : '' }}" aria-haspopup="true"><a
                                                     href="{{route('roles.trash')}}" class="kt-menu__link "><i
                                                         class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                         class="kt-menu__link-text">Account Is Canceled</span></a></li>
@@ -165,7 +164,6 @@
                             </ul>
                         </div>
                     </li>
-                @endcan
                 <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
                     data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
                                                           class="kt-menu__link kt-menu__toggle"><span
@@ -399,6 +397,35 @@
                         </ul>
                     </div>
                 </li>
+                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
+                    data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
+                                                          class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"></rect>
+													<path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+													<path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+												</g>
+											</svg></span>
+                        <span class="kt-menu__link-text">Survey</span><i
+                            class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
+                                    class="kt-menu__link"><span
+                                        class="kt-menu__link-text">List</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                    href="{{ route('survey.list') }}" class="kt-menu__link "><i
+                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                        class="kt-menu__link-text">List</span></a></li>
+{{--                            <li class="kt-menu__item " aria-haspopup="true"><a--}}
+{{--                                    href="{{ route('survey.answer') }}" class="kt-menu__link "><i--}}
+{{--                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span--}}
+{{--                                        class="kt-menu__link-text">Item Categories</span></a></li>--}}
+
+                        </ul>
+                    </div>
+                </li>
 
                 <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
                     data-ktmenu-submenu-toggle="hover"><a href="{{ route('personal.index') }}"
@@ -413,7 +440,7 @@
                         <span class="kt-menu__link-text">Personal Information</span></a>
                 </li>
                 <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
-                    data-ktmenu-submenu-toggle="hover"><a href="{{ route('fee.index') }}"
+                    data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
                                                           class="kt-menu__link kt-menu__toggle">
                         <span class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
 												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -422,7 +449,55 @@
 													<path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
 												</g>
 											</svg></span>
-                        <span class="kt-menu__link-text">Tuition Fee</span></a>
+                        <span class="kt-menu__link-text">Fees</span><i
+                            class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
+                                    class="kt-menu__link"><span
+                                        class="kt-menu__link-text">Tuition Fee</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                    href="{{ route('fee.index') }}" class="kt-menu__link "><i
+                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                        class="kt-menu__link-text">Tuition Fee</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                    href="{{ route('event.email') }}" class="kt-menu__link "><i
+                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                        class="kt-menu__link-text">Send Mail</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
+                    data-ktmenu-submenu-toggle="hover"><a href="javascript:;"
+                                                          class="kt-menu__link kt-menu__toggle">
+                        <span class="kt-menu__link-icon"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"></rect>
+													<path d="M7,3 L17,3 C19.209139,3 21,4.790861 21,7 C21,9.209139 19.209139,11 17,11 L7,11 C4.790861,11 3,9.209139 3,7 C3,4.790861 4.790861,3 7,3 Z M7,9 C8.1045695,9 9,8.1045695 9,7 C9,5.8954305 8.1045695,5 7,5 C5.8954305,5 5,5.8954305 5,7 C5,8.1045695 5.8954305,9 7,9 Z" fill="#000000"></path>
+													<path d="M7,13 L17,13 C19.209139,13 21,14.790861 21,17 C21,19.209139 19.209139,21 17,21 L7,21 C4.790861,21 3,19.209139 3,17 C3,14.790861 4.790861,13 7,13 Z M17,19 C18.1045695,19 19,18.1045695 19,17 C19,15.8954305 18.1045695,15 17,15 C15.8954305,15 15,15.8954305 15,17 C15,18.1045695 15.8954305,19 17,19 Z" fill="#000000" opacity="0.3"></path>
+												</g>
+											</svg></span>
+                        <span class="kt-menu__link-text">Notifications</span><i
+                            class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                    <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                        <ul class="kt-menu__subnav">
+                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span
+                                    class="kt-menu__link"><span
+                                        class="kt-menu__link-text">Notifications</span></span></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                    href="{{ route('notifications.list-send') }}" class="kt-menu__link "><i
+                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                        class="kt-menu__link-text">List Send Mail</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                    href="{{ route('notifications.send.grade') }}" class="kt-menu__link "><i
+                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                        class="kt-menu__link-text">Send Grade</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a
+                                    href="{{ route('notifications.send.group') }}" class="kt-menu__link "><i
+                                        class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                        class="kt-menu__link-text">Send Group</span></a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true"
                     data-ktmenu-submenu-toggle="hover"><a href="{{ route('evaluate.index') }}"

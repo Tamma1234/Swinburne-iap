@@ -89,4 +89,9 @@ class PromotionController extends Controller
 
         return redirect()->route('promotion.index')->with('msg-add', 'Update Successful Promotion');
     }
+
+    public function itemList() {
+        $items = Items::select('name_item')->pluck('name_item')->toArray();
+        return response()->json($items);
+    }
 }

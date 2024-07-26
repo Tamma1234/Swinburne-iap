@@ -234,9 +234,9 @@
 <script src="{{asset('assets/admin/js/pages/dashboard.js')}}" type="text/javascript"></script>
 <script src="{{asset('assets/admin/js/pages/crud/datatables/basic/basic.js')}}" type="text/javascript"></script>
 <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/admin/js/pages/crud/forms/editors/summernote.js') }}" type="text/javascript"></script>
 
-
-
+<script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-select.js') }}" type="text/javascript"></script>
 
 <script src="{{asset('assets/admin/js/pages/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 <!-- // Alert success -->
@@ -333,9 +333,9 @@
     swal("Notification", "{{ session('msg-trash') }}!", "success");
     @endif;
 
-    @if (session('errors'))
-    swal("Notification", "{{ session('errors') }}!", "error");
-    @endif;
+{{--    @if (session('errors'))--}}
+{{--    swal("Notification", "{{ session('errors') }}!", "error");--}}
+{{--    @endif;--}}
 
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

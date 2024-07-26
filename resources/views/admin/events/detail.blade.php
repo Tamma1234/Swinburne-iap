@@ -141,37 +141,10 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>
-    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.polyfills.min.js')}}"
-            type="text/javascript"></script>
-    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.min.js')}}"
-            type="text/javascript"></script>
-    <script>
-        $(".chosen-select").chosen({
-            no_results_text: "Oops, nothing found!"
-        })
-        $("#submit-send").on('click', function () {
-            var user_name = $("#message-text").val();
-            var event_id = $("#event_id").val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url: "{{ route('student.add') }}",
-                method: 'POST',
-                data: {user_name: user_name, _token: _token, event_id: event_id},
-                success: function (data) {
-                    if ($.isEmptyObject(data.error_type)) {
-                        location.reload();
-                        toastr.success(data.success);
-                    } else {
-                        $('#error_type').html(data.error_type);
-                    }
-                }
-            });
-        })
-        $("#multiple").val(["Multiple2", "Multiple3"]);
+{{--    <script src="{{ asset('assets/admin/js/pages/crud/forms/widgets/tagify.js') }}" type="text/javascript"></script>--}}
+{{--    <script src="{{asset('assets/admin/plugins/general/@yaireo/tagify/dist/tagify.polyfills.min.js')}}"--}}
+{{--            type="text/javascript"></script>--}}
 
-
-    </script>
     <script>
         $(document).ready(function () {
             $("#example").on("click", "#delete_event", function () {

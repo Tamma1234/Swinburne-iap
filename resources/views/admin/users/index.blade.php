@@ -14,7 +14,7 @@
                         List User
                     </h3>
                 </div>
-                <div class="col-sm-12 col-md-10">
+                <div class="col-sm-12 col-md-8">
                     <form method="post">
                         @csrf
                         <div class="form-row">
@@ -50,17 +50,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="inputState"></label>
-                                <div class="search">
-                                    <input type="text" id="user_givenname" class="form-control" placeholder="Name"
-                                           name="user_givenname">
-                                    <button type="button" class="btn btn-primary" ><i
-                                            class="flaticon-search" id="btn-form-search"></i></button>
-                                </div>
-                            </div>
                         </div>
                     </form>
+                </div>
+                <div class="col-md-2 col-2 align-self-center">
+                    <a href="{{ route('users.create')  }}" class="btn pull-right hidden-sm-down btn btn-primary"
+                       data-toggle="kt-tooltip" title="" data-original-title="add"><i
+                            class="flaticon-add-circular-button"></i></a>
                 </div>
             </div>
             <div class="kt-portlet__body" id="form-table-search">
@@ -85,15 +81,17 @@
                             <td>{{$user->user_middlename}}</td>
                             <td>{{$user->user_givenname}}</td>
                             <td>{{$user->user_email}}</td>
-                            <td style="padding: 50px">{!! DNS2D::getBarcodeHTML("$user->user_code", 'QRCODE') !!}</td>
-{{--                            <td style="padding: 50px">--}}
-{{--                                <a href="#">{!! DNS2D::getBarcodeSVG("$user->user_code", 'DATAMATRIX') !!} Download</a>--}}
-{{--                                </td>--}}
+                            {{--                            <td><img class="qrcode" src="https://chart.googleapis.com/chart?chs=150x150&amp;cht=qr&amp;chl={{ $user->user_code }}&amp;choe=UTF-8" alt="QR code" /></td>--}}
+                            <td style="padding: 50px">
+                                <img src="{{ asset("storage/qr_code/$user->file_qr") }}" width="150" alt="">
+                            </td>
                             <td class="text-nowrap">
-                                <a href="{{route('users.edit', ['id' => $user->id])}}" data-toggle="kt-tooltip" title="Edit"
+                                <a href="{{route('users.edit', ['id' => $user->id])}}" data-toggle="kt-tooltip"
+                                   title="Edit"
                                    data-original-title="Edit"><i class="flaticon-edit"></i>
                                 </a>
-                                <a href="{{route('users.remove', ['id' => $user->id])}}" data-toggle="kt-tooltip" title="Delete"
+                                <a href="{{route('users.remove', ['id' => $user->id])}}" data-toggle="kt-tooltip"
+                                   title="Delete"
                                    data-original-title="Close"> <i class="flaticon-delete"></i> </a>
                             </td>
                         </tr>
@@ -108,30 +106,6 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({pageLength: 10});
-            // Get the page info, so we know what the last is
-            var pageInfo = table.page.info();
-            // Set the ending interval to the last page
-            endInt = pageInfo.end;
-            // Current page
-            currentInt = 0;
-            // interval = setInterval(function () {
-            //     // "Next" ...
-            //     table.page(currentInt).draw('page');
-            //
-            //     // Increment the current page int
-            //     currentInt++;
-            //
-            //     // If were on the last page, reset the currentInt to the first page #
-            //     if (currentInt === pageInfo.pages) {
-            //         currentInt = 0;
-            //     }
-            //     // console.log(currentInt);
-            // }, 10000); // 3 seconds
-        });
-    </script>
-    <script>
         //search with stude_status
         $(document).ready(function () {
             $('#study_status').change(function () {
@@ -142,7 +116,7 @@
                 }).done(function (response) {
                     $('#form-table-search').empty();
                     $('#form-table-search').html(response);
-                    })
+                })
             });
         });
 
@@ -179,11 +153,10 @@
                     url: '{{ route('users.post.search') }}',
                     type: 'post',
                     data: $('form').serialize(),
-                })
-                    .done(function (response) {
+                }).done(function (response) {
                         $('#form-table-search').empty();
                         $('#form-table-search').html(response);
-                    })
+                })
             })
         })
     </script>

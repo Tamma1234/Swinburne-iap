@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EventMailJob;
 use App\Models\EventSwin;
 use App\Models\Golds;
 use App\Models\StudentEvent;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 
 class QRCodeController extends Controller
 {
+
     public function index(Request $request)
     {
         $event = EventSwin::where('id', $request->id)->first();
@@ -21,9 +25,15 @@ class QRCodeController extends Controller
 
     public function storeQrCode(Request $request)
     {
+        $user = auth()->user();
+        $email = $user->user_email;
         $date = Carbon::now()->toDateTimeString();
         $user_code = $request->result;
         $event_id = $request->event_id;
+//        EventMailJob::dispatch($email, $name);
+        $campus_code = session('campus_db');
+        Queue::connection($campus_code)->push(new EventMailJob($email, $campus_code));
+
         $event = EventSwin::where('id', $event_id)->first();
         $gold_event = $event->gold;
 
@@ -60,6 +70,7 @@ class QRCodeController extends Controller
                     $output .= '<td>' . $item->type_person . '</td>';
                     $output .= '</tr>';
                 }
+                Queue::connection($campus_code)->push(new EventMailJob($email, $campus_code));
                 return $output;
             } else {
                 $user = User::where('user_code', $user_code)->where('user_level', 3)->first();
@@ -71,6 +82,7 @@ class QRCodeController extends Controller
             $user = User::where('user_code', $user_code)->where('user_level', 3)->first();
             if (!empty($user)) {
                 $full_name = $user->user_surname . ' ' . $user->user_middlename . ' ' . $user->user_givenname;
+                Queue::connection($campus_code)->push(new EventMailJob($email, $campus_code));
 
                 StudentEvent::create([
                     'user_code' => $user_code,

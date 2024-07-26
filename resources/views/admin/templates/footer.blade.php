@@ -1,3 +1,6 @@
+<div id="kt_scrolltop" class="kt-scrolltop">
+    <i class="fa fa-arrow-up"></i>
+</div>
 <div class="kt-footer  kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop" id="kt_footer">
     <div class="kt-container  kt-container--fluid ">
         <div class="kt-footer__copyright">

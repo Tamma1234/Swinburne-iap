@@ -72,9 +72,9 @@
                                     <input type="password" name="password" class="form-control" id="exampleInputEmail1"
                                            placeholder="Enter User Password">
                                 </div>
-{{--                                @error('password')--}}
-{{--                                <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                                @enderror--}}
+                                @error('password')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
@@ -92,9 +92,9 @@
                                                 <div class="form-group col-md-3" >
                                                     <div class="kt-checkbox-inline">
                                                         <label class="kt-checkbox kt-checkbox--solid kt-checkbox--primary">
-                                                            <input type="checkbox"  name="office_id[]"
+                                                            <input type="checkbox"  name="role_id[]"
                                                                    class="checkbox_childrent custom-control-input"
-                                                                   value="{{$role->id}}"> {{$role->role_name}}
+                                                                   value="{{$role->id}}"> {{$role->name}}
                                                             <span></span>
                                                         </label>
                                                     </div>

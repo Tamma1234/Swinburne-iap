@@ -17,6 +17,8 @@
         "milon/barcode": "^10.0",
         "nao-pon/flysystem-google-drive": "~1.1",
         "predis/predis": "^2.2",
+        "realrashid/sweet-alert": "^7.1",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-responsecache": "^6.6"
     },
     "require-dev": {

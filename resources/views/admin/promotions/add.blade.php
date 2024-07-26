@@ -47,11 +47,41 @@
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="exampleSelectd">Choose Items</label>
-                                        <select class="form-control" id="exampleSelectd" name="item_id">
+{{--                                        <select class="form-control" id="exampleSelectd" name="item_id">--}}
+{{--                                            @foreach($items as $item)--}}
+{{--                                                <option value="{{ $item->id }}">{{ $item->name_item }}</option>--}}
+{{--                                             --}}
+{{--                                            @endforeach--}}
+                                        <select class="form-control kt-selectpicker" name="item_id[]" multiple data-actions-box="true">
                                             @foreach($items as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name_item }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->name_item }} </option>
                                             @endforeach
+{{--                                            <option>Ketchup</option>--}}
+{{--                                            <option>Relish</option>--}}
+{{--                                            <option>Mayonnaise</option>--}}
+{{--                                            <option>Barbecue Sauce</option>--}}
+{{--                                            <option>Salad Dressing</option>--}}
+{{--                                            <option>Tabasco</option>--}}
+{{--                                            <option>Salsa</option>--}}
+{{--                                            <option>Mustard</option>--}}
+{{--                                            <option>Ketchup</option>--}}
+{{--                                            <option>Relish</option>--}}
+{{--                                            <option>Mayonnaise</option>--}}
+{{--                                            <option>Barbecue Sauce</option>--}}
+{{--                                            <option>Salad Dressing</option>--}}
+{{--                                            <option>Tabasco</option>--}}
+{{--                                            <option>Salsa</option>--}}
+{{--                                            <option>Mustard</option>--}}
+{{--                                            <option>Ketchup</option>--}}
+{{--                                            <option>Relish</option>--}}
+{{--                                            <option>Mayonnaise</option>--}}
+{{--                                            <option>Barbecue Sauce</option>--}}
+{{--                                            <option>Salad Dressing</option>--}}
+{{--                                            <option>Tabasco</option>--}}
+{{--                                            <option>Salsa</option>--}}
                                         </select>
+{{--                                                <input id="kt_tagify_1" name='user_login' placeholder='Thêm member bằng mã user code'--}}
+{{--                                                       value='' autofocus data-blacklist='.NET,PHP'>--}}
                                     </div>
                                     <!-- /.card-header -->
 
@@ -89,3 +119,4 @@
         </div>
     </div>
 @endsection
+

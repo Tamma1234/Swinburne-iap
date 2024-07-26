@@ -23,7 +23,6 @@ class SocialController extends Controller
             return redirect()->route('home');
         }
         session(['campus_db' => $campus]);
-
         return Socialite::driver('google')->stateless()->redirect();
     }
 

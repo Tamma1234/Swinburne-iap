@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportEvent;
+use App\Jobs\EventMailJob;
 use App\Exports\ExportGroupSemmester;
 use App\Models\EventSwin;
 use App\Models\StudentEvent;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EventController extends Controller
@@ -195,5 +198,26 @@ class EventController extends Controller
             ->groupBy('user_code', 'full_name')
             ->get();
         return view('admin.events.history', compact('eventHistory'));
+    }
+
+    public function emailFee() {
+        return view('admin.fees.email-fee');
+    }
+
+    public function sendMail() {
+        $email = "thientam160796@gmail.com";
+        $campus_code=session('campus_db');
+        $queue_config = config("queue.connections.$campus_code");
+        try {
+            EventMailJob::dispatch($email, $campus_code)->onConnection($campus_code);
+            return response()->json(['message' => 'Email đã được đưa vào hàng đợi để gửi!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+//        dispatch(new EventMailJob($email,$campus_code))->onConnection($campus_code)->onQueue($campus_code);
+//        Mail::to($email)->queue(new SendEventMail());
+//        $emailJob = (new EventMailJob($email, $campus_code))->delay(Carbon::now()->addSeconds(10));
+//        $this->dispatch($emailJob);
+        dd(321321);
     }
 }

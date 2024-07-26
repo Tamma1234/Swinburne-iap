@@ -8,6 +8,7 @@ use \App\Models\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PermissionController extends Controller
 {
@@ -25,7 +26,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permissions.create');
+        $permissionChildrens = Permissions::where('parent_id', 0)->get();
+        return view('admin.permissions.create', compact('permissionChildrens'));
     }
 
     /**
@@ -35,17 +37,23 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            DB::beginTransaction();
-            Permissions::create([
-                'permission_name' => $request->permission_name,
+            $permission = Permissions::create([
+                'name' => $request->permission_name,
+                'route_name' => $request->permission_name,
+                'parent_id' => 0
             ]);
-            DB::commit();
-            return redirect()->route('permissions.index')->with('msg-add', 'Create roles successful');
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error('Message :' . $exception->getMessage() . '--GetLine' . $exception->getLine());
-        }
+
+            foreach ($request->children as $value) {
+                Permissions::create([
+                    'name' => $value,
+                    'route_name' => $value .'_' .$request->permission_name,
+                    'parent_id' => $permission->id
+                ]);
+            }
+            Alert::success('Successfully!', 'You Create Successfully');
+
+            return redirect()->route('permissions.index');
+
     }
 
     /**

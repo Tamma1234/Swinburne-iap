@@ -36,9 +36,9 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp.office365.com'),
             'port' => env('MAIL_PORT', 587),
-            'from' => ['address' => 'thientamjvb@gmail.com', 'name' => 'Diane Kaplan'],
+            'from' => ['address' => 'swin@fe.edu.vn', 'name' => ''],
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
@@ -70,6 +70,18 @@ return [
 
         'array' => [
             'transport' => 'array',
+        ],
+
+        'second_smtp' => [
+            'transport' => 'smtp',
+            'host' => env('SECOND_MAIL_HOST', 'smtp.gmail.com'),
+            'port' => env('SECOND_MAIL_PORT', 587),
+            'from' => ['address' => 'thientamjvb@gmail.com', 'name' => ''],
+            'encryption' => env('SECOND_MAIL_ENCRYPTION', 'tls'),
+            'username' => env('SECOND_MAIL_USERNAME'),
+            'password' => env('SECOND_MAIL_PASSWORD'),
+            'timeout' => null,
+            'auth_mode' => null,
         ],
 
         'failover' => [
@@ -115,5 +127,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];

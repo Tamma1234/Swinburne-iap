@@ -10,10 +10,12 @@ class Permissions extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'dra_t1_permission';
+    protected $table = 'fu_permission';
 
     protected $fillable = [
-        'permission_name'
+        'name',
+        'route_name',
+        'parent_id'
     ];
 
     public function __construct(array $attributes = [])

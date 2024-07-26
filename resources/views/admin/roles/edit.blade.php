@@ -14,7 +14,7 @@
                         <div class="kt-portlet__head">
                             <div class="kt-portlet__head-label">
                                 <h3 class="kt-portlet__head-title">
-                                    Create User Form Layout
+                                    Edit User Form Layout
                                 </h3>
                             </div>
                         </div>
@@ -34,33 +34,37 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="card-border-primary mb-3 col-md-12">
-                                            <div class="row" id="modul-row">
-                                                <div class="kt-checkbox-list">
-                                                    <label class="kt-checkbox kt-checkbox--solid kt-checkbox--light">
-                                                        <input class="checkbox_wraper custom-control-input" type="checkbox">Roles
-                                                        <span></span>
-                                                    </label>
+                                    @foreach($permissionChildrens as $permissionChildren)
+                                        <div class="row">
+                                            <div class="card-border-primary mb-3 col-md-12">
+                                                <div class="row" id="modul-row">
+                                                    <div class="kt-checkbox-list">
+                                                        <label class="kt-checkbox kt-checkbox--solid kt-checkbox--light">
+                                                            <input class="checkbox_wraper custom-control-input"
+                                                                   type="checkbox">{{ $permissionChildren->name }}
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="permission-row">
+                                                    @foreach($permissionChildren->permissionChildren as $item)
+                                                        <div class="form-group col-md-3">
+                                                            <div class="kt-checkbox-inline">
+                                                                <label
+                                                                    class="kt-checkbox kt-checkbox--bold kt-checkbox--brand">
+                                                                    <input type="checkbox" name="permission_id[]"
+                                                                           {{$role->permissions->contains('id', $item->id) ? 'checked' : ""}}
+                                                                           class="checkbox_childrent custom-control-input"
+                                                                           value="{{$item->id}}"> {{$item->route_name}}
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
-                                            <div class="row" id="permission-row">
-                                                @foreach($permissions as $permission)
-                                                    <div class="form-group col-md-3" >
-                                                        <div class="kt-checkbox-inline">
-                                                            <label class="kt-checkbox kt-checkbox--solid kt-checkbox--primary">
-                                                                <input type="checkbox"  name="permission_id[]"
-                                                                       {{$role->permissions->contains('id', $permission->id) ? 'checked' : ""}}
-                                                                       class="checkbox_childrent custom-control-input"
-                                                                       value="{{$permission->id}}"> {{$permission->permission_name}}
-                                                                <span></span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="kt-portlet__foot">
