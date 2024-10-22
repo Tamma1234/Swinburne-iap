@@ -126,11 +126,12 @@ Route::middleware('auth')->group(function () {
         Route::get('send-mail', 'EventController@sendMail')->name('event.send');
         Route::get('/list-student', 'EventController@listStudent')->name('student.list');
         Route::get('detail/{id}', 'EventController@detail')->name('event.detail');
-        Route::get('add', 'EventController@create')->name('event.add')->middleware('can:add_events');
+        Route::get('add', 'EventController@create')->name('event.add');
         Route::post('store', 'EventController@store')->name('event.store');
         Route::get('delete/{id}', 'EventController@delete')->name('event.delete')->middleware('delete:delete_events');
         Route::get('student-delete/{id?}', 'EventController@deleteStudent')->name('student-delete');
         Route::post('student-add', 'EventController@studentAdd')->name('student.add');
+        Route::get('list-lecturer', 'EventController@listLecturer')->name('event.lecturer.list');
         Route::post('event-update', 'EventController@eventUpdate')->name('event.update');
         Route::get('event-history', 'EventController@eventHistory')->name('event.history');
         Route::get('export-event/{id}', 'EventController@exportEvents')->name('export.event');

@@ -48,11 +48,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Office::class, 'dra_user_office',
             'user_id', 'office_id');
     }
-
     public function roles()
     {
         return $this->belongsToMany(Roles::class, 'user_role', 'user_id', 'role_id');
     }
+
 
     public function curriculum()
     {

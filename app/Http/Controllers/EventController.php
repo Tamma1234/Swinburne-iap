@@ -9,10 +9,12 @@ use App\Models\EventSwin;
 use App\Models\StudentEvent;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Maatwebsite\Excel\Facades\Excel;
+use MongoDB\Driver\Session;
 
 class EventController extends Controller
 {
@@ -45,23 +47,70 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'gold' => 'required',
-            'name_event' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required'
-        ]);
-        $event = new EventSwin();
-        $event->create([
-            'department' => $request->department,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'name_event' => $request->name_event,
-            'description_event' => $request->description_event,
-            'gold' => $request->gold
-        ]);
+//        $request->validate([
+//            'gold' => 'required',
+//            'name_event' => 'required',
+//            'start_date' => 'required',
+//            'end_date' => 'required'
+//        ]);
+        $start_date =  Carbon::createFromFormat('Y/m/d H:i', $request->start_date)->format('Y-m-d H:i');
+        $end_date =  Carbon::createFromFormat('Y/m/d H:i', $request->end_date)->format('Y-m-d H:i');
+        $campus_db = session('campus_db');
+        DB::connection($campus_db)->beginTransaction();
 
-        return redirect()->route('event.index')->with('msg-add', 'Create Event Successful');
+        try {
+            $user_code = $request->user_login;
+            $student_codes = "";
+            if ($user_code) {
+                $users = json_decode($user_code, true);
+
+                // Kiểm tra nếu dữ liệu có nhiều value
+                if (isset($users[0]['value']) && is_array($users) && count($users) > 1) {
+                    // Trường hợp có nhiều value
+                    $student_codes = array_column($users, 'value');
+                } else {
+                    // Trường hợp có một value
+                    $student_codes = $users[0]['value'];
+                    // Loại bỏ ký tự xuống dòng và dấu cách
+                    $student_codes = str_replace(["\n", " "], "", $student_codes);
+                    // Tách chuỗi thành các mã sinh viên riêng biệt bằng preg_split
+                    $student_codes = preg_split('/(?=S)/', $student_codes, -1, PREG_SPLIT_NO_EMPTY);
+                }
+            }
+            $event = new EventSwin();
+            $add_event = $event->create([
+                'department' => $request->department,
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'name_event' => $request->name_event,
+                'description_event' => $request->description_event,
+                'gold' => $request->gold
+            ]);
+            $event_id = $add_event->id;
+            $data = [];
+            $date = Carbon::now()->toDateTimeString();
+            if ($student_codes != "") {
+                foreach ($student_codes as $user_code) {
+                    $lecturer = User::where('user_code', $user_code)->first();
+                    $full_name = $lecturer->user_surname . ' ' . $lecturer->user_middlename . ' ' . $lecturer->user_givenname;
+                    $data[] = [
+                        'user_code' => $user_code,
+                        'full_name' => $full_name,
+                        'event_id' => $event_id,
+                        'date_add' => $date,
+                        'level_member' => 1
+                    ];
+                }
+                StudentEvent::insert($data);
+            }
+            DB::connection($campus_db)->commit();
+
+            return redirect()->route('event.index')->with('msg-add', 'Create Event Successful');
+        } catch (\Exception $e) {
+            // Rollback transaction nếu có lỗi xảy ra
+            DB::connection($campus_db)->rollback();
+            throw $e;
+        }
     }
 
     /**
@@ -81,7 +130,7 @@ class EventController extends Controller
     {
         $id = $request->id;
         $event = EventSwin::find($id);
-        $studentEvent = StudentEvent::where('event_id', $id)->get();
+        $studentEvent = StudentEvent::where('event_id', $id)->where('level_member', '!=', 1)->get();
         $totalRelaties = StudentEvent::where('event_id', $id)->select('relatives')->sum('relatives');
         return view('admin.events.detail', compact('event', 'studentEvent', 'id', 'totalRelaties'));
     }
@@ -124,6 +173,12 @@ class EventController extends Controller
         }
         StudentEvent::insert($stdentEvent);
         return response()->json(['success' => "Create Student In Event Successful"]);
+    }
+
+    public function listLecturer()
+    {
+        $users = User::where('user_level', 2)->select('user_code')->pluck('user_code')->toArray();
+        return response()->json($users);
     }
 
     public function exportEvents(Request $request)
@@ -192,7 +247,8 @@ class EventController extends Controller
         return $output;
     }
 
-    public function eventHistory() {
+    public function eventHistory()
+    {
         $eventHistory = StudentEvent::selectRaw('SUM(gold) as gold, full_name, user_code')
             ->orderBy('gold', 'desc')
             ->groupBy('user_code', 'full_name')
@@ -200,13 +256,15 @@ class EventController extends Controller
         return view('admin.events.history', compact('eventHistory'));
     }
 
-    public function emailFee() {
+    public function emailFee()
+    {
         return view('admin.fees.email-fee');
     }
 
-    public function sendMail() {
+    public function sendMail()
+    {
         $email = "thientam160796@gmail.com";
-        $campus_code=session('campus_db');
+        $campus_code = session('campus_db');
         $queue_config = config("queue.connections.$campus_code");
         try {
             EventMailJob::dispatch($email, $campus_code)->onConnection($campus_code);
