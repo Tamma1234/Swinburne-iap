@@ -50,7 +50,7 @@ class User extends Authenticatable
     }
     public function roles()
     {
-        return $this->belongsToMany(Roles::class, 'user_role', 'user_id', 'role_id');
+        return $this->belongsToMany(Roles::class, 'fu_user_role', 'user_id', 'role_id');
     }
 
 
@@ -71,13 +71,6 @@ class User extends Authenticatable
                 return false;
             }
         }
-//        foreach ($offices as $office) {
-//            $campus = Campus::find($office->id);
-//            if ($campus->campus_code == $checkOffice) {
-//                return true;
-//            }
-//        }
-
         return false;
     }
 

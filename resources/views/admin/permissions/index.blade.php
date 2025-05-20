@@ -37,7 +37,7 @@
                             @foreach($permissions as $permission)
                                 <tr>
                                     <td>{{$permission->id}}</td>
-                                    <td>{{$permission->name}}</td>
+                                    <td>{{$permission->permission_name}}</td>
                                     <td class="text-nowrap">
                                         <a href="{{route('permissions.edit', ['id' => $permission->id])}}"
                                            data-toggle="kt-tooltip" title="Edit"
